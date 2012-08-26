@@ -1,0 +1,60 @@
+\documentclass{book}
+
+\usepackage [utf8] {inputenc}
+\usepackage [russian] {babel}
+\usepackage {amsmath}
+\usepackage [landscape,a3paper] {geometry}
+\usepackage {colortbl}
+\usepackage {color}
+\usepackage {graphicx}
+\usepackage {multicol,multirow}
+
+\pagestyle {empty}
+
+\begin {document}
+
+%\newcommand{\yes}{\rowcolor{green} {\large $+$}}
+%\newcommand{\nnn}{\rowcolor{red} {\large $-$}}
+%\newcommand{\pos}{\rowcolor[rgb]{.8,.88,.95} {\large $\pm$}}
+
+\begin{center}
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+	\hline
+	Часть & Глава & Секция & Название & Переведено & Напечатано & Проверена
+грамматика & Примеры работают & Ссылки корректны \\
+	\hline
+	0 &  &  & Preface & - & - & - & - & - \\
+	\hline
+	0 & 0 & 1 & Preface & - & - & - & - & - \\
+	\hline
+	\multicolumn{9}{|c|}{\ldots} \\
+% 	0 & 0 & Introduction & - & - & - \\
+% 	\hline
+% 	0 & 1 & How to obtain Objective CAML & - & - & - \\
+% 	\hline
+	\hline
+	\multirow{8}*{II} & \multicolumn{8}{|c|}{Часть II} \\
+	\cline{2-9}
+	 & \multirow{1}*{10} &  & Средства анализа программ & + & - & - & - & - \\
+	\cline{2-9}
+	 & \multirow{7}*{11} &  & Средства лексического и
+синтаксического анализа & + & - & - & - & - \\
+	\cline{3-9}
+	 & & 1 & Введение & + & + & + & + & - \\
+	\cline{3-9}
+	 &  & 2 & План главы & + & + & + & + & - \\
+	\cline{3-9}
+	 &  & 3 & Лексика & + & + & + & - & - \\
+	\cline{3-9}
+	 &  & 4 & Синтаксис & + & - & - & - & - \\
+	\cline{3-9}
+	 &  & 5 & Пересмотренный Basic & + & - & - & - & - \\
+	\cline{3-9}
+	 &  & 6 & Резюме & + & - & - & - & - \\
+	\hline
+\end{tabular}
+
+\end{center}
+
+\end {document}
