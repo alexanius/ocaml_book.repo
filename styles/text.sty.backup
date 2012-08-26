@@ -1,0 +1,9 @@
+ 
+% русский стиль написания кавычек
+\usepackage {csquotes}
+\DeclareQuoteStyle{russian}
+	{\guillemotleft}{\guillemotright}[0.025em]
+	{\quotedblbase}{\textquotedblleft}
+\ExecuteQuoteOptions{style=russian}
+
+\newcommand{\enq}[1]{\enquote{#1}}			% укороченный синоним для кавычек
