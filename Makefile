@@ -9,7 +9,7 @@ html:
 	hevea -o html/index.html src/main.tex
 
 status:
-	pdflatex status/status.tex
+	pdflatex -halt-on-error -jobname status status/status.tex
 
 clean_all: clean
 	rm -f ocaml-book.pdf
