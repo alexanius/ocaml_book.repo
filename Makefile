@@ -5,7 +5,7 @@ pdf:
 	pdflatex -halt-on-error -jobname ocaml-book src/main.tex
 
 html:
-	mkdir html
+	mkdir -p html
 	hevea -o html/index.html src/main.tex
 
 status:
