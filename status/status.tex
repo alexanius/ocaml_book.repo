@@ -12,10 +12,11 @@
 \pagestyle {empty}
 
 \begin {document}
+\batchmode
 
-%\newcommand{\yes}{\rowcolor{green} {\large $+$}}
-%\newcommand{\nnn}{\rowcolor{red} {\large $-$}}
-%\newcommand{\pos}{\rowcolor[rgb]{.8,.88,.95} {\large $\pm$}}
+\newcommand{\yes}{\rowcolor{green} {\large $+$}}
+\newcommand{\no}{\rowcolor{red} {\large $-$}}
+\newcommand{\prt}{\rowcolor[rgb]{.8,.88,.95} {\large $\pm$}}
 
 \begin{table}[hс]
 \begin{center}
@@ -25,9 +26,9 @@
 	Часть & Глава & Секция & Название & Переведено & Напечатано & Проверена
 грамматика & Примеры работают & Ссылки корректны \\
 	\hline
-	0 &  &  & Preface & - & - & - & - & - \\
+	0 & &  & Preface & \no & \no & \no & \no & \no \\
 	\hline
-	0 & 0 & 1 & Preface & - & - & - & - & - \\
+	0 & 0 & 1 & Preface & \no & \no & \no & \no & \no \\
 	\hline
 	\multicolumn{9}{|c|}{\ldots} \\
 % 	0 & 0 & Introduction & - & - & - \\
@@ -37,22 +38,27 @@
 	\hline
 	\multirow{8}*{II} & \multicolumn{8}{|c|}{Часть II} \\
 	\cline{2-9}
-	 & \multirow{1}*{10} &  & Средства анализа программ & + & - & - & - & - \\
+	 & \multirow{1}*{10} &  & Средства анализа программ & \yes & \no & \no & \no & \no \\
+	\cline{2-9}
 	\cline{2-9}
 	 & \multirow{7}*{11} &  & Средства лексического и
-синтаксического анализа & + & - & - & - & - \\
+синтаксического анализа & \yes & \no & \no & \no & \no \\
 	\cline{3-9}
-	 & & 1 & Введение & + & + & + & + & - \\
+	 & & 1 & Введение & \yes & \yes & \yes & \yes & \no \\
 	\cline{3-9}
-	 &  & 2 & План главы & + & + & + & + & - \\
+	 &  & 2 & План главы & \yes & \yes & \yes & \yes & \no \\
 	\cline{3-9}
-	 &  & 3 & Лексика & + & + & + & - & - \\
+	 &  & 3 & Лексика & \yes & \yes & \yes & \no & \no \\
 	\cline{3-9}
-	 &  & 4 & Синтаксис & + & + & - & - & - \\
+	 &  & 4 & Синтаксис & \yes & \yes & \no & \no & \no \\
 	\cline{3-9}
-	 &  & 5 & Пересмотренный Basic & + & - & - & - & - \\
+	 &  & 5 & Пересмотренный Basic & \yes & \yes & \no & \no & \no \\
 	\cline{3-9}
-	 &  & 6 & Резюме & + & - & - & - & - \\
+	 &  & 6 & Exersices & \no & \no & \no & \no & \no \\
+	\cline{3-9}
+	 &  & 7 & Резюме & \yes & \yes & \no & \no & \no \\
+	\cline{3-9}
+	 &  & 8 & To learn more & \no & \no & \no & \no & \no \\
 	\hline
 \end{tabular}
 
