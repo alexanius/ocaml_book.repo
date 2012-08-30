@@ -1,0 +1,259 @@
+\section{Пересмотренный Basic}
+
+Теперь, используя совместно \texttt{ocamllex} и \texttt{ocamlyacc}, заменим
+функцию \texttt{parse} для Бэйсика, приведённую на странице \pageref{??}, на
+функции полученные при помощи файлов спецификации лексики и синтаксиса языка.
+
+Для этого, мы не сможем воспользоваться типами лексических единиц, в таком виде
+как они были определены. Необходимо определить более точные типы, чтобы
+различать операторы, команды и ключевые слова.
+
+Так же, нам понадобится изолировать в отдельном файле \texttt{basic\_types.mli}
+декларации типов, относящиеся к абстрактному синтаксису. В нем будут содержатся
+декларации типа \texttt{sentences}, а так же других типы необходимые этому.
+
+\subsection{Файл \texttt{basic\_parser.mly}}
+
+\subsubsection{Заголовок}
+
+Данный файл содержит вызовы деклараций типов абстрактного синтаксиса и две
+функции перевода строк символов в их эквивалент абстрактного синтаксиса.
+
+\begin{lstlisting}[language=Caml]
+%{
+open Basic_types ;;
+
+let phrase_of_cmd c =
+ match c with
+   "RUN" -> Run
+ | "LIST" -> List
+ | "END" -> End
+ | _ -> failwith "line : unexpected command"
+;;
+
+let bin_op_of_rel r =
+ match r with
+   "=" -> EQUAL
+ | "<" -> INF
+ | "<=" -> INFEQ
+ | ">" -> SUP
+ | ">=" -> SUPEQ
+ | "<>" -> DIFF
+ | _ -> failwith "line : unexpected relation symbol"
+;;
+
+%}
+\end{lstlisting}
+
+\subsubsection{Декларации}
+
+Здесь содержится три части: декларация лексем, декларация правил ассоциативности
+и приоритетов, декларация стартового символа \texttt{line}, которая
+соответствует анализу линии программы или команды.
+
+Ниже представлены лексические единицы:
+
+\begin{lstlisting}[language=Caml]
+%token <int> Lint
+%token <string> Lident
+%token <string> Lstring
+%token <string> Lcmd
+%token Lplus Lminus Lmult Ldiv Lmod
+%token <string> Lrel
+%token Land Lor Lneg
+%token Lpar Rpar
+%token <string> Lrem
+%token Lrem Llet Lprint Linput Lif Lthen Lgoto
+%token Lequal
+%token Leol
+\end{lstlisting}
+
+Имена деклараций говорят сами за себя и они описаны в файле
+\texttt{basic\_lexer.mll} (см. стр. \pageref{??}).
+
+Правила приоритета операторов схожи со значениями, которые определяются
+функциями \texttt{priority\_uop} и \texttt{priority\_binop}, которые были
+определены грамматикой Бейсика (см. стр. \pageref{??}).
+
+\begin{lstlisting}[language=Caml]
+%right Lneg
+%left Land Lor
+%left Lequal Lrel
+%left Lmod
+%left Lplus Lminus
+%left Lmult Ldiv
+%nonassoc Lop
+\end{lstlisting}
+
+Символ \texttt{Lop} необходим для обработки унарных минусов. Он не является
+терминальным символом, а \enq{псевдо--терминальным}. Благодаря этому, получаем
+перегрузку операторов, когда в двух случаях использования одного и того же
+оператора, приоритет меняется в зависимости от контекста. Мы вернёмся к этому
+случаю, когда будем рассматривать правила грамматики.
+
+Здесь нетерминалом является \texttt{line}. Полученная функция возвращает дерево
+абстрактного синтаксиса, которое соответствует проанализированной линии.
+
+\begin{lstlisting}[language=Caml]
+%start line
+%type <Basic_types.phrase> line
+\end{lstlisting}
+
+\subsubsection{Правила грамматики}
+
+Грамматика делится на 3 нетерминальных элемента: \texttt{line} для линии,
+\texttt{inst} для инструкции и \texttt{exp} для выражений. Действия, которые
+привязаны к каждому правилу лишь создают соответствующую часть абстрактного
+синтаксиса.
+
+\begin{lstlisting}[language=Caml]
+ %%
+line :
+   Lint inst Leol               { Line {num=$1; inst=$2} }
+ | Lcmd Leol                    { phrase_of_cmd $1 }
+ ;
+
+inst :
+   Lrem                         { Rem $1 }
+ | Lgoto Lint                   { Goto $2 }
+ | Lprint exp                   { Print $2 }
+ | Linput Lident                { Input $2 }
+ | Lif exp Lthen Lint           { If ($2, $4) }
+ | Llet Lident Lequal exp        { Let ($2, $4) }
+ ;
+
+exp :
+   Lint                         { ExpInt $1 }
+ | Lident                       { ExpVar $1 }
+ | Lstring                      { ExpStr $1 }
+ | Lneg exp                     { ExpUnr (NOT, $2) }
+ | exp Lplus exp                { ExpBin ($1, PLUS, $3) }
+ | exp Lminus exp               { ExpBin ($1, MINUS, $3) }
+ | exp Lmult exp                { ExpBin ($1, MULT, $3) }
+ | exp Ldiv exp                 { ExpBin ($1, DIV, $3) }
+ | exp Lmod exp                 { ExpBin ($1, MOD, $3) }
+ | exp Lequal exp                { ExpBin ($1, EQUAL, $3) }
+ | exp Lrel exp                 { ExpBin ($1, (bin_op_of_rel $2), $3) }
+ | exp Land exp                 { ExpBin ($1, AND, $3) }
+ | exp Lor exp                  { ExpBin ($1, OR, $3) }
+ | Lminus exp %prec Lop        { ExpUnr(OPPOSITE, $2) }
+ | Lpar exp Rpar                { $2 }
+ ;
+ %%
+\end{lstlisting}
+
+Данные правила не нуждаются в особых комментариях, кроме следующего:
+
+\begin{lstlisting}[language=Caml]
+exp :
+ ...
+ | Lminus exp %prec Lop { ExpUnr(OPPOSITE, $2) }
+\end{lstlisting}
+
+Это правило касается использования унарного минуса -. Ключевое слово
+\texttt{\%prec} означает, что указанная конструкция получает приоритет от
+\texttt{Lop} (в данном случае наивысший).
+
+\subsection{Файл \texttt{basic\_lexer.mll}}
+
+Лексический анализ содержит лишь одно множество: \texttt{lexer}, которое точно
+соответствует старой функции \texttt{lexer} (см. стр. \pageref{??}).
+
+Семантическое действие, которое связано с распознаванием лексических единиц,
+возвращает результат соответствующего конструктора. Необходимо загрузить файл
+синтаксических правил, так как в нем декларируется тип лексических единиц.
+Добавим так же функцию, которая удаляет кавычки вокруг строк.
+
+\begin{lstlisting}[language=Caml]
+{
+ open Basic_parser ;;
+
+ let string_chars s = String.sub s 1 ((String.length s)-2) ;;
+}
+
+rule lexer = parse
+   [' ' '\t']            { lexer lexbuf }
+
+ | '\n'                  { Leol }
+
+ | '!'                   { Lneg }
+ | '&'                   { Land }
+ | '|'                   { Lor }
+ | '='                   { Lequal }
+ | '%'                   { Lmod }
+ | '+'                   { Lplus }
+ | '-'                   { Lminus }
+ | '*'                   { Lmult }
+ | '/'                   { Ldiv }
+
+ | ['<' '>']             { Lrel (Lexing.lexeme lexbuf) }
+ | "<="                  { Lrel (Lexing.lexeme lexbuf) }
+ | ">="                  { Lrel (Lexing.lexeme lexbuf) }
+
+ | "REM" [^ '\n']*       { Lrem (Lexing.lexeme lexbuf) }
+ | "LET"                 { Llet }
+ | "PRINT"               { Lprint }
+ | "INPUT"               { Linput }
+ | "IF"                  { Lif }
+ | "THEN"                { Lthen }
+ | "GOTO"                { Lgoto }
+
+ | "RUN"                { Lcmd (Lexing.lexeme lexbuf) }
+ | "LIST"               { Lcmd (Lexing.lexeme lexbuf) }
+ | "END"                { Lcmd (Lexing.lexeme lexbuf) }
+
+ | ['0'-'9']+           { Lint (int_of_string (Lexing.lexeme lexbuf)) }
+ | ['A'-'z']+           { Lident (Lexing.lexeme lexbuf) }
+ | '"' [^ '"']* '"'     { Lstring (string_chars (Lexing.lexeme lexbuf)) }
+\end{lstlisting}
+
+Заметьте, что нам пришлось изолировать символ =, который используется
+одновременно в выражениях и приравниваниях.
+
+Для двух рациональных выражений необходимо привести определённые объяснения.
+Линия комментариев соответствует выражению \texttt{("REM"
+[$\wedge$'$\backslash$n']*)}, где за ключевым словом \texttt{REM} следует какое
+угодно количество символов и затем перевод строки. Правило, которое
+соответствует символьным строкам, \texttt{('"' [$\wedge$ '"']* '"')},
+подразумевает последовательность символов, отличных от " и заключённых в
+кавычки ".
+
+\subsection{Компиляция, компоновка}
+
+Компиляция должна быть реализована в определённом порядке. Это связано с
+взаимозависимостью деклараций лексем. Поэтому в нашем случае, необходимо
+выполнить команды в следующем порядке:
+
+\begin{lstlisting}[language=Caml]
+ocamlc -c basic_types.mli
+ocamlyacc basic_parser.mly
+ocamllex basic_lexer.mll
+ocamlc -c basic_parser.mli
+ocamlc -c basic_lexer.ml
+ocamlc -c basic_parser.ml
+\end{lstlisting}
+
+После чего получим файлы \texttt{basic\_lexer.cmo} и \texttt{basic\_parser.cmo},
+которые можно использовать в нашей программе.
+
+Теперь, у нас есть весь необходимый арсенал, для того чтобы переделать
+программу.
+
+Удалим все типы и функции параграфов \enq{лексический анализ} (стр.
+\pageref{??}) и \enq{синтаксический анализ} (стр. \pageref{??}) для программы
+Бэйсик. Также в функции \texttt{one\_command} (стр. \pageref{??}) заменим
+выражение:
+
+\begin{lstlisting}[language=Caml]
+match parse (input_line stdin) with
+\end{lstlisting}
+
+на
+
+\begin{lstlisting}[language=Caml]
+match line lexer (Lexing.from_string ((input_line stdin)^"\n")) with
+\end{lstlisting}
+
+Заметьте, что необходимо поместить в конце линии символ конца '$\backslash$n',
+который был удалён функцией \texttt{input\_line}. Это необходимо, потому что
+данный символ используется для указания конца командной линии (\texttt{Leol}).
