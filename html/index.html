@@ -1,0 +1,718 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>html/index</TITLE>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<STYLE type="text/css">
+.li-itemize{margin:1ex 0ex;}
+.li-enumerate{margin:1ex 0ex;}
+.dd-description{margin:0ex 0ex 1ex 4ex;}
+.dt-description{margin:0ex;}
+.toc{list-style:none;}
+.thefootnotes{text-align:left;margin:0ex;}
+.dt-thefootnotes{margin:0em;}
+.dd-thefootnotes{margin:0em 0em 0em 2em;}
+.footnoterule{margin:1em auto 1em 0px;width:50%;}
+.caption{padding-left:2ex; padding-right:2ex; margin-left:auto; margin-right:auto}
+.title{margin:2ex auto;text-align:center}
+.center{text-align:center;margin-left:auto;margin-right:auto;}
+.flushleft{text-align:left;margin-left:0ex;margin-right:auto;}
+.flushright{text-align:right;margin-left:auto;margin-right:0ex;}
+DIV TABLE{margin-left:inherit;margin-right:inherit;}
+PRE{text-align:left;margin-left:0ex;margin-right:auto;}
+BLOCKQUOTE{margin-left:4ex;margin-right:4ex;text-align:left;}
+TD P{margin:0px;}
+.boxed{border:1px solid black}
+.textboxed{border:1px solid black}
+.vbar{border:none;width:2px;background-color:black;}
+.hbar{border:none;height:2px;width:100%;background-color:black;}
+.hfill{border:none;height:1px;width:200%;background-color:black;}
+.vdisplay{border-collapse:separate;border-spacing:2px;width:auto; empty-cells:show; border:2px solid red;}
+.vdcell{white-space:nowrap;padding:0px;width:auto; border:2px solid green;}
+.display{border-collapse:separate;border-spacing:2px;width:auto; border:none;}
+.dcell{white-space:nowrap;padding:0px;width:auto; border:none;}
+.dcenter{margin:0ex auto;}
+.vdcenter{border:solid #FF8000 2px; margin:0ex auto;}
+.minipage{text-align:left; margin-left:0em; margin-right:auto;}
+.marginpar{border:solid thin black; width:20%; text-align:left;}
+.marginparleft{float:left; margin-left:0ex; margin-right:1ex;}
+.marginparright{float:right; margin-left:1ex; margin-right:0ex;}
+.theorem{text-align:left;margin:1ex auto 1ex 0ex;}
+.part{margin:2ex auto;text-align:center}
+</STYLE>
+</HEAD>
+<BODY >
+<!--HEVEA command line is: hevea -o html/index.html src/main.tex -->
+<!--CUT DEF chapter 1 --><TABLE CLASS="title"><TR><TD><H1 CLASS="titlemain">Разработка программ с помощью Objective Caml<BR>
+Developing Applications with Objective Caml</H1><H3 CLASS="titlerest">Emmanuel Chailloux<BR>
+Pascal Manoury<BR>
+Bruno Pagano</H3></TD></TR>
+</TABLE><!--TOC chapter Contents-->
+<H1 CLASS="chapter"><!--SEC ANCHOR -->Contents</H1><!--SEC END --><!--TOC chapter Как заполучить Objective CAML-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc1">Chapter 1</A>  Как заполучить Objective CAML</H1><!--SEC END --><!--TOC part Основы языка-->
+<TABLE CLASS="center"><TR><TD><H1 CLASS="part"><!--SEC ANCHOR --><A NAME="htoc2">Part I</A><BR>
+Основы языка</H1></TD></TR>
+</TABLE><!--SEC END --><!--TOC chapter Функциональное программирование-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc3">Chapter 2</A>  Функциональное программирование</H1><!--SEC END --><!--TOC chapter Императивное программирование-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc4">Chapter 3</A>  Императивное программирование</H1><!--SEC END --><!--TOC chapter Функциональный и императивный стиль-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc5">Chapter 4</A>  Функциональный и императивный стиль</H1><!--SEC END --><!--TOC chapter Графический интерфейс-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc6">Chapter 5</A>  Графический интерфейс</H1><!--SEC END --><!--TOC chapter Приложения-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc7">Chapter 6</A>  Приложения</H1><!--SEC END --><!--TOC part Средства разработки-->
+<TABLE CLASS="center"><TR><TD><H1 CLASS="part"><!--SEC ANCHOR --><A NAME="htoc8">Part II</A><BR>
+Средства разработки</H1></TD></TR>
+</TABLE><!--SEC END --><!--TOC chapter Компиляция и переносимость-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc9">Chapter 7</A>  Компиляция и переносимость</H1><!--SEC END --><!--TOC chapter Библиотеки-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc10">Chapter 8</A>  Библиотеки</H1><!--SEC END --><!--TOC chapter Автоматический сборщик мусора-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc11">Chapter 9</A>  Автоматический сборщик мусора</H1><!--SEC END --><!--TOC chapter Средства анализа программ-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc12">Chapter 10</A>  Средства анализа программ</H1><!--SEC END --><!--TOC chapter Средства лексического и синтаксического анализа-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc13">Chapter 11</A>  Средства лексического и синтаксического анализа</H1><!--SEC END --><!--TOC section Введение-->
+<H2 CLASS="section"><!--SEC ANCHOR --><A NAME="htoc14">11.1</A>  Введение</H2><!--SEC END --><P>Определение и реализация средств лексического и синтаксического анализа являлись
+важным доменом исследования в информатике. Эта работа привела к созданию
+генераторов лексического и синтаксического анализа <TT>lex</TT> и
+<TT>yacc</TT>. Команды <TT>camllex camlyacc</TT>, которые мы представим в этой
+главе, являются их достойными наследниками. Два указанных инструмента стали
+de–facto стандартными, однако существуют другие средства, как например потоки
+или регулярные выражения из библиотеки <TT>Str</TT>, которые могут быть
+достаточны для простых случаев, там где не нужен мощный анализ.</P><P>Необходимость подобных инструментов особенно чувствовалась в таких доменах как
+компиляция языков программирования. Однако и другие программы могут с успехом
+использовать данные средства: базы данных, позволяющие определять запросы или
+электронная таблица, где содержимое ячейки можно определить как результат
+какой–нибудь формулы. Проще говоря, любая программа, в которой взаимодействие с
+пользователем осуществляется при помощи языка, использует лексический и
+синтаксический анализ.</P><P>Возьмём простой случай. Текстовый формат часто используется для хранения данных,
+будь то конфигурационный системный файл или данные табличного файла. Здесь, для
+использования данных, необходим лексический и синтаксический анализ.</P><P>Обобщая, скажем что лексический и синтаксический анализ преобразует линейный
+поток символов в данные с более богатой структурой: последовательность слов,
+структура записи, абстрактное синтаксическое дерево программы и т.д.</P><P>У каждого языка есть словарный состав (лексика) и грамматика, которая описывает
+каким образом эти составные объединяются (синтаксис). Для того, чтобы машина или
+программа могли корректно обрабатывать язык, этот язык должен иметь точные
+лексические и синтаксические правила. У машины нет тонкого чувства для
+того чтобы правильно оценить двусмысленность натуральных языков. По этой
+причине к машине необходимо обращаться в соответствии с чёткими правилами, в
+которых нет исключений. В соответствии с этим, понятия лексики и семантики
+получили формальные определения, которые будут кратко представлены в данной
+главе.
+</P><!--TOC section План главы-->
+<H2 CLASS="section"><!--SEC ANCHOR --><A NAME="htoc15">11.2</A>  План главы</H2><!--SEC END --><P>Данная глава знакомит нас со средствами лексического и синтаксического анализа,
+которые входят в дистрибутив Objective CAML. Обычно синтаксический анализ
+следует за лексическим. В первой части мы узнаем о простом инструменте
+лексического анализа из модуля <TT>Genlex</TT>. После этого ознакомимся с
+формализмом рациональных выражений и тем самым рассмотрим более детально
+определение множества лексических единиц. А так же проиллюстрируем их реализацию
+в модуле <TT>Str</TT> и инструменте <TT>ocamllex</TT>. Во второй части мы
+определим грамматику и рассмотрим правила создания фраз языка. После этого
+рассмотрим два анализа фраз: восходящий и нисходящий. Они будут
+проиллюстрированы использованием <TT>Stream</TT> и <TT>ocamlyacc</TT>. В
+приведённых примерах используется контекстно–независимая грамматика. Здесь мы
+узнаем как реализовать контекстный анализ при помощи Stream. В третьей части мы
+вернёмся к интерпретатору BASIC (см. стр <A HREF="#??">??</A>) и при помощи
+<TT>ocamllex</TT> и <TT>ocamlyacc</TT> добавим лексические и синтаксические
+функции анализа языка.
+
+</P><!--TOC section Лексика-->
+<H2 CLASS="section"><!--SEC ANCHOR --><A NAME="htoc16">11.3</A>  Лексика</H2><!--SEC END --><P>Синтаксический анализ это предварительный и необходимый этап обработки
+последовательностей символов: он разделяет этот поток в последовательность слов,
+так называемых лексические единицы или лексемы.</P><!--TOC subsection Модуль <TT>Genlex</TT>-->
+<H3 CLASS="subsection"><!--SEC ANCHOR --><A NAME="htoc17">11.3.1</A>  Модуль <TT>Genlex</TT></H3><!--SEC END --><P>В данном модуле имеется элементарное средство для анализа символьного потока.
+Для этого используются несколько категорий предопределённых лексических единиц.
+Эти категории различаются по типу:</P><P>[language=Caml]
+# type token = Kwd of string
+| Ident of string
+| Int of int
+| Float of float
+| String of string
+| Char of char ;;
+</P><P>Таким образом мы можем распознать в потоке символов целое число (конструктор
+<TT>Int</TT>) и получить его значение (аргумент конструктора <TT>int</TT>).
+Распознаваемые символы и строки подчиняются следующим общепринятым соглашением:
+строка окружена символами ("), а символ окружён (’). Десятичное число
+представлено либо используя запись с точкой (например 0.01), либо с мантиссой и
+экспонентой (на пример 1E-2). Кроме этого остались конструкторы <TT>Kwd</TT> и
+<TT>Ident</TT>.</P><P>Конструктор <TT>Ident</TT> предназначен для определения идентификаторов.
+Идентификатором может быть имя переменной или функции языка программирования.
+Они состоят из любой последовательности букв и цифр, могут включать
+символ подчёркивания (_) или апостроф (’). Данная последовательность не должна
+начинаться с цифры. Любая последовательность следующих операндов тоже будет
+считаться идентификатором: +,*,&gt; или -. И наконец, конструктор <TT>Kwd</TT>
+определяет
+категорию специальных идентификаторов или символов.</P><P>Категория ключевых слова — единственная из этого множества, которую можно
+сконфигурировать. Для того, чтобы создать лексический анализатор, воспользуемся
+следующей конструкцией, которой необходимо передать список ключевых слов на
+место первого аргумента.</P><P>[language=Caml]
+# Genlex.make_lexer ;;
+- : string list -&gt; char Stream.t -&gt; Genlex.token Stream.t = &lt;fun&gt;
+</P><P>Тем самым получаем функцию, которая принимает на вход поток символов и
+возвращает поток лексических единиц (с типом <TT>token</TT>).</P><P>Таким образом, мы без труда реализуем лексический анализатор для интерпретатора
+BASIC. Объявим множество ключевых слов:</P><P>[language=Caml]
+# let keywords =
+[ "REM"; "GOTO"; "LET"; "PRINT"; "INPUT"; "IF"; "THEN"; "-";
+"!"; "+"; "-"; "*"; "/"; ""="; "&lt;"; "&gt;"; "&lt;="; "&gt;="; "&lt;&gt;";
+""; "|" ] ;;
+</P><P>При помощи данного множества, определим функцию лексического анализа:</P><P>[language=Caml]
+# let line_lexer l = Genlex.make_lexer keywords (Stream.of_string l) ;;
+val line_lexer : string -&gt; Genlex.token Stream.t = &lt;fun&gt;
+# line_lexer "LET x = x + y * 3" ;;
+- : Genlex.token Stream.t = &lt;abstr&gt;
+</P><P>Приведённая функция <TT>line_lexer</TT>, из входящего потока символов создаёт
+поток соответствующих лексем.</P><!--TOC subsection Использование потоков-->
+<H3 CLASS="subsection"><!--SEC ANCHOR --><A NAME="htoc18">11.3.2</A>  Использование потоков</H3><!--SEC END --><P>Мы также можем реализовать лексический анализ в ручную используя потоки.</P><P>В следующем примере определён лексический анализатор арифметических выражений.
+Функции lexer передаётся поток символов из которого она создаёт поток
+лексических единиц с типом <TT>lexeme Stream.t</TT> <SUP><A NAME="text1" HREF="#note1">1</A></SUP>. Символы пробел, табуляция и
+переход на новую строку удаляются. Для упрощения, мы не будем обрабатывать
+переменные и отрицательны целые числа.</P><P>[language=Caml]
+# let rec spaces s =
+match s with parser
+[&lt;” ’ ; rest &gt;] -&gt; spaces rest
+| [&lt;”’ ; rest &gt;] -&gt; spaces rest
+| [&lt;”’ ; rest &gt;] -&gt; spaces rest
+| [&lt;&gt;] -&gt; ();;
+val spaces : char Stream.t -&gt; unit = &lt;fun&gt;
+# let rec lexer s =
+spaces s;
+match s with parser
+[&lt; ”(’ &gt;] -&gt; [&lt; ’Lsymbol "("; lexer s &gt;]
+| [&lt; ”)’ &gt;] -&gt; [&lt; ’Lsymbol ")"; lexer s &gt;]
+| [&lt; ”+’ &gt;] -&gt; [&lt; ’Lsymbol "+" ; lexer s &gt;]
+| [&lt; ”-’ &gt;] -&gt; [&lt; ’Lsymbol "-" ; lexer s &gt;]
+| [&lt; ”*’ &gt;] -&gt; [&lt; ’Lsymbol "*" ; lexer s &gt;]
+| [&lt; ”/’ &gt;] -&gt; [&lt; ’Lsymbol "/" ; lexer s &gt;]
+| [&lt; ”0’..’9’ as c;
+i,v = lexint (Char.code c - Char.code(’0’)) &gt;]
+-&gt;[&lt;’Lint i ; lexer v&gt;]
+and lexint r s =
+match s with parser
+[&lt; ”0’..’9’ as c &gt;]
+-&gt; let u = (Char.code c) - (Char.code ’0’) in lexint (10*r + u) s
+| [&lt;&gt;] -&gt; r,s ;;
+val lexer : char Stream.t -&gt; lexeme Stream.t = &lt;fun&gt;
+val lexint : int -&gt; char Stream.t -&gt; int * char Stream.t = &lt;fun&gt;
+</P><P>Функция <TT>lexint</TT> предназначена для анализа той части потока символов,
+которая соответствует числовой постоянной. Она вызывается, когда функция
+<TT>lexer</TT> встречает цифры. В этом случае функция <TT>lexint</TT> поглощает
+все последовательные цифры и выдаёт соответствующее значение полученного числа.</P><!--TOC subsection Регулярные выражения-->
+<H3 CLASS="subsection"><!--SEC ANCHOR --><A NAME="htoc19">11.3.3</A>  Регулярные выражения</H3><!--SEC END --><P>Оставим ненадолго практику и рассмотрим проблему лексических единиц с
+теоретической точки зрения.</P><P>Лексическая единица является словом. Слово образуется при конкатенации элементов
+алфавита. В нашем случае алфавитом является множество символов ASCII.</P><P>Теоретически, слово может вообще не содержать символов (пустое слово
+<SUP><A NAME="text2" HREF="#note2">2</A></SUP>) или состоять из одного символа.</P><P>Теоретические исследования конкатенации элементов алфавита для образования
+лексических элементов (лексем) привели к созданию простого формализма,
+известного как регулярные выражения.</P><!--TOC subsubsection Определение-->
+<H4 CLASS="subsubsection"><!--SEC ANCHOR -->Определение</H4><!--SEC END --><P>Регулярные выражения позволяют определить множества слов. Пример такого
+множества: идентификаторы. Принцип определения основан на некоторых
+теоретико–множественный операциях. Пусть <I>M</I> и <I>N</I> — два множества слов, тогда
+мы можем определить:</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+	объединение <I>M</I> и <I>N</I>, записываемое <I>M</I> | <I>N</I>.<P>	</P></LI><LI CLASS="li-itemize">дополнение <I>M</I>, записываемое ∧ <I>M</I>: множество всех слов, кроме
+тех, которые входят в <I>M</I>.<P>	</P></LI><LI CLASS="li-itemize">конкатенация <I>M</I> и <I>N</I>: множество всех слов созданных конкатенацией
+слова из <I>M</I> и слова из <I>N</I>. Записывается просто <I>MN</I>.<P>	</P></LI><LI CLASS="li-itemize">мы можем повторить операцию конкатенации слов множества <I>M</I> и тем
+самым получить множество слов образованных из конечной последовательности слов
+множеств <I>M</I>. Такое множество записывается <I>M</I>+. Он содержит все слова множества
+<I>M</I>, все слова полученные конкатенацией двух слов множества <I>M</I>, трёх слов, и
+т.д. Если мы желаем чтобы данное множество содержало пустое слово, необходимо
+писать <I>M</I>*.<P>	</P></LI><LI CLASS="li-itemize">для удобства, существует дополнительная конструкция <I>M</I>?, которая
+включает все слова множества <I>M</I>, а так же пустое слово.
+</LI></UL><P>Один единственный символ ассоциируется с одно элементным множеством. В таком
+случае выражение <I>a| b| c</I> описывает множество состоящее из трёх слов
+<I>a</I>, <I>b</I> и <I>c</I>. Существует более компактная запись: <I>[abc]</I>.
+Так как наш алфавит является упорядоченным (по порядку кодов ASCII), можно
+определить интервал. Например, множество цифр запишется как [0−9]. Для
+группировки выражений можно использовать скобки.</P><P>Для того, чтобы использовать в записи сами символы–операторы, как обычные
+символы, необходимо ставить перед ними обратную косую черту: \.
+Например множество (\ *)* обозначает множество последовательностей
+звёздочек.</P><!--TOC subsubsection Пример-->
+<H4 CLASS="subsubsection"><!--SEC ANCHOR -->Пример</H4><!--SEC END --><P>Пусть существует множество из цифр (0,1,2,3,4,5,6,7,8,9), символы плюс (+) и
+минус (−), точки (.) и буквы <I>E</I>. Теперь мы можем определить множество чисел
+<I>num</I>. Назовем <I>integers</I> множество определённое выражением [0−9]+.
+Множество неотрицательных чисел <I>unum</I> определяется так:
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">	<I>integers</I> ? (.<I>integers</I>) ? (<I>E</I>(\+|−) ? <I>integers</I>)?
+</TD></TR>
+</TABLE><P>Множество отрицательных и положительных чисел записывается:</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>unum</I> | −<I>unum</I>    или    −?<I>unum</I>
+</TD></TR>
+</TABLE><!--TOC subsubsection Распознавание-->
+<H4 CLASS="subsubsection"><!--SEC ANCHOR -->Распознавание</H4><!--SEC END --><P>Теперь, после того как множество выражений определено, остаётся проблема
+распознавания принадлежности строки символов или одной из её подстрок этому
+множеству. Для решения данной задачи необходимо реализовать программу обработки
+выражений, которая соответствует формальным определениям множества. Для
+регулярных выражений такая обработка может быть автоматизирована. Подобная
+автоматизация реализована в модуле <TT>Genlex</TT> из библиотеки <TT>Str</TT> и
+инструментом <TT>ocamllex</TT>, которые будут представлены в следующих двух
+параграфах.</P><!--TOC subsubsection Библиотека <TT>Str</TT>-->
+<H4 CLASS="subsubsection"><!--SEC ANCHOR -->Библиотека <TT>Str</TT></H4><!--SEC END --><P>В данном модуле имеется абстрактный тип <TT>regexp</TT> и функция
+<TT>regexp</TT>. Указанный тип представляет регулярные выражения, а функция
+трансформирует регулярное выражение, представленное в виде строки символов, в
+абстрактное представление.</P><P>Модуль <TT>Str</TT> содержит несколько функций, которые используют регулярные
+выражения и манипулируют символьными строками. Синтаксис регулярных выражений
+библиотеки <TT>Str</TT> приведён в таблице <A HREF="#tbl:reg_exps">??</A>.</P><BLOCKQUOTE CLASS="table"><DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV>
+	<DIV CLASS="caption"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD VALIGN=top ALIGN=left>Table 11.1: Регулярные выражения</TD></TR>
+</TABLE></DIV>
+	<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD VALIGN=top ALIGN=center NOWRAP>	.</TD><TD VALIGN=top ALIGN=left>любой символ, кроме \</TD></TR>
+<TR><TD VALIGN=top ALIGN=center NOWRAP>	*</TD><TD VALIGN=top ALIGN=left>ноль или несколько экземпляров предыдущего выражения</TD></TR>
+<TR><TD VALIGN=top ALIGN=center NOWRAP>	+</TD><TD VALIGN=top ALIGN=left>хотя бы один экземпляр предыдущего выражения</TD></TR>
+<TR><TD VALIGN=top ALIGN=center NOWRAP>	?</TD><TD VALIGN=top ALIGN=left>ноль или один экземпляр предыдущего выражения</TD></TR>
+<TR><TD VALIGN=top ALIGN=center NOWRAP>	[..]</TD><TD VALIGN=top ALIGN=left>множество символов</TD></TR>
+<TR><TD VALIGN=top ALIGN=center NOWRAP>	.</TD><TD VALIGN=top ALIGN=left>любой символ, кроме \</TD></TR>
+<TR><TD VALIGN=top ALIGN=center NOWRAP>	</TD><TD VALIGN=top ALIGN=left>интервал записывается при помощи - (пример [0−9])</TD></TR>
+<TR><TD VALIGN=top ALIGN=center NOWRAP>	</TD><TD VALIGN=top ALIGN=left>дополнение записывается при помощи ∧ (пример [∧ <I>A</I>−<I>Z</I>])</TD></TR>
+<TR><TD VALIGN=top ALIGN=center NOWRAP>	∧</TD><TD VALIGN=top ALIGN=left>начало строки (не путать с дополнением ∧)</TD></TR>
+<TR><TD VALIGN=top ALIGN=center NOWRAP>	$</TD><TD VALIGN=top ALIGN=left>конец строки</TD></TR>
+<TR><TD VALIGN=top ALIGN=center NOWRAP>	|</TD><TD VALIGN=top ALIGN=left>вариант</TD></TR>
+<TR><TD VALIGN=top ALIGN=center NOWRAP>	(..)</TD><TD VALIGN=top ALIGN=left>группировка в одно выражение (можно ссылаться на это выражение)</TD></TR>
+<TR><TD VALIGN=top ALIGN=center NOWRAP>	<I>i</I></TD><TD VALIGN=top ALIGN=left>числовая константа <I>i</I> ссылается на <I>i</I>–ый элемент группированного
+выражения</TD></TR>
+<TR><TD VALIGN=top ALIGN=center NOWRAP>	\</TD><TD VALIGN=top ALIGN=left>забой, используется для сопоставления зарезервированных
+символов в регулярных выражениях</TD></TR>
+<TR><TD VALIGN=top ALIGN=center NOWRAP></TD></TR>
+</TABLE>
+	<A NAME="tbl:reg_exps"></A>
+<DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV></BLOCKQUOTE><!--TOC subsubsection Пример-->
+<H4 CLASS="subsubsection"><!--SEC ANCHOR -->Пример</H4><!--SEC END --><P>В следующем примере напишем функцию, которая переводит дату из английского
+формата во французский. Предполагается, что входной файл состоит из строк,
+разбитых на поля данных и элементы даты разделяются точкой. Определим функцию,
+которая из полученной строки (строка файла), выделяет дату, разбивает её на
+части, переводит во французских формат и тем самым заменяет старую дату на
+новую.</P><P>[language=Caml]
+# let french_date_of d =
+match d with
+[mm; dd; yy] -&gt; dd^"/"^mm^"/"^yy
+| _ -&gt; failwith "Bad date format" ;;
+val french_date_of : string list -&gt; string = &lt;fun&gt;</P><P># let english_date_format = Str.regexp "[0-9]+[0-9]+[0-9]+" ;;
+val english_date_format : Str.regexp = &lt;abstr&gt;</P><P># let trans_date l =
+try
+let i=Str.search_forward english_date_format l 0 in
+let d1 = Str.matched_string l in
+let d2 = french_date_of (Str.split (Str.regexp "") d1) in
+Str.global_replace english_date_format d2 l
+with Not_found -&gt; l ;;
+val trans_date : string -&gt; string = &lt;fun&gt;</P><P># trans_date
+"..............06.13.99............" ;;
+- : string = "..............13/06/99............"
+</P><!--TOC subsection Инструмент <TT>Ocamllex</TT>-->
+<H3 CLASS="subsection"><!--SEC ANCHOR --><A NAME="htoc20">11.3.4</A>  Инструмент <TT>Ocamllex</TT></H3><!--SEC END --><P><TT>ocamllex</TT> — это лексический генератор созданный для Objective CAML по
+модели <TT>lex</TT>, написанном на языке C. При помощи файла, описывающего
+элементы лексики в виде множества регулярных выражений, которые необходимо
+распознать, он создаёт файл–исходник на Objective CAML. К описанию каждого
+лексического элемента можно привязать какое–нибудь действие, называемое
+семантическое действие. В полученном коде используется абстрактный тип
+<TT>lexbuf</TT> из модуля <TT>Lexing</TT>. В данном модуле также имеется
+несколько функций управления лексическими буферами, которые могут быть
+использованы программистом для того чтобы определить необходимые действия.</P><P>Обычно, файлы, описывающие лексику, имеют расширение <TT>.mll</TT>. Для того,
+чтобы из файла <TT>lex_file.mll</TT> получить файл на Objective CAML,
+необходимо выполнить следующую команду:</P><P>[language=Caml]
+ocamllex lex_file.mll
+</P><P>После этого, мы получим файл <TT>lex_file.ml</TT>, содержащий код лексического
+анализатора. Теперь, данный файл можно использовать в программе на Objective
+CAML. Каждому множеству правил анализа соответствует функция, которая принимает
+лексический буфер (типа <TT>Lexing.lexbuf</TT>) и затем возвращает значение,
+определённое семантическим действием. Значит, все действия для определённого
+правила должны создавать значение одного и того же типа.</P><P>Формат у файла для <TT>ocamllex</TT> следующий:</P><P>[language=Caml]
+
+header
+
+let ident = regexp
+...
+rule ruleset1 = parse
+regexp  action 
+| ...
+| regexp  action 
+and ruleset2 = parse
+...
+and ...
+
+trailer-and-end
+
+</P><P>Части заголовок и продолжение-и-конец не являются обязательными.
+Здесь вставляется код Objective CAML, определяющий типы данных, функции и т.д.
+необходимые для обработки данных. В последней части используются функции,
+которые используют правила анализа множества лексических данных из средней
+части. Серия объявлений, которая предшествует определению правил, позволяет дать
+имя некоторым регулярным выражениям. Эти имена будут использоваться в
+определении правил.</P><!--TOC subsubsection Пример-->
+<H4 CLASS="subsubsection"><!--SEC ANCHOR -->Пример</H4><!--SEC END --><P>Вернёмся к нашему интерпретатору BASIC и усовершенствуем тип возвращаемых
+лексических единиц. Таким образом, мы можем воспользоваться функцией
+<TT>lexer</TT>, (см. стр. <A HREF="#??">??</A>) которая возвращает такой же тип результата
+(<TT>lexeme</TT>), но на входе она получает буфер типа <TT>Lexing.lexbuf</TT>.</P><P>[language=Caml]
+
+let string_chars s =
+String.sub s 1 ((String.length s)-2) ;;
+</P><P>let op_ar = [’-’ ’+’ ’*’ ’%’ ’/’]
+let op_bool = [’!’ ’&amp;’ ’|’]
+let rel = [’=’ ’&lt;’ ’&gt;’]</P><P>rule lexer = parse
+[’ ’]  lexer lexbuf 
+| op_ar  Lsymbol (Lexing.lexeme lexbuf) 
+| op_bool  Lsymbol (Lexing.lexeme lexbuf) 
+| "&lt;="  Lsymbol (Lexing.lexeme lexbuf) 
+| "&gt;="  Lsymbol (Lexing.lexeme lexbuf) 
+| "&lt;&gt;"  Lsymbol (Lexing.lexeme lexbuf) 
+| rel  Lsymbol (Lexing.lexeme lexbuf) 
+| "REM"  Lsymbol (Lexing.lexeme lexbuf) 
+| "LET"  Lsymbol (Lexing.lexeme lexbuf) 
+| "PRINT"  Lsymbol (Lexing.lexeme lexbuf) 
+| "INPUT"  Lsymbol (Lexing.lexeme lexbuf) 
+| "IF"  Lsymbol (Lexing.lexeme lexbuf) 
+| "THEN"  Lsymbol (Lexing.lexeme lexbuf) 
+| ’-’? [’0’-’9’]+  Lint (int_of_string (Lexing.lexeme lexbuf)) 
+| [’A’-’z’]+  Lident (Lexing.lexeme lexbuf) 
+| ’"’ [^ ’"’]* ’"’  Lstring (string_chars (Lexing.lexeme lexbuf)) 
+</P><P>После обработки данного файла командой <TT>ocamllex</TT> получим функцию
+<TT>lexer</TT> типа <TT>Lexing.lexbuf -&gt; lexeme</TT>. Далее, мы рассмотрим каким
+образом подобные функции используются в синтаксическом анализе (см. стр.
+<A HREF="#??">??</A>).
+
+</P><!--TOC section Синтаксис-->
+<H2 CLASS="section"><!--SEC ANCHOR --><A NAME="htoc21">11.4</A>  Синтаксис</H2><!--SEC END --><P>Благодаря лексическому анализу, мы в состоянии разбить поток символов на более
+структурированные элементы: лексические элементы. Теперь необходимо знать как
+правильно объединять эти элементы в синтаксически корректные фразы какого-нибудь
+языка. Правила синтаксической группировки определены посредством грамматических
+правил. Формализм, произошедший из лингвистики, был с успехом перенят
+математиками, занимающимися теориями языков, и специалистами по информатике. На
+странице <A HREF="#??">??</A> мы уже видели пример грамматики для языка BASIC. Здесь мы
+снова вернёмся к этому примеру, чтобы более углублённо ознакомится с базовыми
+концепциями грамматики.</P><!--TOC subsection Грамматика-->
+<H3 CLASS="subsection"><!--SEC ANCHOR --><A NAME="htoc22">11.4.1</A>  Грамматика</H3><!--SEC END --><P>Говоря формальным языком, грамматика основывается на четырёх элементах:</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+	Множество символов, называемых терминалами. Эти символы являются
+лексическими элементами языка. В Бэйсике к ним относятся символы операторов,
+арифметических отношений и логические (+, &amp;, &lt;, ≤, ⋯), ключевые
+слова языка <B>(GOTO, PRINT, IF, THEN, </B><B>⋯</B><B>)</B>, целые числа (элемент
+<TT>integer</TT>) и переменные (элемент <TT>variable</TT>).<P>	</P></LI><LI CLASS="li-enumerate">Множество нетерминальных символов, которые представляют
+синтаксические компоненты языка. Например, программа на языке Бэйсик состоит из
+строк. Таким образом мы имеем компоненту Line, которая в свою очередь
+состоит из выражений (Expression), и т.д.<P>	</P></LI><LI CLASS="li-enumerate">Множество так называемых порождающих правил. Они описывают каким
+образом комбинируются терминальные и нетерминальные символы, чтобы создать
+синтаксическую компоненту. Строка в Бэйсике начинается с номера, за которой
+следует инструкция. Смысл правила следующий:<DIV CLASS="center">
+	Line ::= <I>integer</I> Instruction
+</DIV><P>Одна и та же компонента может быть порождена несколькими способами. В этом
+случае варианты разделяются символом | как в:</P><DIV CLASS="center">
+	<TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>		Instruction</TD><TD ALIGN=center NOWRAP>::=</TD><TD ALIGN=left NOWRAP>LET variable = Instruction</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>GOTO integer</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>PRINT Expression</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		etc</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=left NOWRAP></TD></TR>
+</TABLE>
+</DIV></LI></OL><P>Среди всех нетерминальных символов различают один, называемый начальным.
+Правило, которое порождает эту аксиому является порождающим правилом всего
+языка.</P><!--TOC subsection Порождение и распознавание-->
+<H3 CLASS="subsection"><!--SEC ANCHOR --><A NAME="htoc23">11.4.2</A>  Порождение и распознавание</H3><!--SEC END --><P>
+<A NAME="page_ref:Production_and_Recognition"></A></P><P>С помощью порождающих правил можно определить принадлежит ли последовательность
+лексем языку.</P><P>Рассмотрим простой язык, описывающий арифметические выражения:</P><DIV CLASS="center">
+	<TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>		Exp</TD><TD ALIGN=center NOWRAP>::=</TD><TD ALIGN=left NOWRAP><I>integer</I></TD><TD ALIGN=center NOWRAP>(R1)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>Exp + Exp</TD><TD ALIGN=center NOWRAP>(R2)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>Exp * Exp</TD><TD ALIGN=center NOWRAP>(R3)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>( Exp )</TD><TD ALIGN=center NOWRAP>(R4)</TD></TR>
+</TABLE>
+</DIV><P>здесь <I>(R1) (R2) (R3) (R4)</I> — имена правил. По окончании лексического
+анализа выражение 1*(2+3) становится последовательностью следующих лексем:</P><DIV CLASS="center">
+<I>integer * (integer + integer)</I>
+</DIV><P>Для того, чтобы проанализировать эту фразу и убедиться в том что она принадлежит
+языку арифметических выражений, воспользуемся правилами справа налево: если
+часть выражения соответствует правому члену какого-нибудь правила, мы заменяем
+это выражение соответствующим левым членом. Этот процесс продолжается до тех
+пор, пока выражение не будет редуцировано до аксиомы. Ниже представлен результат
+такого анализа <SUP><A NAME="text3" HREF="#note3">3</A></SUP>:</P><DIV CLASS="center">
+	<TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>		integer * (integer + integer)</TD><TD ALIGN=center NOWRAP>(R1)</TD><TD ALIGN=left NOWRAP>Exp * (integer + integer)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>(R1)</TD><TD ALIGN=left NOWRAP>Exp * (Exp + integer)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>(R1)</TD><TD ALIGN=left NOWRAP>Exp * (Exp + Exp)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>(R2)</TD><TD ALIGN=left NOWRAP>Exp * (Exp)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>(R4)</TD><TD ALIGN=left NOWRAP>Exp * Exp</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>(R3)</TD><TD ALIGN=left NOWRAP>Exp</TD></TR>
+</TABLE>
+</DIV><P>Начиная с последней линии, которая содержит лишь Exp и следуя стрелкам, можно
+определить каким образом было полученное выражение исходя из аксиомы Exp.
+Соответственно данная фраза является правильно сформированной фразой языка
+арифметических выражений, определённого грамматикой.</P><P>Преобразование грамматики в программу, способную распознать принадлежность
+последовательности лексем языку, который определён грамматикой, является более
+сложной проблемой, чем проблема использования регулярных выражений.
+Действительно, в соответствии с математическим результатом любое множество
+(слов), определённое формализмом регулярных выражений, может быть определено
+другим формализмом: детерминированные конечные автоматы. Такие автоматы легко
+реализуются программами, принимающими поток символов. Подобный результат для
+грамматик в общем не существует. Однако, имеются менее строгие (?) (weaker)
+результаты устанавливающие эквивалентность между определёнными классами
+грамматик и более богатыми автоматами: автомат со стеком. Здесь мы не станем
+вдаваться ни в детали этих результатов, ни в точное определение таких автоматов.
+Однако, мы можем определить какие классы грамматики могут использоваться в
+средствах генерации синтаксических анализаторов или для реализации напрямую
+анализатора.</P><!--TOC subsection Нисходящий анализ-->
+<H3 CLASS="subsection"><!--SEC ANCHOR --><A NAME="htoc24">11.4.3</A>  Нисходящий анализ</H3><!--SEC END --><P>Разбор выражения 1 * (2 + 3) в предыдущем параграфе не является единственным:
+мы с таким же успехом могли бы начать редуцирование <I>integer</I>, то есть
+воспользоваться правилом <I>(R2)</I> редуцирования 2 + 3. Эти два способа
+распознавания являются двумя типами анализа: восходящий анализ (справа налево) и
+нисходящий слева направо. Последний анализ легко реализуется при помощи потоков
+лексем модуля <TT>Stream</TT>. Средство <TT>ocamlyacc</TT> использует восходящий
+анализ, при котором применяется стек, как это уже было проиллюстрировано
+синтаксическим анализатором программ на Бэйсике. Выбор анализа не просто дело
+вкуса, в зависимости от используемой для спецификации языка формы грамматики,
+можно или нет применять нисходящий анализ.</P><!--TOC subsubsection Простой случай-->
+<H4 CLASS="subsubsection"><!--SEC ANCHOR -->Простой случай</H4><!--SEC END --><P>Каноническим примером нисходящего анализа является префиксная запись
+арифметических выражений, определяемая как:</P><DIV CLASS="center">
+	<TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>		Exp</TD><TD ALIGN=center NOWRAP>::=</TD><TD ALIGN=left NOWRAP>integer</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>+ Exp Exp</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>* Exp Exp</TD></TR>
+<TR><TD ALIGN=right NOWRAP></TD></TR>
+</TABLE>
+</DIV><P>В данном случае достаточно знать первую лексему, для того чтобы определить какое
+правило может быть использовано. При помощи подобной предсказуемости нет
+необходимости явно управлять стеком, достаточно положиться на рекурсивный вызов
+анализатора. И тогда при помощи <TT>Genlex</TT> и <TT>Stream</TT> очень просто
+написать программу реализующую нисходящий анализ. Функция <TT>infix_of</TT> из
+полученного префиксного выражения возвращает его инфиксный эквивалент:</P><P>[language=Caml]
+# let lexer s =
+let ll = Genlex.make_lexer ["+";"*"]
+in ll (Stream.of_string s);;
+val lexer : string -&gt; Genlex.token Stream.t = &lt;fun&gt;</P><P># let rec stream_parse s =
+match s with parser
+[&lt;’Genlex.Ident x&gt;] -&gt; x
+| [&lt;’Genlex.Int n&gt;] -&gt; string_of_int n
+| [&lt;’Genlex.Kwd "+"; e1=stream_parse; e2=stream_parse&gt;] -&gt; "("^e1^"+"^e2^")"
+| [&lt;’Genlex.Kwd "*"; e1=stream_parse; e2=stream_parse&gt;] -&gt; "("^e1^"*"^e2^")"
+| [&lt;&gt;] -&gt; failwith "Parse error" ;;
+val stream_parse : Genlex.token Stream.t -&gt; string = &lt;fun&gt;</P><P># let infix_of s = stream_parse (lexer s) ;;
+val infix_of : string -&gt; string = &lt;fun&gt;</P><P># infix_of "* +3 11 22";;
+- : string = "((3+11)*22)"
+</P><P>Однако не стоит забывать о некоторой примитивности лексического анализа.
+Советуем периодически добавлять пробелы между различными лексическими
+элементами.</P><P>[language=Caml]
+# infix_of "*+3 11 22";;
+- : string = "*+"
+</P><!--TOC subsubsection Случай посложней-->
+<H4 CLASS="subsubsection"><!--SEC ANCHOR -->Случай посложней</H4><!--SEC END --><P>Синтаксический анализ при помощи потоков предсказуем, он облагает грамматику
+двумя условиями:</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+	В правилах грамматики не должно быть левой рекурсии. Правило
+называется рекурсивным слева, если его правый член начинается с нетерминального
+символа, который является левой частью правила. Например: <TT>Exp ::= Exp +
+Exp</TT><P>	</P></LI><LI CLASS="li-itemize">Не должно существовать правил начинающихся одним и тем же выражением.
+</LI></UL><P>Грамматика арифметических выражений, приведённая на стр.
+<A HREF="#page_ref:Production_and_Recognition">??</A>, не подходит для нисходящего
+анализа: они не удовлетворяют ни одному из условий. Для того, чтобы применить
+нисходящий анализ необходимо переформулировать грамматику таким образом, чтобы
+удалить левую рекурсию и неопределённость правил. Вот полученный результат:</P><DIV CLASS="center">
+	<TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>		Exp</TD><TD ALIGN=center NOWRAP>::=</TD><TD ALIGN=left NOWRAP>Atom NextExpr</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		NextExpr</TD><TD ALIGN=center NOWRAP>::=</TD><TD ALIGN=left NOWRAP>+ Atom</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>- Atom</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>* Atom</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>/ Atom</TD></TR>
+<TR><TD ALIGN=right NOWRAP> 		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>ε</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		 Atom</TD><TD ALIGN=center NOWRAP>::=</TD><TD ALIGN=left NOWRAP>integer</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>( Expr )</TD></TR>
+</TABLE>
+</DIV><P>Заметьте использование пустого слова ε в определении
+<TT>NextExpr</TT>. Оно необходимо, если мы хотим чтобы просто целое число
+являлось выражением.</P><P>Следующий анализатор есть просто перевод вышеуказанной грамматики в код. Он
+реализует абстрактное синтаксическое дерево арифметических выражений.</P><P>[language=Caml]
+# let rec rest = parser
+[&lt; ’Lsymbol "+"; e2 = atom &gt;] -&gt; Some (PLUS,e2)
+| [&lt; ’Lsymbol "-"; e2 = atom &gt;] -&gt; Some (MINUS,e2)
+| [&lt; ’Lsymbol "*"; e2 = atom &gt;] -&gt; Some (MULT,e2)
+| [&lt; ’Lsymbol "/"; e2 = atom &gt;] -&gt; Some (DIV,e2)
+| [&lt; &gt;] -&gt; None
+and atom = parser
+[&lt; ’Lint i &gt;] -&gt; ExpInt i
+| [&lt; ’Lsymbol "("; e = expr ; ’Lsymbol ")" &gt;] -&gt; e
+and expr s =
+match s with parser
+[&lt; e1 = atom &gt;] -&gt;
+match rest s with
+None -&gt; e1
+| Some (op,e2) -&gt; ExpBin(e1,op,e2) ;;
+val rest : lexeme Stream.t -&gt; (bin_op * expression) option = &lt;fun&gt;
+val atom : lexeme Stream.t -&gt; expression = &lt;fun&gt;
+val expr : lexeme Stream.t -&gt; expression = &lt;fun&gt;
+</P><P>Сложность использования нисходящего анализа заключается в том, что грамматика
+должна быть очень ограниченной формы. Если язык выражен естественно с
+использованием левой рекурсии (как в инфиксных выражениях), то не всегда легко
+определить эквивалентную грамматику, то есть определяющую такой же язык, которая
+бы удовлетворяла требованиям нисходящего анализа. По этой причине, средства
+<TT>yacc</TT> и <TT>ocamlyacc</TT> реализуют восходящий анализ, который
+разрешает определение более естественных грамматик. Однако, мы увидим, что даже
+в этом случае существуют ограничения.</P><!--TOC subsection Восходящий анализ-->
+<H3 CLASS="subsection"><!--SEC ANCHOR --><A NAME="htoc25">11.4.4</A>  Восходящий анализ</H3><!--SEC END --><P>Мы уже вкратце представили на странице <A HREF="#??">??</A> принципы восходящего
+анализа: сдвиг и вывод <SUP><A NAME="text4" HREF="#note4">4</A></SUP>.
+После каждого подобного действия, состояние стека изменяется. Из этой
+последовательности можно вывести правила грамматики, в случае если грамматика
+это позволяет, как в примере с нисходящим анализом. Опять же, сложности
+возникают из-за неопределённости правил, когда невозможно выбрать между
+продвинутся или сократить. Проиллюстрируем действие восходящего анализа и его
+недостатки на все тех же арифметических выражениях в постфиксном и инфиксном
+написании.</P><!--TOC subsubsection Положительная сторона-->
+<H4 CLASS="subsubsection"><!--SEC ANCHOR -->Положительная сторона</H4><!--SEC END --><P>Упрощённая постфиксная грамматика арифметических выражений выглядит так:</P><DIV CLASS="center">
+	<TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>		Exp</TD><TD ALIGN=center NOWRAP>::=</TD><TD ALIGN=left NOWRAP><I>integer</I></TD><TD ALIGN=center NOWRAP>(R1)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>Exp Exp +</TD><TD ALIGN=center NOWRAP>(R2)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>Exp Exp -</TD><TD ALIGN=center NOWRAP>(R3)</TD></TR>
+<TR><TD ALIGN=right NOWRAP></TD></TR>
+</TABLE>
+</DIV><P>Данная грамматика является двойственной по отношению к префиксной: для того
+чтобы точно знать какое правило следует применить, необходимо дождаться
+окончания анализа. В действительности анализ подобных выражений схож с
+вычислением при помощи стека. Только вместо проталкивания результата вычисления,
+проталкиваются грамматические символы. Если в начале стек пустой, то после того
+как ввод закончен, необходимо получить стек содержащий лишь нетерминальную
+аксиому. Приведём изменение стека: если мы продвигаемся, то проталкивается
+текущий нетерминальный символ; если сокращаем, то первые символы стека
+соответствуют правому члену (в обратном порядке) правила и тогда мы заменяем эти
+элементы соответствующими нетерминальными элементами.</P><P>В таблице <A HREF="#tbl:bottom-up_parsing">??</A> приведён восходящий анализ выражения 1 2
++ 3 * 4 +. Считываемая лексическая единица подчёркивается для более удобного
+чтения. Конец потока помечается символом $.</P><BLOCKQUOTE CLASS="table"><DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV>
+	<DIV CLASS="caption"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD VALIGN=top ALIGN=left>Table 11.2: Восходящий анализ</TD></TR>
+</TABLE></DIV>
+	<DIV CLASS="center">
+	<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD ALIGN=left NOWRAP>	Действие</TD><TD ALIGN=left NOWRAP>Вход</TD><TD ALIGN=right NOWRAP>Стек</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	</TD><TD ALIGN=left NOWRAP><U>1</U> 2 + 3 * 4 + $</TD><TD ALIGN=right NOWRAP>[]</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	Сдвиг</TD><TD ALIGN=left NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	</TD><TD ALIGN=left NOWRAP><U>2</U> + 3 * 4 + $</TD><TD ALIGN=right NOWRAP>[1]</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	Сократить <I>(R1)</I></TD><TD ALIGN=left NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	</TD><TD ALIGN=left NOWRAP><U>2</U> + 3 * 4 + $</TD><TD ALIGN=right NOWRAP>[Exp]</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	Сдвиг</TD><TD ALIGN=left NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	</TD><TD ALIGN=left NOWRAP><U>+</U> 3 * 4 + $</TD><TD ALIGN=right NOWRAP>[2 Exp]</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	Сдвиг, Сократить <I>(R1)</I></TD><TD ALIGN=left NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	</TD><TD ALIGN=left NOWRAP><U>+</U> 3 * 4 + $</TD><TD ALIGN=right NOWRAP>[Exp Exp]</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	Сдвиг, Сократить <I>(R2)</I></TD><TD ALIGN=left NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	</TD><TD ALIGN=left NOWRAP><U>3</U> * 4 + $</TD><TD ALIGN=right NOWRAP>[Exp]</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	Сдвиг, Сократить <I>(R1)</I></TD><TD ALIGN=left NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	</TD><TD ALIGN=left NOWRAP><U>*</U> 4 + $</TD><TD ALIGN=right NOWRAP>[Exp Exp]</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	Сдвиг, Сократить <I>(R3)</I></TD><TD ALIGN=left NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	</TD><TD ALIGN=left NOWRAP><U>4</U> + $</TD><TD ALIGN=right NOWRAP>[Exp]</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	Сдвиг, Сократить <I>(R1)</I></TD><TD ALIGN=left NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	</TD><TD ALIGN=left NOWRAP><U>+</U> $</TD><TD ALIGN=right NOWRAP>[Exp Exp]</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	Сдвиг, Сократить <I>(R2)</I></TD><TD ALIGN=left NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	</TD><TD ALIGN=left NOWRAP><U>$</U></TD><TD ALIGN=right NOWRAP>[Exp]</TD></TR>
+<TR><TD ALIGN=left NOWRAP></TD></TR>
+</TABLE>
+	</DIV>
+	<A NAME="tbl:bottom-up_parsing"></A>
+<DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV></BLOCKQUOTE><!--TOC subsubsection Отрицательная сторона-->
+<H4 CLASS="subsubsection"><!--SEC ANCHOR -->Отрицательная сторона</H4><!--SEC END --><P>Вся трудность перехода от грамматики к программе распознающей язык заключается в
+определении действия, которое необходимо применить. Проиллюстрируем эту проблему
+на трёх примерах, приводящих к трём неопределённостям.</P><P>Первый пример есть грамматика выражений использующих операцию сложения:</P><DIV CLASS="center">
+	<TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>		E0</TD><TD ALIGN=center NOWRAP>::=</TD><TD ALIGN=left NOWRAP><I>integer</I></TD><TD ALIGN=center NOWRAP>(R1)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>E0 + E0</TD><TD ALIGN=center NOWRAP>(R2)</TD></TR>
+<TR><TD ALIGN=right NOWRAP></TD></TR>
+</TABLE>
+</DIV><P>Неопределённость данной грамматики проявляется при использовании правила <I>R2</I>. Предположим следующую ситуацию:</P><BLOCKQUOTE CLASS="table"><DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV>
+	<DIV CLASS="center">
+	<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD ALIGN=left NOWRAP>	Действие</TD><TD ALIGN=left NOWRAP>Вход</TD><TD ALIGN=right NOWRAP>Стек</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	:</TD><TD ALIGN=left NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	</TD><TD ALIGN=left NOWRAP><U>+</U></TD><TD ALIGN=right NOWRAP>E0 + E0 …</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	:</TD><TD ALIGN=left NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP></TD></TR>
+</TABLE>
+	</DIV>
+<DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV></BLOCKQUOTE><P>В подобном случае невозможно определить необходимо сдвинуть и протолкнуть в стек
++ или сократить в соответствии с правилом <I>(R2)</I> оба E0 и присутствующий в
+стеке +. Подобная ситуация называется конфликтом сдвиг-вывод (shift/reduce). Она
+является следствием того, что выражение <I>integer</I> + <I>integer</I> + <I>integer</I> может быть выведено справа двумя способами.</P><P>Первый вариант:</P><DIV CLASS="center">
+	<TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>		E0</TD><TD ALIGN=left NOWRAP>(<I>R2</I>) E0 + <U>E0</U></TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=left NOWRAP>(<I>R1</I>) <U>E0</U> + <I>integer</I></TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=left NOWRAP>(<I>R2</I>) E0 + <U>E0</U> + <I>integer</I></TD></TR>
+<TR><TD ALIGN=right NOWRAP></TD></TR>
+</TABLE>
+</DIV><P>Второй вариант:</P><DIV CLASS="center">
+	<TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>		E0</TD><TD ALIGN=left NOWRAP>(<I>R2</I>) E0 + <U>E0</U></TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=left NOWRAP>(<I>R1</I>) E0 + E0 + <U>E0</U> + <I>integer</I></TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=left NOWRAP>(<I>R2</I>) E0 + <U>E0</U> + <I>integer</I></TD></TR>
+<TR><TD ALIGN=right NOWRAP></TD></TR>
+</TABLE>
+</DIV><P>Выражения, полученные двумя выводами, могут показаться одинаковыми с точки
+зрения вычисления выражения,</P><P>(<I>integer</I> + <I>integer</I>) + <I>integer</I> и <I>integer</I> + (<I>integer</I>
++ <I>integer</I>)</P><P>но разными для конструкции синтаксического дерева (см. рис. <A HREF="#??">??</A> на стр.
+<A HREF="#??">??</A>)</P><P>Второй пример грамматики, порождающей конфликт между сдвиг-вывод, содержит
+такую же неопределённость: явное заключение в скобки. Но в отличии от
+предыдущего случая, выбор сдвиг-вывод изменяет смысл выражения. Пусть есть
+грамматика:</P><DIV CLASS="center">
+	<TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>		E1</TD><TD ALIGN=center NOWRAP>::=</TD><TD ALIGN=left NOWRAP><I>integer</I> (<I>R1</I>)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>E1 + E1 (<I>R2</I>)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>E1 * E1 (<I>R3</I>)</TD></TR>
+</TABLE>
+</DIV><P>Здесь мы снова получаем предыдущий конфликт как в случае с + так и для *, но к
+этому добавляется другой, между + и *. Опять же, одно и то же выражение может
+быть получено двумя способами, так как у него существует два вывода справа:</P><P><I>integer</I> + <I>integer</I> * <I>integer</I></P><P>Первый вариант:</P><DIV CLASS="center">
+	<TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>		E1</TD><TD ALIGN=left NOWRAP>(<I>R3</I>) E0 * <U>E1</U></TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=left NOWRAP>(<I>R1</I>) <U>E1</U> * <I>integer</I></TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=left NOWRAP>(<I>R2</I>) E1 + <U>E1</U> * <I>integer</I></TD></TR>
+</TABLE>
+</DIV><P>Второй вариант:</P><DIV CLASS="center">
+	<TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>		E1</TD><TD ALIGN=left NOWRAP>(<I>R2</I>) E1 + <U>E1</U></TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=left NOWRAP>(<I>R2</I>) E1 + E1 * <U>E1</U></TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=left NOWRAP>(<I>R1</I>) E1 + <U>E1</U> * <I>integer</I></TD></TR>
+</TABLE>
+</DIV><P>В данном выражении обе пары скобок имеют разный смысл:</P><P>(<I>integer</I> + <I>integer</I>) * <I>integer</I> ≠ <I>integer</I> + (<I>integer</I> * <I>integer</I>)</P><P>Подобную проблему, мы уже встречали в выражениях Basic (см. стр. <A HREF="#??">??</A>).
+Она была разрешена при помощи приоритетов, которые присваиваются операторам:
+сначала редуцируется правило (R3), затем (R2), что соответствует заключению в
+скобки произведения.</P><P>Данную проблему выбора между + и * можно решить изменив грамматику. Для того,
+введём два новых терминальных символа: член T (<I>term</I>) и множитель F
+(<I>factor</I>). Отсюда получаем:</P><DIV CLASS="center">
+	<TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>		E</TD><TD ALIGN=center NOWRAP>::=</TD><TD ALIGN=left NOWRAP>E + T</TD><TD ALIGN=center NOWRAP>(<I>R1</I>)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>T</TD><TD ALIGN=center NOWRAP>(<I>R2</I>)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		T</TD><TD ALIGN=center NOWRAP>::=</TD><TD ALIGN=left NOWRAP>T + F</TD><TD ALIGN=center NOWRAP>(<I>R3</I>)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>F</TD><TD ALIGN=center NOWRAP>(<I>R4</I>)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		F</TD><TD ALIGN=center NOWRAP>::=</TD><TD ALIGN=left NOWRAP>T + <I>integer</I></TD><TD ALIGN=center NOWRAP>(<I>R5</I>)</TD></TR>
+<TR><TD ALIGN=right NOWRAP></TD></TR>
+</TABLE>
+</DIV><P>После этого, единственный способ получить <I>integer</I> + <I>integer</I> *
+<I>integer</I>: посредством правила (<I>R1</I>).</P><P>Третий и последний случай касается условных конструкций языка программирования.
+На пример в Pascal существует две конструкции: <TT>if .. then</TT> и <TT>if
+.. then .. else</TT>. Пусть существует следующая грамматика:</P><DIV CLASS="center">
+	<TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>		Instr</TD><TD ALIGN=center NOWRAP>::=</TD><TD ALIGN=left NOWRAP><I>if</I> EXP <I>then</I> Instr</TD><TD ALIGN=center NOWRAP>(<I>R1</I>)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>-</TD><TD ALIGN=left NOWRAP><I>if</I> EXP <I>then</I> Instr <I>else</I> Instr</TD><TD ALIGN=center NOWRAP>(<I>R2</I>)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>-</TD><TD ALIGN=left NOWRAP>etc …</TD><TD ALIGN=center NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=right NOWRAP></TD></TR>
+</TABLE>
+</DIV><P>И в следующей ситуации:</P><BLOCKQUOTE CLASS="table"><DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV>
+	<DIV CLASS="center">
+	<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD ALIGN=left NOWRAP>	Действие</TD><TD ALIGN=left NOWRAP>Вход</TD><TD ALIGN=right NOWRAP>Стек</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	:</TD><TD ALIGN=left NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	</TD><TD ALIGN=left NOWRAP><I>else</I></TD><TD ALIGN=right NOWRAP>[Instr <I>then</I> Epx <I>if</I> …]</TD></TR>
+<TR><TD ALIGN=left NOWRAP></TD></TR>
+</TABLE>
+	</DIV>
+<DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV></BLOCKQUOTE><P>Невозможно определить соответствуют ли элементы стека правила (<I>R1</I>) и в
+этом случае необходимо сократить или соответствуют первому <TT>Instr</TT>
+правила (<I>R2</I>) и тогда необходимо сдвинуть.</P><P>Кроме конфликтов сдвиг-вывод, восходящий анализ вызывает конфликт вывод-вывод.</P><P>Мы представим здесь инструмент <TT>ocamlyacc</TT>, который использует подобную
+технику может встретить указанные конфликты.
+</P><!--TOC section Пересмотренный Basic-->
+<H2 CLASS="section"><!--SEC ANCHOR --><A NAME="htoc26">11.5</A>  Пересмотренный Basic</H2><!--SEC END --><P>Теперь, используя совместно <TT>ocamllex</TT> и <TT>ocamlyacc</TT>, заменим
+функцию <TT>parse</TT> для Бэйсика, приведённую на странице <A HREF="#??">??</A>, на
+функции полученные при помощи файлов спецификации лексики и синтаксиса языка.</P><P>Для этого, мы не сможем воспользоваться типами лексических единиц, в таком виде
+как они были определены. Необходимо определить более точные типы, чтобы
+различать операторы, команды и ключевые слова.</P><P>Так же, нам понадобится изолировать в отдельном файле <TT>basic_types.mli</TT>
+декларации типов, относящиеся к абстрактному синтаксису. В нем будут содержатся
+декларации типа <TT>sentences</TT>, а так же других типы необходимые этому.</P><!--TOC subsection Файл <TT>basic_parser.mly</TT>-->
+<H3 CLASS="subsection"><!--SEC ANCHOR --><A NAME="htoc27">11.5.1</A>  Файл <TT>basic_parser.mly</TT></H3><!--SEC END --><!--TOC subsubsection Заголовок-->
+<H4 CLASS="subsubsection"><!--SEC ANCHOR -->Заголовок</H4><!--SEC END --><P>Данный файл содержит вызовы деклараций типов абстрактного синтаксиса и две
+функции перевода строк символов в их эквивалент абстрактного синтаксиса.</P><P>[language=Caml]
+open Basic_types ;;</P><P>let phrase_of_cmd c =
+match c with
+"RUN" -&gt; Run
+| "LIST" -&gt; List
+| "END" -&gt; End
+| _ -&gt; failwith "line : unexpected command"
+;;</P><P>let bin_op_of_rel r =
+match r with
+"=" -&gt; EQUAL
+| "&lt;" -&gt; INF
+| "&lt;=" -&gt; INFEQ
+| "&gt;" -&gt; SUP
+| "&gt;=" -&gt; SUPEQ
+| "&lt;&gt;" -&gt; DIFF
+| _ -&gt; failwith "line : unexpected relation symbol"
+;;</P><!--TOC subsubsection Декларации-->
+<H4 CLASS="subsubsection"><!--SEC ANCHOR -->Декларации</H4><!--SEC END --><P>Здесь содержится три части: декларация лексем, декларация правил ассоциативности
+и приоритетов, декларация стартового символа <TT>line</TT>, которая
+соответствует анализу линии программы или команды.</P><P>Ниже представлены лексические единицы:</P><P>[language=Caml]
+</P><P>Имена деклараций говорят сами за себя и они описаны в файле
+<TT>basic_lexer.mll</TT> (см. стр. <A HREF="#??">??</A>).</P><P>Правила приоритета операторов схожи со значениями, которые определяются
+функциями <TT>priority_uop</TT> и <TT>priority_binop</TT>, которые были
+определены грамматикой Бейсика (см. стр. <A HREF="#??">??</A>).</P><P>[language=Caml]
+</P><P>Символ <TT>Lop</TT> необходим для обработки унарных минусов. Он не является
+терминальным символом, а псевдо–терминальным. Благодаря этому, получаем
+перегрузку операторов, когда в двух случаях использования одного и того же
+оператора, приоритет меняется в зависимости от контекста. Мы вернёмся к этому
+случаю, когда будем рассматривать правила грамматики.</P><P>Здесь нетерминалом является <TT>line</TT>. Полученная функция возвращает дерево
+абстрактного синтаксиса, которое соответствует проанализированной линии.</P><P>[language=Caml]
+</P><!--TOC subsubsection Правила грамматики-->
+<H4 CLASS="subsubsection"><!--SEC ANCHOR -->Правила грамматики</H4><!--SEC END --><P>Грамматика делится на 3 нетерминальных элемента: <TT>line</TT> для линии,
+<TT>inst</TT> для инструкции и <TT>exp</TT> для выражений. Действия, которые
+привязаны к каждому правилу лишь создают соответствующую часть абстрактного
+синтаксиса.</P>[language=Caml]
+line :
+Lint inst Leol  Line num=1; <I>inst</I>=2 
+| Lcmd Leol  phrase_of_cmd 1 
