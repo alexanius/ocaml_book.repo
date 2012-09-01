@@ -150,7 +150,7 @@
 написать программу реализующую нисходящий анализ. Функция \texttt{infix\_of} из
 полученного префиксного выражения возвращает его инфиксный эквивалент:
 
-\begin{lstlisting}[language=Caml]
+\begin{lstlisting}[language=OCaml]
 # let lexer s =
    let ll = Genlex.make_lexer ["+";"*"]
    in ll (Stream.of_string s);;
@@ -176,7 +176,7 @@ val infix_of : string -> string = <fun>
 Советуем периодически добавлять пробелы между различными лексическими
 элементами.
 
-\begin{lstlisting}[language=Caml]
+\begin{lstlisting}[language=OCaml]
 # infix_of "*+3 11 22";;
 - : string = "*+"
 \end{lstlisting}
@@ -221,7 +221,7 @@ Exp}
 Следующий анализатор есть просто перевод вышеуказанной грамматики в код. Он
 реализует абстрактное синтаксическое дерево арифметических выражений.
 
-\begin{lstlisting}[language=Caml]
+\begin{lstlisting}[language=OCaml]
 # let rec rest = parser
     [< 'Lsymbol "+"; e2 = atom >] -> Some (PLUS,e2)
   | [< 'Lsymbol "-"; e2 = atom >] -> Some (MINUS,e2)

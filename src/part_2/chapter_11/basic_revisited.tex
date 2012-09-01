@@ -19,7 +19,7 @@
 Данный файл содержит вызовы деклараций типов абстрактного синтаксиса и две
 функции перевода строк символов в их эквивалент абстрактного синтаксиса.
 
-\begin{lstlisting}[language=Caml]
+\begin{lstlisting}[language=OCaml]
 %{
 open Basic_types ;;
 
@@ -53,7 +53,7 @@ let bin_op_of_rel r =
 
 Ниже представлены лексические единицы:
 
-\begin{lstlisting}[language=Caml]
+\begin{lstlisting}[language=OCaml]
 %token <int> Lint
 %token <string> Lident
 %token <string> Lstring
@@ -75,7 +75,7 @@ let bin_op_of_rel r =
 функциями \texttt{priority\_uop} и \texttt{priority\_binop}, которые были
 определены грамматикой Бейсика (см. стр. \pageref{??}).
 
-\begin{lstlisting}[language=Caml]
+\begin{lstlisting}[language=OCaml]
 %right Lneg
 %left Land Lor
 %left Lequal Lrel
@@ -94,7 +94,7 @@ let bin_op_of_rel r =
 Здесь нетерминалом является \texttt{line}. Полученная функция возвращает дерево
 абстрактного синтаксиса, которое соответствует проанализированной линии.
 
-\begin{lstlisting}[language=Caml]
+\begin{lstlisting}[language=OCaml]
 %start line
 %type <Basic_types.phrase> line
 \end{lstlisting}
@@ -106,7 +106,7 @@ let bin_op_of_rel r =
 привязаны к каждому правилу лишь создают соответствующую часть абстрактного
 синтаксиса.
 
-\begin{lstlisting}[language=Caml]
+\begin{lstlisting}[language=OCaml]
  %%
 line :
    Lint inst Leol               { Line {num=$1; inst=$2} }
@@ -144,7 +144,7 @@ exp :
 
 Данные правила не нуждаются в особых комментариях, кроме следующего:
 
-\begin{lstlisting}[language=Caml]
+\begin{lstlisting}[language=OCaml]
 exp :
  ...
  | Lminus exp %prec Lop { ExpUnr(OPPOSITE, $2) }
@@ -164,7 +164,7 @@ exp :
 синтаксических правил, так как в нем декларируется тип лексических единиц.
 Добавим так же функцию, которая удаляет кавычки вокруг строк.
 
-\begin{lstlisting}[language=Caml]
+\begin{lstlisting}[language=OCaml]
 {
  open Basic_parser ;;
 
@@ -224,7 +224,7 @@ rule lexer = parse
 взаимозависимостью деклараций лексем. Поэтому в нашем случае, необходимо
 выполнить команды в следующем порядке:
 
-\begin{lstlisting}[language=Caml]
+\begin{lstlisting}[language=OCaml]
 ocamlc -c basic_types.mli
 ocamlyacc basic_parser.mly
 ocamllex basic_lexer.mll
@@ -244,13 +244,13 @@ ocamlc -c basic_parser.ml
 Бэйсик. Также в функции \texttt{one\_command} (стр. \pageref{??}) заменим
 выражение:
 
-\begin{lstlisting}[language=Caml]
+\begin{lstlisting}[language=OCaml]
 match parse (input_line stdin) with
 \end{lstlisting}
 
 на
 
-\begin{lstlisting}[language=Caml]
+\begin{lstlisting}[language=OCaml]
 match line lexer (Lexing.from_string ((input_line stdin)^"\n")) with
 \end{lstlisting}
 
