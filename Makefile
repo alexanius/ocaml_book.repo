@@ -6,14 +6,14 @@ pdf:
 
 html:
 	mkdir -p html
-	hevea -o html/index.html src/main.tex
+	hevea -o html/index.html styles/misc.hva src/main.tex -I . -I styles
 
 status:
 	pdflatex -halt-on-error -jobname status status/status.tex
 
 clean_all: clean
 	rm -f ocaml-book.pdf
-	rm -f html/ -r
+	rm -f html -r
 	
 clean:
 	rm -f *.log *.aux *.toc

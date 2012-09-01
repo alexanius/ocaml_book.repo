@@ -1,0 +1,34 @@
+
+%%%% Hevea support for babel option 'russian'.
+
+%%%% Resets 
+%%%%    a) date format
+%%%%    b) names of various part descriptors (contentsname etc.)
+
+\newcommand{\russian@babel}{
+\let\russian@day\default@day%
+\let\russian@month\default@month%
+\@ifundefined{theyear}{}{\def\today{\russian@day\russian@month,~\theyear}}%
+\def\prefacename{Предисловие}%
+\def\refname{Ссылки}%
+\def\abstractname{Введение}%
+\def\bibname{Список литературы}%
+\def\chaptername{Глава}%
+\def\appendixname{Приложение}%
+\def\contentsname{Содержание}%
+\def\listfigurename{Список рисунков}%
+\def\listtablename{Список таблиц}%
+\def\indexname{Указатель}%
+\def\figurename{Рисунок}%
+\def\tablename{Тадлица}%
+\def\partname{Часть}%
+\def\enclname{encl}%
+\def\ccname{cc}%
+\def\headtoname{К}%
+\def\pagename{Страница}%
+\def\headpagename{Страница}%
+\def\seename{см.}%
+\def\alsoseename{см. также}%
+\def\footertext{Этот документ был преобразован из \LaTeX{}
+\footahref{\heveaurl/index.html}{\hevea}.}%
+}

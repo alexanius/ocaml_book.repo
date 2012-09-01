@@ -10,7 +10,7 @@
 Для этого используются несколько категорий предопределённых лексических единиц.
 Эти категории различаются по типу:
 
-\begin{lstlisting}[language=Caml]
+\begin{lstlisting}[language=OCaml]
 # type token = Kwd of string
     | Ident of string
     | Int of int
@@ -41,7 +41,7 @@
 следующей конструкцией, которой необходимо передать список ключевых слов на
 место первого аргумента.
 
-\begin{lstlisting}[language=Caml]
+\begin{lstlisting}[language=OCaml]
 # Genlex.make_lexer ;;
 - : string list -> char Stream.t -> Genlex.token Stream.t = <fun>
 \end{lstlisting}
@@ -52,7 +52,7 @@
 Таким образом, мы без труда реализуем лексический анализатор для интерпретатора
 BASIC. Объявим множество ключевых слов:
 
-\begin{lstlisting}[language=Caml]
+\begin{lstlisting}[language=OCaml]
 # let keywords =
     [ "REM"; "GOTO"; "LET"; "PRINT"; "INPUT"; "IF"; "THEN"; "-";
     "!"; "+"; "-"; "*"; "/"; "%";
@@ -62,7 +62,7 @@ BASIC. Объявим множество ключевых слов:
 
 При помощи данного множества, определим функцию лексического анализа:
 
-\begin{lstlisting}[language=Caml]
+\begin{lstlisting}[language=OCaml]
 # let line_lexer l = Genlex.make_lexer keywords (Stream.of_string l) ;;
 val line_lexer : string -> Genlex.token Stream.t = <fun>
 # line_lexer "LET x = x + y * 3" ;;
@@ -83,7 +83,7 @@ val line_lexer : string -> Genlex.token Stream.t = <fun>
 переход на новую строку удаляются. Для упрощения, мы не будем обрабатывать
 переменные и отрицательны целые числа.
 
-\begin{lstlisting}[language=Caml]
+\begin{lstlisting}[language=OCaml]
 # let rec spaces s =
     match s with parser
       [<'' ' ; rest >] -> spaces rest
@@ -258,7 +258,7 @@ $$
 части, переводит во французских формат и тем самым заменяет старую дату на
 новую.
 
-\begin{lstlisting}[language=Caml]
+\begin{lstlisting}[language=OCaml]
 # let french_date_of d =
   match d with
    [mm; dd; yy] -> dd^"/"^mm^"/"^yy
@@ -298,7 +298,7 @@ val english_date_format : Str.regexp = <abstr>
 чтобы из файла \texttt{lex\_file.mll} получить файл на Objective CAML,
 необходимо выполнить следующую команду:
 
-\begin{lstlisting}[language=Caml]
+\begin{lstlisting}[language=OCaml]
 ocamllex lex_file.mll
 \end{lstlisting}
 
@@ -311,7 +311,7 @@ CAML. Каждому множеству правил анализа соотве
 
 Формат у файла для \texttt{ocamllex} следующий:
 
-\begin{lstlisting}[language=Caml]
+\begin{lstlisting}[language=OCaml]
 {
   header
 }
@@ -344,7 +344,7 @@ and ...
 \texttt{lexer}, (см. стр.  \ref{??}) которая возвращает такой же тип результата
 (\texttt{lexeme}), но на входе она получает буфер типа \texttt{Lexing.lexbuf}.
 
-\begin{lstlisting}[language=Caml]
+\begin{lstlisting}[language=OCaml]
   {
     let string_chars s =
     String.sub s 1 ((String.length s)-2) ;;

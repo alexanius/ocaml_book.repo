@@ -8,3 +8,27 @@
 	numbers=left,
 	numberstyle={\footnotesize},
 	extendedchars}
+
+\usepackage{xcolor}
+\definecolor{comment}{rgb}{0,128,0}
+\definecolor{string}{HTML}{006E00}
+
+% прописываем правила подсветки JavaScript
+\lstdefinelanguage{OCaml}{
+  keywords={and, as, assert, begin, class, constraint, do, donw, downto, else,
+end, exception, external, false, for, fun, function, functor, if, in, include,
+inherit, inherit!, initializer, lazy, let, match, method, method!, module,
+mutable, new, object, of, open, or, private, rec, sig, struct, then, to, true,
+try, type, val, val!, virtual, when, while, with},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  morecomment=[n]{(*}{*)},
+  commentstyle=\color{gray}\ttfamily,
+  stringstyle=\color{string}\ttfamily,
+  morestring=[b]",
+  showstringspaces=false,
+  numbers=none,
+  frame=single
+}
