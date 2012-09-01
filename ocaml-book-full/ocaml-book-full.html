@@ -1,0 +1,906 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>ocaml-book-full/ocaml-book-full</TITLE>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="GENERATOR" content="hevea 1.10">
+<STYLE type="text/css">
+.li-itemize{margin:1ex 0ex;}
+.li-enumerate{margin:1ex 0ex;}
+.dd-description{margin:0ex 0ex 1ex 4ex;}
+.dt-description{margin:0ex;}
+.toc{list-style:none;}
+.thefootnotes{text-align:left;margin:0ex;}
+.dt-thefootnotes{margin:0em;}
+.dd-thefootnotes{margin:0em 0em 0em 2em;}
+.footnoterule{margin:1em auto 1em 0px;width:50%;}
+.caption{padding-left:2ex; padding-right:2ex; margin-left:auto; margin-right:auto}
+.title{margin:2ex auto;text-align:center}
+.center{text-align:center;margin-left:auto;margin-right:auto;}
+.flushleft{text-align:left;margin-left:0ex;margin-right:auto;}
+.flushright{text-align:right;margin-left:auto;margin-right:0ex;}
+DIV TABLE{margin-left:inherit;margin-right:inherit;}
+PRE{text-align:left;margin-left:0ex;margin-right:auto;}
+BLOCKQUOTE{margin-left:4ex;margin-right:4ex;text-align:left;}
+TD P{margin:0px;}
+.boxed{border:1px solid black}
+.textboxed{border:1px solid black}
+.vbar{border:none;width:2px;background-color:black;}
+.hbar{border:none;height:2px;width:100%;background-color:black;}
+.hfill{border:none;height:1px;width:200%;background-color:black;}
+.vdisplay{border-collapse:separate;border-spacing:2px;width:auto; empty-cells:show; border:2px solid red;}
+.vdcell{white-space:nowrap;padding:0px;width:auto; border:2px solid green;}
+.display{border-collapse:separate;border-spacing:2px;width:auto; border:none;}
+.dcell{white-space:nowrap;padding:0px;width:auto; border:none;}
+.dcenter{margin:0ex auto;}
+.vdcenter{border:solid #FF8000 2px; margin:0ex auto;}
+.minipage{text-align:left; margin-left:0em; margin-right:auto;}
+.marginpar{border:solid thin black; width:20%; text-align:left;}
+.marginparleft{float:left; margin-left:0ex; margin-right:1ex;}
+.marginparright{float:right; margin-left:1ex; margin-right:0ex;}
+.theorem{text-align:left;margin:1ex auto 1ex 0ex;}
+.lstlisting{font-family:monospace;white-space:pre;margin-right:auto;margin-left:0pt;text-align:left}
+.part{margin:2ex auto;text-align:center}
+</STYLE>
+</HEAD>
+<BODY >
+<!--HEVEA command line is: hevea -o ocaml-book-full/ocaml-book-full.html styles/misc.hva src/main.tex -I . -I styles -->
+<!--CUT DEF chapter 1 --><TABLE CLASS="title"><TR><TD><H1 CLASS="titlemain">Разработка программ с помощью Objective Caml<BR>
+Developing Applications with Objective Caml</H1><H3 CLASS="titlerest">Emmanuel Chailloux<BR>
+Pascal Manoury<BR>
+Bruno Pagano</H3></TD></TR>
+</TABLE><!--TOC chapter Содержание-->
+<H1 CLASS="chapter"><!--SEC ANCHOR -->Содержание</H1><!--SEC END --><!--TOC chapter Как заполучить Objective CAML-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc1">Глава 1</A>  Как заполучить Objective CAML</H1><!--SEC END --><!--TOC part Основы языка-->
+<TABLE CLASS="center"><TR><TD><H1 CLASS="part"><!--SEC ANCHOR --><A NAME="htoc2">Часть I</A><BR>
+Основы языка</H1></TD></TR>
+</TABLE><!--SEC END --><!--TOC chapter Функциональное программирование-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc3">Глава 2</A>  Функциональное программирование</H1><!--SEC END --><!--TOC chapter Императивное программирование-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc4">Глава 3</A>  Императивное программирование</H1><!--SEC END --><!--TOC chapter Функциональный и императивный стиль-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc5">Глава 4</A>  Функциональный и императивный стиль</H1><!--SEC END --><!--TOC chapter Графический интерфейс-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc6">Глава 5</A>  Графический интерфейс</H1><!--SEC END --><!--TOC chapter Приложения-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc7">Глава 6</A>  Приложения</H1><!--SEC END --><!--TOC part Средства разработки-->
+<TABLE CLASS="center"><TR><TD><H1 CLASS="part"><!--SEC ANCHOR --><A NAME="htoc8">Часть II</A><BR>
+Средства разработки</H1></TD></TR>
+</TABLE><!--SEC END --><!--TOC chapter Компиляция и переносимость-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc9">Глава 7</A>  Компиляция и переносимость</H1><!--SEC END --><!--TOC chapter Библиотеки-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc10">Глава 8</A>  Библиотеки</H1><!--SEC END --><!--TOC chapter Автоматический сборщик мусора-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc11">Глава 9</A>  Автоматический сборщик мусора</H1><!--SEC END --><!--TOC chapter Средства анализа программ-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc12">Глава 10</A>  Средства анализа программ</H1><!--SEC END --><!--TOC chapter Средства лексического и синтаксического анализа-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc13">Глава 11</A>  Средства лексического и синтаксического анализа</H1><!--SEC END --><!--TOC section Введение-->
+<H2 CLASS="section"><!--SEC ANCHOR --><A NAME="htoc14">11.1</A>  Введение</H2><!--SEC END --><P>Определение и реализация средств лексического и синтаксического анализа являлись
+важным доменом исследования в информатике. Эта работа привела к созданию
+генераторов лексического и синтаксического анализа <TT>lex</TT> и
+<TT>yacc</TT>. Команды <TT>camllex camlyacc</TT>, которые мы представим в этой
+главе, являются их достойными наследниками. Два указанных инструмента стали
+de–facto стандартными, однако существуют другие средства, как например потоки
+или регулярные выражения из библиотеки <TT>Str</TT>, которые могут быть
+достаточны для простых случаев, там где не нужен мощный анализ.</P><P>Необходимость подобных инструментов особенно чувствовалась в таких доменах как
+компиляция языков программирования. Однако и другие программы могут с успехом
+использовать данные средства: базы данных, позволяющие определять запросы или
+электронная таблица, где содержимое ячейки можно определить как результат
+какой–нибудь формулы. Проще говоря, любая программа, в которой взаимодействие с
+пользователем осуществляется при помощи языка, использует лексический и
+синтаксический анализ.</P><P>Возьмём простой случай. Текстовый формат часто используется для хранения данных,
+будь то конфигурационный системный файл или данные табличного файла. Здесь, для
+использования данных, необходим лексический и синтаксический анализ.</P><P>Обобщая, скажем что лексический и синтаксический анализ преобразует линейный
+поток символов в данные с более богатой структурой: последовательность слов,
+структура записи, абстрактное синтаксическое дерево программы и т.д.</P><P>У каждого языка есть словарный состав (лексика) и грамматика, которая описывает
+каким образом эти составные объединяются (синтаксис). Для того, чтобы машина или
+программа могли корректно обрабатывать язык, этот язык должен иметь точные
+лексические и синтаксические правила. У машины нет тонкого чувства для
+того чтобы правильно оценить двусмысленность натуральных языков. По этой
+причине к машине необходимо обращаться в соответствии с чёткими правилами, в
+которых нет исключений. В соответствии с этим, понятия лексики и семантики
+получили формальные определения, которые будут кратко представлены в данной
+главе.
+</P><!--TOC section План главы-->
+<H2 CLASS="section"><!--SEC ANCHOR --><A NAME="htoc15">11.2</A>  План главы</H2><!--SEC END --><P>Данная глава знакомит нас со средствами лексического и синтаксического анализа,
+которые входят в дистрибутив Objective CAML. Обычно синтаксический анализ
+следует за лексическим. В первой части мы узнаем о простом инструменте
+лексического анализа из модуля <TT>Genlex</TT>. После этого ознакомимся с
+формализмом рациональных выражений и тем самым рассмотрим более детально
+определение множества лексических единиц. А так же проиллюстрируем их реализацию
+в модуле <TT>Str</TT> и инструменте <TT>ocamllex</TT>. Во второй части мы
+определим грамматику и рассмотрим правила создания фраз языка. После этого
+рассмотрим два анализа фраз: восходящий и нисходящий. Они будут
+проиллюстрированы использованием <TT>Stream</TT> и <TT>ocamlyacc</TT>. В
+приведённых примерах используется контекстно–независимая грамматика. Здесь мы
+узнаем как реализовать контекстный анализ при помощи Stream. В третьей части мы
+вернёмся к интерпретатору BASIC (см. стр <A HREF="#??">??</A>) и при помощи
+<TT>ocamllex</TT> и <TT>ocamlyacc</TT> добавим лексические и синтаксические
+функции анализа языка.
+
+</P><!--TOC section Лексика-->
+<H2 CLASS="section"><!--SEC ANCHOR --><A NAME="htoc16">11.3</A>  Лексика</H2><!--SEC END --><P>Синтаксический анализ это предварительный и необходимый этап обработки
+последовательностей символов: он разделяет этот поток в последовательность слов,
+так называемых лексические единицы или лексемы.</P><!--TOC subsection Модуль <TT>Genlex</TT>-->
+<H3 CLASS="subsection"><!--SEC ANCHOR --><A NAME="htoc17">11.3.1</A>  Модуль <TT>Genlex</TT></H3><!--SEC END --><P>В данном модуле имеется элементарное средство для анализа символьного потока.
+Для этого используются несколько категорий предопределённых лексических единиц.
+Эти категории различаются по типу:</P><TABLE CLASS="lstframe" STYLE="padding:1ex;border-style:none none none solid;"><TR><TD CLASS="lstlisting"># <FONT COLOR="black">type</FONT> <FONT COLOR="black">token</FONT> = <FONT COLOR="black">Kwd</FONT> <FONT COLOR="black">of</FONT> <FONT COLOR="black">string</FONT>
+    | <FONT COLOR="black">Ident</FONT> <FONT COLOR="black">of</FONT> <FONT COLOR="black">string</FONT>
+    | <FONT COLOR="black">Int</FONT> <FONT COLOR="black">of</FONT> <FONT COLOR="black">int</FONT>
+    | <FONT COLOR="black">Float</FONT> <FONT COLOR="black">of</FONT> <FONT COLOR="black">float</FONT>
+    | <FONT COLOR="black">String</FONT> <FONT COLOR="black">of</FONT> <FONT COLOR="black">string</FONT>
+    | <FONT COLOR="black">Char</FONT> <FONT COLOR="black">of</FONT> <FONT COLOR="black">char</FONT> ;;</TD></TR>
+</TABLE><P>Таким образом мы можем распознать в потоке символов целое число (конструктор
+<TT>Int</TT>) и получить его значение (аргумент конструктора <TT>int</TT>).
+Распознаваемые символы и строки подчиняются следующим общепринятым соглашением:
+строка окружена символами ("), а символ окружён (’). Десятичное число
+представлено либо используя запись с точкой (например 0.01), либо с мантиссой и
+экспонентой (на пример 1E-2). Кроме этого остались конструкторы <TT>Kwd</TT> и
+<TT>Ident</TT>.</P><P>Конструктор <TT>Ident</TT> предназначен для определения идентификаторов.
+Идентификатором может быть имя переменной или функции языка программирования.
+Они состоят из любой последовательности букв и цифр, могут включать
+символ подчёркивания (_) или апостроф (’). Данная последовательность не должна
+начинаться с цифры. Любая последовательность следующих операндов тоже будет
+считаться идентификатором: +,*,&gt; или -. И наконец, конструктор <TT>Kwd</TT>
+определяет
+категорию специальных идентификаторов или символов.</P><P>Категория ключевых слова — единственная из этого множества, которую можно
+сконфигурировать. Для того, чтобы создать лексический анализатор, воспользуемся
+следующей конструкцией, которой необходимо передать список ключевых слов на
+место первого аргумента.</P><TABLE CLASS="lstframe" STYLE="padding:1ex;border-style:none none none solid;"><TR><TD CLASS="lstlisting"># <FONT COLOR="black">Genlex</FONT>.<FONT COLOR="black">make_lexer</FONT> ;;
+- : <FONT COLOR="black">string</FONT> <FONT COLOR="black">list</FONT> -&gt; <FONT COLOR="black">char</FONT> <FONT COLOR="black">Stream</FONT>.<FONT COLOR="black">t</FONT> -&gt; <FONT COLOR="black">Genlex</FONT>.<FONT COLOR="black">token</FONT> <FONT COLOR="black">Stream</FONT>.<FONT COLOR="black">t</FONT> = &lt;<FONT COLOR="black">fun</FONT>&gt;</TD></TR>
+</TABLE><P>Тем самым получаем функцию, которая принимает на вход поток символов и
+возвращает поток лексических единиц (с типом <TT>token</TT>).</P><P>Таким образом, мы без труда реализуем лексический анализатор для интерпретатора
+BASIC. Объявим множество ключевых слов:</P><TABLE CLASS="lstframe" STYLE="padding:1ex;border-style:none none none solid;"><TR><TD CLASS="lstlisting"># <FONT COLOR="black">let</FONT> <FONT COLOR="black">keywords</FONT> =
+    [ <FONT COLOR="black">"REM"</FONT>; <FONT COLOR="black">"GOTO"</FONT>; <FONT COLOR="black">"LET"</FONT>; <FONT COLOR="black">"PRINT"</FONT>; <FONT COLOR="black">"INPUT"</FONT>; <FONT COLOR="black">"IF"</FONT>; <FONT COLOR="black">"THEN"</FONT>; <FONT COLOR="black">"-"</FONT>;
+    <FONT COLOR="black">"!"</FONT>; <FONT COLOR="black">"+"</FONT>; <FONT COLOR="black">"-"</FONT>; <FONT COLOR="black">"*"</FONT>; <FONT COLOR="black">"/"</FONT>; <FONT COLOR="black">"%"</FONT>;
+    <FONT COLOR="black">"="</FONT>; <FONT COLOR="black">"&lt;"</FONT>; <FONT COLOR="black">"&gt;"</FONT>; <FONT COLOR="black">"&lt;="</FONT>; <FONT COLOR="black">"&gt;="</FONT>; <FONT COLOR="black">"&lt;&gt;"</FONT>;
+    <FONT COLOR="black">"&amp;"</FONT>; <FONT COLOR="black">"|"</FONT> ] ;;</TD></TR>
+</TABLE><P>При помощи данного множества, определим функцию лексического анализа:</P><TABLE CLASS="lstframe" STYLE="padding:1ex;border-style:none none none solid;"><TR><TD CLASS="lstlisting"># <FONT COLOR="black">let</FONT> <FONT COLOR="black">line_lexer</FONT> <FONT COLOR="black">l</FONT> = <FONT COLOR="black">Genlex</FONT>.<FONT COLOR="black">make_lexer</FONT> <FONT COLOR="black">keywords</FONT> (<FONT COLOR="black">Stream</FONT>.<FONT COLOR="black">of_string</FONT> <FONT COLOR="black">l</FONT>) ;;
+<FONT COLOR="black">val</FONT> <FONT COLOR="black">line_lexer</FONT> : <FONT COLOR="black">string</FONT> -&gt; <FONT COLOR="black">Genlex</FONT>.<FONT COLOR="black">token</FONT> <FONT COLOR="black">Stream</FONT>.<FONT COLOR="black">t</FONT> = &lt;<FONT COLOR="black">fun</FONT>&gt;
+# <FONT COLOR="black">line_lexer</FONT> <FONT COLOR="black">"LET x = x + y * 3"</FONT> ;;
+- : <FONT COLOR="black">Genlex</FONT>.<FONT COLOR="black">token</FONT> <FONT COLOR="black">Stream</FONT>.<FONT COLOR="black">t</FONT> = &lt;<FONT COLOR="black">abstr</FONT>&gt;</TD></TR>
+</TABLE><P>Приведённая функция <TT>line_lexer</TT>, из входящего потока символов создаёт
+поток соответствующих лексем.</P><!--TOC subsection Использование потоков-->
+<H3 CLASS="subsection"><!--SEC ANCHOR --><A NAME="htoc18">11.3.2</A>  Использование потоков</H3><!--SEC END --><P>Мы также можем реализовать лексический анализ в ручную используя потоки.</P><P>В следующем примере определён лексический анализатор арифметических выражений.
+Функции lexer передаётся поток символов из которого она создаёт поток
+лексических единиц с типом <TT>lexeme Stream.t</TT> <SUP><A NAME="text1" HREF="#note1">1</A></SUP>. Символы пробел, табуляция и
+переход на новую строку удаляются. Для упрощения, мы не будем обрабатывать
+переменные и отрицательны целые числа.</P><TABLE CLASS="lstframe" STYLE="padding:1ex;border-style:none none none solid;"><TR><TD CLASS="lstlisting"># <FONT COLOR="black">let</FONT> <FONT COLOR="black">rec</FONT> <FONT COLOR="black">spaces</FONT> <FONT COLOR="black">s</FONT> =
+    <FONT COLOR="black">match</FONT> <FONT COLOR="black">s</FONT> <FONT COLOR="black">with</FONT> <FONT COLOR="black">parser</FONT>
+      [&lt;'' ' ; <FONT COLOR="black">rest</FONT> &gt;] -&gt; <FONT COLOR="black">spaces</FONT> <FONT COLOR="black">rest</FONT>
+      | [&lt;''\<FONT COLOR="black">t</FONT>' ; <FONT COLOR="black">rest</FONT> &gt;] -&gt; <FONT COLOR="black">spaces</FONT> <FONT COLOR="black">rest</FONT>
+      | [&lt;''\<FONT COLOR="black">n</FONT>' ; <FONT COLOR="black">rest</FONT> &gt;] -&gt; <FONT COLOR="black">spaces</FONT> <FONT COLOR="black">rest</FONT>
+      | [&lt;&gt;] -&gt; ();;
+<FONT COLOR="black">val</FONT> <FONT COLOR="black">spaces</FONT> : <FONT COLOR="black">char</FONT> <FONT COLOR="black">Stream</FONT>.<FONT COLOR="black">t</FONT> -&gt; <FONT COLOR="black">unit</FONT> = &lt;<FONT COLOR="black">fun</FONT>&gt;
+# <FONT COLOR="black">let</FONT> <FONT COLOR="black">rec</FONT> <FONT COLOR="black">lexer</FONT> <FONT COLOR="black">s</FONT> =
+   <FONT COLOR="black">spaces</FONT> <FONT COLOR="black">s</FONT>;
+   <FONT COLOR="black">match</FONT> <FONT COLOR="black">s</FONT> <FONT COLOR="black">with</FONT> <FONT COLOR="black">parser</FONT>
+     [&lt; ''(' &gt;] -&gt; [&lt; '<FONT COLOR="black">Lsymbol</FONT> <FONT COLOR="black">"("</FONT>; <FONT COLOR="black">lexer</FONT> <FONT COLOR="black">s</FONT> &gt;]
+     | [&lt; '')' &gt;] -&gt; [&lt; '<FONT COLOR="black">Lsymbol</FONT> <FONT COLOR="black">")"</FONT>; <FONT COLOR="black">lexer</FONT> <FONT COLOR="black">s</FONT> &gt;]
+     | [&lt; ''+' &gt;] -&gt; [&lt; '<FONT COLOR="black">Lsymbol</FONT> <FONT COLOR="black">"+"</FONT> ; <FONT COLOR="black">lexer</FONT> <FONT COLOR="black">s</FONT> &gt;]
+     | [&lt; ''-' &gt;] -&gt; [&lt; '<FONT COLOR="black">Lsymbol</FONT> <FONT COLOR="black">"-"</FONT> ; <FONT COLOR="black">lexer</FONT> <FONT COLOR="black">s</FONT> &gt;]
+     | [&lt; ''*' &gt;] -&gt; [&lt; '<FONT COLOR="black">Lsymbol</FONT> <FONT COLOR="black">"*"</FONT> ; <FONT COLOR="black">lexer</FONT> <FONT COLOR="black">s</FONT> &gt;]
+     | [&lt; ''/' &gt;] -&gt; [&lt; '<FONT COLOR="black">Lsymbol</FONT> <FONT COLOR="black">"/"</FONT> ; <FONT COLOR="black">lexer</FONT> <FONT COLOR="black">s</FONT> &gt;]
+     | [&lt; ''0'..'9' <FONT COLOR="black">as</FONT> <FONT COLOR="black">c</FONT>;
+       <FONT COLOR="black">i</FONT>,<FONT COLOR="black">v</FONT> = <FONT COLOR="black">lexint</FONT> (<FONT COLOR="black">Char</FONT>.<FONT COLOR="black">code</FONT> <FONT COLOR="black">c</FONT> - <FONT COLOR="black">Char</FONT>.<FONT COLOR="black">code</FONT>('0')) &gt;]
+       -&gt;[&lt;'<FONT COLOR="black">Lint</FONT> <FONT COLOR="black">i</FONT> ; <FONT COLOR="black">lexer</FONT> <FONT COLOR="black">v</FONT>&gt;]
+   <FONT COLOR="blue"><B>and</B></FONT> <FONT COLOR="black">lexint</FONT> <FONT COLOR="black">r</FONT> <FONT COLOR="black">s</FONT> =
+     <FONT COLOR="black">match</FONT> <FONT COLOR="black">s</FONT> <FONT COLOR="black">with</FONT> <FONT COLOR="black">parser</FONT>
+       [&lt; ''0'..'9' <FONT COLOR="black">as</FONT> <FONT COLOR="black">c</FONT> &gt;]
+       -&gt; <FONT COLOR="black">let</FONT> <FONT COLOR="black">u</FONT> = (<FONT COLOR="black">Char</FONT>.<FONT COLOR="black">code</FONT> <FONT COLOR="black">c</FONT>) - (<FONT COLOR="black">Char</FONT>.<FONT COLOR="black">code</FONT> '0') <FONT COLOR="black">in</FONT> <FONT COLOR="black">lexint</FONT> (10*<FONT COLOR="black">r</FONT> + <FONT COLOR="black">u</FONT>) <FONT COLOR="black">s</FONT>
+       | [&lt;&gt;] -&gt; <FONT COLOR="black">r</FONT>,<FONT COLOR="black">s</FONT> ;;
+<FONT COLOR="black">val</FONT> <FONT COLOR="black">lexer</FONT> : <FONT COLOR="black">char</FONT> <FONT COLOR="black">Stream</FONT>.<FONT COLOR="black">t</FONT> -&gt; <FONT COLOR="black">lexeme</FONT> <FONT COLOR="black">Stream</FONT>.<FONT COLOR="black">t</FONT> = &lt;<FONT COLOR="black">fun</FONT>&gt;
+<FONT COLOR="black">val</FONT> <FONT COLOR="black">lexint</FONT> : <FONT COLOR="black">int</FONT> -&gt; <FONT COLOR="black">char</FONT> <FONT COLOR="black">Stream</FONT>.<FONT COLOR="black">t</FONT> -&gt; <FONT COLOR="black">int</FONT> * <FONT COLOR="black">char</FONT> <FONT COLOR="black">Stream</FONT>.<FONT COLOR="black">t</FONT> = &lt;<FONT COLOR="black">fun</FONT>&gt;</TD></TR>
+</TABLE><P>Функция <TT>lexint</TT> предназначена для анализа той части потока символов,
+которая соответствует числовой постоянной. Она вызывается, когда функция
+<TT>lexer</TT> встречает цифры. В этом случае функция <TT>lexint</TT> поглощает
+все последовательные цифры и выдаёт соответствующее значение полученного числа.</P><!--TOC subsection Регулярные выражения-->
+<H3 CLASS="subsection"><!--SEC ANCHOR --><A NAME="htoc19">11.3.3</A>  Регулярные выражения</H3><!--SEC END --><P>Оставим ненадолго практику и рассмотрим проблему лексических единиц с
+теоретической точки зрения.</P><P>Лексическая единица является словом. Слово образуется при конкатенации элементов
+алфавита. В нашем случае алфавитом является множество символов ASCII.</P><P>Теоретически, слово может вообще не содержать символов (пустое слово
+<SUP><A NAME="text2" HREF="#note2">2</A></SUP>) или состоять из одного символа.</P><P>Теоретические исследования конкатенации элементов алфавита для образования
+лексических элементов (лексем) привели к созданию простого формализма,
+известного как регулярные выражения.</P><!--TOC subsubsection Определение-->
+<H4 CLASS="subsubsection"><!--SEC ANCHOR -->Определение</H4><!--SEC END --><P>Регулярные выражения позволяют определить множества слов. Пример такого
+множества: идентификаторы. Принцип определения основан на некоторых
+теоретико–множественный операциях. Пусть <I>M</I> и <I>N</I> — два множества слов, тогда
+мы можем определить:</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+	объединение <I>M</I> и <I>N</I>, записываемое <I>M</I> | <I>N</I>.<P>	</P></LI><LI CLASS="li-itemize">дополнение <I>M</I>, записываемое ∧ <I>M</I>: множество всех слов, кроме
+тех, которые входят в <I>M</I>.<P>	</P></LI><LI CLASS="li-itemize">конкатенация <I>M</I> и <I>N</I>: множество всех слов созданных конкатенацией
+слова из <I>M</I> и слова из <I>N</I>. Записывается просто <I>MN</I>.<P>	</P></LI><LI CLASS="li-itemize">мы можем повторить операцию конкатенации слов множества <I>M</I> и тем
+самым получить множество слов образованных из конечной последовательности слов
+множеств <I>M</I>. Такое множество записывается <I>M</I>+. Он содержит все слова множества
+<I>M</I>, все слова полученные конкатенацией двух слов множества <I>M</I>, трёх слов, и
+т.д. Если мы желаем чтобы данное множество содержало пустое слово, необходимо
+писать <I>M</I>*.<P>	</P></LI><LI CLASS="li-itemize">для удобства, существует дополнительная конструкция <I>M</I>?, которая
+включает все слова множества <I>M</I>, а так же пустое слово.
+</LI></UL><P>Один единственный символ ассоциируется с одно элементным множеством. В таком
+случае выражение <I>a| b| c</I> описывает множество состоящее из трёх слов
+<I>a</I>, <I>b</I> и <I>c</I>. Существует более компактная запись: <I>[abc]</I>.
+Так как наш алфавит является упорядоченным (по порядку кодов ASCII), можно
+определить интервал. Например, множество цифр запишется как [0−9]. Для
+группировки выражений можно использовать скобки.</P><P>Для того, чтобы использовать в записи сами символы–операторы, как обычные
+символы, необходимо ставить перед ними обратную косую черту: \.
+Например множество (\ *)* обозначает множество последовательностей
+звёздочек.</P><!--TOC subsubsection Пример-->
+<H4 CLASS="subsubsection"><!--SEC ANCHOR -->Пример</H4><!--SEC END --><P>Пусть существует множество из цифр (0,1,2,3,4,5,6,7,8,9), символы плюс (+) и
+минус (−), точки (.) и буквы <I>E</I>. Теперь мы можем определить множество чисел
+<I>num</I>. Назовем <I>integers</I> множество определённое выражением [0−9]+.
+Множество неотрицательных чисел <I>unum</I> определяется так:
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">	<I>integers</I> ? (.<I>integers</I>) ? (<I>E</I>(\+|−) ? <I>integers</I>)?
+</TD></TR>
+</TABLE><P>Множество отрицательных и положительных чисел записывается:</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>unum</I> | −<I>unum</I>    или    −?<I>unum</I>
+</TD></TR>
+</TABLE><!--TOC subsubsection Распознавание-->
+<H4 CLASS="subsubsection"><!--SEC ANCHOR -->Распознавание</H4><!--SEC END --><P>Теперь, после того как множество выражений определено, остаётся проблема
+распознавания принадлежности строки символов или одной из её подстрок этому
+множеству. Для решения данной задачи необходимо реализовать программу обработки
+выражений, которая соответствует формальным определениям множества. Для
+регулярных выражений такая обработка может быть автоматизирована. Подобная
+автоматизация реализована в модуле <TT>Genlex</TT> из библиотеки <TT>Str</TT> и
+инструментом <TT>ocamllex</TT>, которые будут представлены в следующих двух
+параграфах.</P><!--TOC subsubsection Библиотека <TT>Str</TT>-->
+<H4 CLASS="subsubsection"><!--SEC ANCHOR -->Библиотека <TT>Str</TT></H4><!--SEC END --><P>В данном модуле имеется абстрактный тип <TT>regexp</TT> и функция
+<TT>regexp</TT>. Указанный тип представляет регулярные выражения, а функция
+трансформирует регулярное выражение, представленное в виде строки символов, в
+абстрактное представление.</P><P>Модуль <TT>Str</TT> содержит несколько функций, которые используют регулярные
+выражения и манипулируют символьными строками. Синтаксис регулярных выражений
+библиотеки <TT>Str</TT> приведён в таблице <A HREF="#tbl:reg_exps">??</A>.</P><BLOCKQUOTE CLASS="table"><DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV>
+	<DIV CLASS="caption"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD VALIGN=top ALIGN=left>Тадлица 11.1: Регулярные выражения</TD></TR>
+</TABLE></DIV>
+	<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD VALIGN=top ALIGN=center NOWRAP>	.</TD><TD VALIGN=top ALIGN=left>любой символ, кроме \</TD></TR>
+<TR><TD VALIGN=top ALIGN=center NOWRAP>	*</TD><TD VALIGN=top ALIGN=left>ноль или несколько экземпляров предыдущего выражения</TD></TR>
+<TR><TD VALIGN=top ALIGN=center NOWRAP>	+</TD><TD VALIGN=top ALIGN=left>хотя бы один экземпляр предыдущего выражения</TD></TR>
+<TR><TD VALIGN=top ALIGN=center NOWRAP>	?</TD><TD VALIGN=top ALIGN=left>ноль или один экземпляр предыдущего выражения</TD></TR>
+<TR><TD VALIGN=top ALIGN=center NOWRAP>	[..]</TD><TD VALIGN=top ALIGN=left>множество символов</TD></TR>
+<TR><TD VALIGN=top ALIGN=center NOWRAP>	.</TD><TD VALIGN=top ALIGN=left>любой символ, кроме \</TD></TR>
+<TR><TD VALIGN=top ALIGN=center NOWRAP>	</TD><TD VALIGN=top ALIGN=left>интервал записывается при помощи - (пример [0−9])</TD></TR>
+<TR><TD VALIGN=top ALIGN=center NOWRAP>	</TD><TD VALIGN=top ALIGN=left>дополнение записывается при помощи ∧ (пример [∧ <I>A</I>−<I>Z</I>])</TD></TR>
+<TR><TD VALIGN=top ALIGN=center NOWRAP>	∧</TD><TD VALIGN=top ALIGN=left>начало строки (не путать с дополнением ∧)</TD></TR>
+<TR><TD VALIGN=top ALIGN=center NOWRAP>	$</TD><TD VALIGN=top ALIGN=left>конец строки</TD></TR>
+<TR><TD VALIGN=top ALIGN=center NOWRAP>	|</TD><TD VALIGN=top ALIGN=left>вариант</TD></TR>
+<TR><TD VALIGN=top ALIGN=center NOWRAP>	(..)</TD><TD VALIGN=top ALIGN=left>группировка в одно выражение (можно ссылаться на это выражение)</TD></TR>
+<TR><TD VALIGN=top ALIGN=center NOWRAP>	<I>i</I></TD><TD VALIGN=top ALIGN=left>числовая константа <I>i</I> ссылается на <I>i</I>–ый элемент группированного
+выражения</TD></TR>
+<TR><TD VALIGN=top ALIGN=center NOWRAP>	\</TD><TD VALIGN=top ALIGN=left>забой, используется для сопоставления зарезервированных
+символов в регулярных выражениях</TD></TR>
+<TR><TD VALIGN=top ALIGN=center NOWRAP></TD></TR>
+</TABLE>
+	<A NAME="tbl:reg_exps"></A>
+<DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV></BLOCKQUOTE><!--TOC subsubsection Пример-->
+<H4 CLASS="subsubsection"><!--SEC ANCHOR -->Пример</H4><!--SEC END --><P>В следующем примере напишем функцию, которая переводит дату из английского
+формата во французский. Предполагается, что входной файл состоит из строк,
+разбитых на поля данных и элементы даты разделяются точкой. Определим функцию,
+которая из полученной строки (строка файла), выделяет дату, разбивает её на
+части, переводит во французских формат и тем самым заменяет старую дату на
+новую.</P><TABLE CLASS="lstframe" STYLE="padding:1ex;border-style:none none none solid;"><TR><TD CLASS="lstlisting"># <FONT COLOR="black">let</FONT> <FONT COLOR="black">french_date_of</FONT> <FONT COLOR="black">d</FONT> =
+  <FONT COLOR="black">match</FONT> <FONT COLOR="black">d</FONT> <FONT COLOR="black">with</FONT>
+   [<FONT COLOR="black">mm</FONT>; <FONT COLOR="black">dd</FONT>; <FONT COLOR="black">yy</FONT>] -&gt; <FONT COLOR="black">dd</FONT>^<FONT COLOR="black">"/"</FONT>^<FONT COLOR="black">mm</FONT>^<FONT COLOR="black">"/"</FONT>^<FONT COLOR="black">yy</FONT>
+   | <FONT COLOR="black">_</FONT> -&gt; <FONT COLOR="black">failwith</FONT> <FONT COLOR="black">"Bad date format"</FONT> ;;
+<FONT COLOR="black">val</FONT> <FONT COLOR="black">french_date_of</FONT> : <FONT COLOR="black">string</FONT> <FONT COLOR="black">list</FONT> -&gt; <FONT COLOR="black">string</FONT> = &lt;<FONT COLOR="black">fun</FONT>&gt;
+
+# <FONT COLOR="black">let</FONT> <FONT COLOR="black">english_date_format</FONT> = <FONT COLOR="black">Str</FONT>.<FONT COLOR="black">regexp</FONT> <FONT COLOR="black">"[0-9]+\.[0-9]+\.[0-9]+"</FONT> ;;
+<FONT COLOR="black">val</FONT> <FONT COLOR="black">english_date_format</FONT> : <FONT COLOR="black">Str</FONT>.<FONT COLOR="black">regexp</FONT> = &lt;<FONT COLOR="black">abstr</FONT>&gt;
+
+# <FONT COLOR="black">let</FONT> <FONT COLOR="black">trans_date</FONT> <FONT COLOR="black">l</FONT> =
+  <FONT COLOR="black">try</FONT>
+  <FONT COLOR="black">let</FONT> <FONT COLOR="black">i</FONT>=<FONT COLOR="black">Str</FONT>.<FONT COLOR="black">search_forward</FONT> <FONT COLOR="black">english_date_format</FONT> <FONT COLOR="black">l</FONT> 0 <FONT COLOR="black">in</FONT>
+  <FONT COLOR="black">let</FONT> <FONT COLOR="black">d1</FONT> = <FONT COLOR="black">Str</FONT>.<FONT COLOR="black">matched_string</FONT> <FONT COLOR="black">l</FONT> <FONT COLOR="black">in</FONT>
+  <FONT COLOR="black">let</FONT> <FONT COLOR="black">d2</FONT> = <FONT COLOR="black">french_date_of</FONT> (<FONT COLOR="black">Str</FONT>.<FONT COLOR="black">split</FONT> (<FONT COLOR="black">Str</FONT>.<FONT COLOR="black">regexp</FONT> <FONT COLOR="black">"\."</FONT>) <FONT COLOR="black">d1</FONT>) <FONT COLOR="black">in</FONT>
+    <FONT COLOR="black">Str</FONT>.<FONT COLOR="black">global_replace</FONT> <FONT COLOR="black">english_date_format</FONT> <FONT COLOR="black">d2</FONT> <FONT COLOR="black">l</FONT>
+  <FONT COLOR="black">with</FONT> <FONT COLOR="black">Not_found</FONT> -&gt; <FONT COLOR="black">l</FONT> ;;
+  <FONT COLOR="black">val</FONT> <FONT COLOR="black">trans_date</FONT> : <FONT COLOR="black">string</FONT> -&gt; <FONT COLOR="black">string</FONT> = &lt;<FONT COLOR="black">fun</FONT>&gt;
+
+# <FONT COLOR="black">trans_date</FONT>
+<FONT COLOR="black">"..............06.13.99............"</FONT> ;;
+- : <FONT COLOR="black">string</FONT> = <FONT COLOR="black">"..............13/06/99............"</FONT></TD></TR>
+</TABLE><!--TOC subsection Инструмент <TT>Ocamllex</TT>-->
+<H3 CLASS="subsection"><!--SEC ANCHOR --><A NAME="htoc20">11.3.4</A>  Инструмент <TT>Ocamllex</TT></H3><!--SEC END --><P><TT>ocamllex</TT> — это лексический генератор созданный для Objective CAML по
+модели <TT>lex</TT>, написанном на языке C. При помощи файла, описывающего
+элементы лексики в виде множества регулярных выражений, которые необходимо
+распознать, он создаёт файл–исходник на Objective CAML. К описанию каждого
+лексического элемента можно привязать какое–нибудь действие, называемое
+семантическое действие. В полученном коде используется абстрактный тип
+<TT>lexbuf</TT> из модуля <TT>Lexing</TT>. В данном модуле также имеется
+несколько функций управления лексическими буферами, которые могут быть
+использованы программистом для того чтобы определить необходимые действия.</P><P>Обычно, файлы, описывающие лексику, имеют расширение <TT>.mll</TT>. Для того,
+чтобы из файла <TT>lex_file.mll</TT> получить файл на Objective CAML,
+необходимо выполнить следующую команду:</P><TABLE CLASS="lstframe" STYLE="padding:1ex;border-style:none none none solid;"><TR><TD CLASS="lstlisting"><FONT COLOR="black">ocamllex</FONT> <FONT COLOR="black">lex_file</FONT>.<FONT COLOR="black">mll</FONT></TD></TR>
+</TABLE><P>После этого, мы получим файл <TT>lex_file.ml</TT>, содержащий код лексического
+анализатора. Теперь, данный файл можно использовать в программе на Objective
+CAML. Каждому множеству правил анализа соответствует функция, которая принимает
+лексический буфер (типа <TT>Lexing.lexbuf</TT>) и затем возвращает значение,
+определённое семантическим действием. Значит, все действия для определённого
+правила должны создавать значение одного и того же типа.</P><P>Формат у файла для <TT>ocamllex</TT> следующий:</P><TABLE CLASS="lstframe" STYLE="padding:1ex;border-style:none none none solid;"><TR><TD CLASS="lstlisting">{
+  <FONT COLOR="black">header</FONT>
+}
+<FONT COLOR="black">let</FONT> <FONT COLOR="black">ident</FONT> = <FONT COLOR="black">regexp</FONT>
+        ...
+<FONT COLOR="black">rule</FONT> <FONT COLOR="black">ruleset1</FONT> = <FONT COLOR="black">parse</FONT>
+                <FONT COLOR="black">regexp</FONT> { <FONT COLOR="black">action</FONT> }
+                | ...
+                | <FONT COLOR="black">regexp</FONT> { <FONT COLOR="black">action</FONT> }
+<FONT COLOR="blue"><B>and</B></FONT> <FONT COLOR="black">ruleset2</FONT> = <FONT COLOR="black">parse</FONT>
+        ...
+<FONT COLOR="blue"><B>and</B></FONT> ...
+{
+  <FONT COLOR="black">trailer</FONT>-<FONT COLOR="blue"><B>and</B></FONT>-<FONT COLOR="black">end</FONT>
+}</TD></TR>
+</TABLE><P>Части заголовок и продолжение-и-конец не являются обязательными.
+Здесь вставляется код Objective CAML, определяющий типы данных, функции и т.д.
+необходимые для обработки данных. В последней части используются функции,
+которые используют правила анализа множества лексических данных из средней
+части. Серия объявлений, которая предшествует определению правил, позволяет дать
+имя некоторым регулярным выражениям. Эти имена будут использоваться в
+определении правил.</P><!--TOC subsubsection Пример-->
+<H4 CLASS="subsubsection"><!--SEC ANCHOR -->Пример</H4><!--SEC END --><P>Вернёмся к нашему интерпретатору BASIC и усовершенствуем тип возвращаемых
+лексических единиц. Таким образом, мы можем воспользоваться функцией
+<TT>lexer</TT>, (см. стр. <A HREF="#??">??</A>) которая возвращает такой же тип результата
+(<TT>lexeme</TT>), но на входе она получает буфер типа <TT>Lexing.lexbuf</TT>.</P><TABLE CLASS="lstframe" STYLE="padding:1ex;border-style:none none none solid;"><TR><TD CLASS="lstlisting">  {
+    <FONT COLOR="black">let</FONT> <FONT COLOR="black">string_chars</FONT> <FONT COLOR="black">s</FONT> =
+    <FONT COLOR="black">String</FONT>.<FONT COLOR="black">sub</FONT> <FONT COLOR="black">s</FONT> 1 ((<FONT COLOR="black">String</FONT>.<FONT COLOR="black">length</FONT> <FONT COLOR="black">s</FONT>)-2) ;;
+  }
+
+<FONT COLOR="black">let</FONT> <FONT COLOR="black">op_ar</FONT> = ['-' '+' '*' '\%' '/']
+<FONT COLOR="black">let</FONT> <FONT COLOR="black">op_bool</FONT> = ['!' '\&amp;' '|']
+<FONT COLOR="black">let</FONT> <FONT COLOR="black">rel</FONT> = ['=' '&lt;' '&gt;']
+
+<FONT COLOR="black">rule</FONT> <FONT COLOR="black">lexer</FONT> = <FONT COLOR="black">parse</FONT>
+    [' ']   { <FONT COLOR="black">lexer</FONT> <FONT COLOR="black">lexbuf</FONT> }
+  | <FONT COLOR="black">op_ar</FONT>   { <FONT COLOR="black">Lsymbol</FONT> (<FONT COLOR="black">Lexing</FONT>.<FONT COLOR="black">lexeme</FONT> <FONT COLOR="black">lexbuf</FONT>) }
+  | <FONT COLOR="black">op_bool</FONT> { <FONT COLOR="black">Lsymbol</FONT> (<FONT COLOR="black">Lexing</FONT>.<FONT COLOR="black">lexeme</FONT> <FONT COLOR="black">lexbuf</FONT>) }
+  | <FONT COLOR="black">"&lt;="</FONT>    { <FONT COLOR="black">Lsymbol</FONT> (<FONT COLOR="black">Lexing</FONT>.<FONT COLOR="black">lexeme</FONT> <FONT COLOR="black">lexbuf</FONT>) }
+  | <FONT COLOR="black">"&gt;="</FONT>    { <FONT COLOR="black">Lsymbol</FONT> (<FONT COLOR="black">Lexing</FONT>.<FONT COLOR="black">lexeme</FONT> <FONT COLOR="black">lexbuf</FONT>) }
+  | <FONT COLOR="black">"&lt;&gt;"</FONT>    { <FONT COLOR="black">Lsymbol</FONT> (<FONT COLOR="black">Lexing</FONT>.<FONT COLOR="black">lexeme</FONT> <FONT COLOR="black">lexbuf</FONT>) }
+  | <FONT COLOR="black">rel</FONT>     { <FONT COLOR="black">Lsymbol</FONT> (<FONT COLOR="black">Lexing</FONT>.<FONT COLOR="black">lexeme</FONT> <FONT COLOR="black">lexbuf</FONT>) }
+  | <FONT COLOR="black">"REM"</FONT>   { <FONT COLOR="black">Lsymbol</FONT> (<FONT COLOR="black">Lexing</FONT>.<FONT COLOR="black">lexeme</FONT> <FONT COLOR="black">lexbuf</FONT>) }
+  | <FONT COLOR="black">"LET"</FONT>   { <FONT COLOR="black">Lsymbol</FONT> (<FONT COLOR="black">Lexing</FONT>.<FONT COLOR="black">lexeme</FONT> <FONT COLOR="black">lexbuf</FONT>) }
+  | <FONT COLOR="black">"PRINT"</FONT> { <FONT COLOR="black">Lsymbol</FONT> (<FONT COLOR="black">Lexing</FONT>.<FONT COLOR="black">lexeme</FONT> <FONT COLOR="black">lexbuf</FONT>) }
+  | <FONT COLOR="black">"INPUT"</FONT> { <FONT COLOR="black">Lsymbol</FONT> (<FONT COLOR="black">Lexing</FONT>.<FONT COLOR="black">lexeme</FONT> <FONT COLOR="black">lexbuf</FONT>) }
+  | <FONT COLOR="black">"IF"</FONT>    { <FONT COLOR="black">Lsymbol</FONT> (<FONT COLOR="black">Lexing</FONT>.<FONT COLOR="black">lexeme</FONT> <FONT COLOR="black">lexbuf</FONT>) }
+  | <FONT COLOR="black">"THEN"</FONT>  { <FONT COLOR="black">Lsymbol</FONT> (<FONT COLOR="black">Lexing</FONT>.<FONT COLOR="black">lexeme</FONT> <FONT COLOR="black">lexbuf</FONT>) }
+  | '-'? ['0'-'9']+   { <FONT COLOR="black">Lint</FONT> (<FONT COLOR="black">int_of_string</FONT> (<FONT COLOR="black">Lexing</FONT>.<FONT COLOR="black">lexeme</FONT> <FONT COLOR="black">lexbuf</FONT>)) }
+  | ['<FONT COLOR="black">A</FONT>'-'<FONT COLOR="black">z</FONT>']+        { <FONT COLOR="black">Lident</FONT> (<FONT COLOR="black">Lexing</FONT>.<FONT COLOR="black">lexeme</FONT> <FONT COLOR="black">lexbuf</FONT>) }
+  | '<FONT COLOR="black">"' [^ '"</FONT>']* '<FONT COLOR="black">"'  { Lstring (string_chars (Lexing.lexeme lexbuf)) }</FONT></TD></TR>
+</TABLE><P>После обработки данного файла командой <TT>ocamllex</TT> получим функцию
+<TT>lexer</TT> типа <TT>Lexing.lexbuf -&gt; lexeme</TT>. Далее, мы рассмотрим каким
+образом подобные функции используются в синтаксическом анализе (см. стр.
+<A HREF="#??">??</A>).
+
+</P><!--TOC section Синтаксис-->
+<H2 CLASS="section"><!--SEC ANCHOR --><A NAME="htoc21">11.4</A>  Синтаксис</H2><!--SEC END --><P>Благодаря лексическому анализу, мы в состоянии разбить поток символов на более
+структурированные элементы: лексические элементы. Теперь необходимо знать как
+правильно объединять эти элементы в синтаксически корректные фразы какого-нибудь
+языка. Правила синтаксической группировки определены посредством грамматических
+правил. Формализм, произошедший из лингвистики, был с успехом перенят
+математиками, занимающимися теориями языков, и специалистами по информатике. На
+странице <A HREF="#??">??</A> мы уже видели пример грамматики для языка BASIC. Здесь мы
+снова вернёмся к этому примеру, чтобы более углублённо ознакомится с базовыми
+концепциями грамматики.</P><!--TOC subsection Грамматика-->
+<H3 CLASS="subsection"><!--SEC ANCHOR --><A NAME="htoc22">11.4.1</A>  Грамматика</H3><!--SEC END --><P>Говоря формальным языком, грамматика основывается на четырёх элементах:</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">
+	Множество символов, называемых терминалами. Эти символы являются
+лексическими элементами языка. В Бэйсике к ним относятся символы операторов,
+арифметических отношений и логические (+, &amp;, &lt;, ≤, ⋯), ключевые
+слова языка <B>(GOTO, PRINT, IF, THEN, </B><B>⋯</B><B>)</B>, целые числа (элемент
+<TT>integer</TT>) и переменные (элемент <TT>variable</TT>).<P>	</P></LI><LI CLASS="li-enumerate">Множество нетерминальных символов, которые представляют
+синтаксические компоненты языка. Например, программа на языке Бэйсик состоит из
+строк. Таким образом мы имеем компоненту Line, которая в свою очередь
+состоит из выражений (Expression), и т.д.<P>	</P></LI><LI CLASS="li-enumerate">Множество так называемых порождающих правил. Они описывают каким
+образом комбинируются терминальные и нетерминальные символы, чтобы создать
+синтаксическую компоненту. Строка в Бэйсике начинается с номера, за которой
+следует инструкция. Смысл правила следующий:<DIV CLASS="center">
+	Line ::= <I>integer</I> Instruction
+</DIV><P>Одна и та же компонента может быть порождена несколькими способами. В этом
+случае варианты разделяются символом | как в:</P><DIV CLASS="center">
+	<TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>		Instruction</TD><TD ALIGN=center NOWRAP>::=</TD><TD ALIGN=left NOWRAP>LET variable = Instruction</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>GOTO integer</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>PRINT Expression</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		etc</TD><TD ALIGN=center NOWRAP>&nbsp;</TD><TD ALIGN=left NOWRAP></TD></TR>
+</TABLE>
+</DIV></LI></OL><P>Среди всех нетерминальных символов различают один, называемый начальным.
+Правило, которое порождает эту аксиому является порождающим правилом всего
+языка.</P><!--TOC subsection Порождение и распознавание-->
+<H3 CLASS="subsection"><!--SEC ANCHOR --><A NAME="htoc23">11.4.2</A>  Порождение и распознавание</H3><!--SEC END --><P>
+<A NAME="page_ref:Production_and_Recognition"></A></P><P>С помощью порождающих правил можно определить принадлежит ли последовательность
+лексем языку.</P><P>Рассмотрим простой язык, описывающий арифметические выражения:</P><DIV CLASS="center">
+	<TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>		Exp</TD><TD ALIGN=center NOWRAP>::=</TD><TD ALIGN=left NOWRAP><I>integer</I></TD><TD ALIGN=center NOWRAP>(R1)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>Exp + Exp</TD><TD ALIGN=center NOWRAP>(R2)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>Exp * Exp</TD><TD ALIGN=center NOWRAP>(R3)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>( Exp )</TD><TD ALIGN=center NOWRAP>(R4)</TD></TR>
+</TABLE>
+</DIV><P>здесь <I>(R1) (R2) (R3) (R4)</I> — имена правил. По окончании лексического
+анализа выражение 1*(2+3) становится последовательностью следующих лексем:</P><DIV CLASS="center">
+<I>integer * (integer + integer)</I>
+</DIV><P>Для того, чтобы проанализировать эту фразу и убедиться в том что она принадлежит
+языку арифметических выражений, воспользуемся правилами справа налево: если
+часть выражения соответствует правому члену какого-нибудь правила, мы заменяем
+это выражение соответствующим левым членом. Этот процесс продолжается до тех
+пор, пока выражение не будет редуцировано до аксиомы. Ниже представлен результат
+такого анализа <SUP><A NAME="text3" HREF="#note3">3</A></SUP>:</P><DIV CLASS="center">
+	<TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>		integer * (integer + integer)</TD><TD ALIGN=center NOWRAP>(R1)</TD><TD ALIGN=left NOWRAP>Exp * (integer + integer)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>(R1)</TD><TD ALIGN=left NOWRAP>Exp * (Exp + integer)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>(R1)</TD><TD ALIGN=left NOWRAP>Exp * (Exp + Exp)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>(R2)</TD><TD ALIGN=left NOWRAP>Exp * (Exp)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>(R4)</TD><TD ALIGN=left NOWRAP>Exp * Exp</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>(R3)</TD><TD ALIGN=left NOWRAP>Exp</TD></TR>
+</TABLE>
+</DIV><P>Начиная с последней линии, которая содержит лишь Exp и следуя стрелкам, можно
+определить каким образом было полученное выражение исходя из аксиомы Exp.
+Соответственно данная фраза является правильно сформированной фразой языка
+арифметических выражений, определённого грамматикой.</P><P>Преобразование грамматики в программу, способную распознать принадлежность
+последовательности лексем языку, который определён грамматикой, является более
+сложной проблемой, чем проблема использования регулярных выражений.
+Действительно, в соответствии с математическим результатом любое множество
+(слов), определённое формализмом регулярных выражений, может быть определено
+другим формализмом: детерминированные конечные автоматы. Такие автоматы легко
+реализуются программами, принимающими поток символов. Подобный результат для
+грамматик в общем не существует. Однако, имеются менее строгие (?) (weaker)
+результаты устанавливающие эквивалентность между определёнными классами
+грамматик и более богатыми автоматами: автомат со стеком. Здесь мы не станем
+вдаваться ни в детали этих результатов, ни в точное определение таких автоматов.
+Однако, мы можем определить какие классы грамматики могут использоваться в
+средствах генерации синтаксических анализаторов или для реализации напрямую
+анализатора.</P><!--TOC subsection Нисходящий анализ-->
+<H3 CLASS="subsection"><!--SEC ANCHOR --><A NAME="htoc24">11.4.3</A>  Нисходящий анализ</H3><!--SEC END --><P>Разбор выражения 1 * (2 + 3) в предыдущем параграфе не является единственным:
+мы с таким же успехом могли бы начать редуцирование <I>integer</I>, то есть
+воспользоваться правилом <I>(R2)</I> редуцирования 2 + 3. Эти два способа
+распознавания являются двумя типами анализа: восходящий анализ (справа налево) и
+нисходящий слева направо. Последний анализ легко реализуется при помощи потоков
+лексем модуля <TT>Stream</TT>. Средство <TT>ocamlyacc</TT> использует восходящий
+анализ, при котором применяется стек, как это уже было проиллюстрировано
+синтаксическим анализатором программ на Бэйсике. Выбор анализа не просто дело
+вкуса, в зависимости от используемой для спецификации языка формы грамматики,
+можно или нет применять нисходящий анализ.</P><!--TOC subsubsection Простой случай-->
+<H4 CLASS="subsubsection"><!--SEC ANCHOR -->Простой случай</H4><!--SEC END --><P>Каноническим примером нисходящего анализа является префиксная запись
+арифметических выражений, определяемая как:</P><DIV CLASS="center">
+	<TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>		Exp</TD><TD ALIGN=center NOWRAP>::=</TD><TD ALIGN=left NOWRAP>integer</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>+ Exp Exp</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>* Exp Exp</TD></TR>
+<TR><TD ALIGN=right NOWRAP></TD></TR>
+</TABLE>
+</DIV><P>В данном случае достаточно знать первую лексему, для того чтобы определить какое
+правило может быть использовано. При помощи подобной предсказуемости нет
+необходимости явно управлять стеком, достаточно положиться на рекурсивный вызов
+анализатора. И тогда при помощи <TT>Genlex</TT> и <TT>Stream</TT> очень просто
+написать программу реализующую нисходящий анализ. Функция <TT>infix_of</TT> из
+полученного префиксного выражения возвращает его инфиксный эквивалент:</P><TABLE CLASS="lstframe" STYLE="padding:1ex;border-style:none none none solid;"><TR><TD CLASS="lstlisting"># <FONT COLOR="black">let</FONT> <FONT COLOR="black">lexer</FONT> <FONT COLOR="black">s</FONT> =
+   <FONT COLOR="black">let</FONT> <FONT COLOR="black">ll</FONT> = <FONT COLOR="black">Genlex</FONT>.<FONT COLOR="black">make_lexer</FONT> [<FONT COLOR="black">"+"</FONT>;<FONT COLOR="black">"*"</FONT>]
+   <FONT COLOR="black">in</FONT> <FONT COLOR="black">ll</FONT> (<FONT COLOR="black">Stream</FONT>.<FONT COLOR="black">of_string</FONT> <FONT COLOR="black">s</FONT>);;
+<FONT COLOR="black">val</FONT> <FONT COLOR="black">lexer</FONT> : <FONT COLOR="black">string</FONT> -&gt; <FONT COLOR="black">Genlex</FONT>.<FONT COLOR="black">token</FONT> <FONT COLOR="black">Stream</FONT>.<FONT COLOR="black">t</FONT> = &lt;<FONT COLOR="black">fun</FONT>&gt;
+
+# <FONT COLOR="black">let</FONT> <FONT COLOR="black">rec</FONT> <FONT COLOR="black">stream_parse</FONT> <FONT COLOR="black">s</FONT> =
+   <FONT COLOR="black">match</FONT> <FONT COLOR="black">s</FONT> <FONT COLOR="black">with</FONT> <FONT COLOR="black">parser</FONT>
+     [&lt;'<FONT COLOR="black">Genlex</FONT>.<FONT COLOR="black">Ident</FONT> <FONT COLOR="black">x</FONT>&gt;] -&gt; <FONT COLOR="black">x</FONT>
+   | [&lt;'<FONT COLOR="black">Genlex</FONT>.<FONT COLOR="black">Int</FONT> <FONT COLOR="black">n</FONT>&gt;] -&gt; <FONT COLOR="black">string_of_int</FONT> <FONT COLOR="black">n</FONT>
+   | [&lt;'<FONT COLOR="black">Genlex</FONT>.<FONT COLOR="black">Kwd</FONT> <FONT COLOR="black">"+"</FONT>; <FONT COLOR="black">e1</FONT>=<FONT COLOR="black">stream_parse</FONT>; <FONT COLOR="black">e2</FONT>=<FONT COLOR="black">stream_parse</FONT>&gt;] -&gt; <FONT COLOR="black">"("</FONT>^<FONT COLOR="black">e1</FONT>^<FONT COLOR="black">"+"</FONT>^<FONT COLOR="black">e2</FONT>^<FONT COLOR="black">")"</FONT>
+   | [&lt;'<FONT COLOR="black">Genlex</FONT>.<FONT COLOR="black">Kwd</FONT> <FONT COLOR="black">"*"</FONT>; <FONT COLOR="black">e1</FONT>=<FONT COLOR="black">stream_parse</FONT>; <FONT COLOR="black">e2</FONT>=<FONT COLOR="black">stream_parse</FONT>&gt;] -&gt; <FONT COLOR="black">"("</FONT>^<FONT COLOR="black">e1</FONT>^<FONT COLOR="black">"*"</FONT>^<FONT COLOR="black">e2</FONT>^<FONT COLOR="black">")"</FONT>
+   | [&lt;&gt;] -&gt; <FONT COLOR="black">failwith</FONT> <FONT COLOR="black">"Parse error"</FONT> ;;
+<FONT COLOR="black">val</FONT> <FONT COLOR="black">stream_parse</FONT> : <FONT COLOR="black">Genlex</FONT>.<FONT COLOR="black">token</FONT> <FONT COLOR="black">Stream</FONT>.<FONT COLOR="black">t</FONT> -&gt; <FONT COLOR="black">string</FONT> = &lt;<FONT COLOR="black">fun</FONT>&gt;
+
+# <FONT COLOR="black">let</FONT> <FONT COLOR="black">infix_of</FONT> <FONT COLOR="black">s</FONT> = <FONT COLOR="black">stream_parse</FONT> (<FONT COLOR="black">lexer</FONT> <FONT COLOR="black">s</FONT>) ;;
+<FONT COLOR="black">val</FONT> <FONT COLOR="black">infix_of</FONT> : <FONT COLOR="black">string</FONT> -&gt; <FONT COLOR="black">string</FONT> = &lt;<FONT COLOR="black">fun</FONT>&gt;
+
+# <FONT COLOR="black">infix_of</FONT> <FONT COLOR="black">"* +3 11 22"</FONT>;;
+- : <FONT COLOR="black">string</FONT> = <FONT COLOR="black">"((3+11)*22)"</FONT></TD></TR>
+</TABLE><P>Однако не стоит забывать о некоторой примитивности лексического анализа.
+Советуем периодически добавлять пробелы между различными лексическими
+элементами.</P><TABLE CLASS="lstframe" STYLE="padding:1ex;border-style:none none none solid;"><TR><TD CLASS="lstlisting"># <FONT COLOR="black">infix_of</FONT> <FONT COLOR="black">"*+3 11 22"</FONT>;;
+- : <FONT COLOR="black">string</FONT> = <FONT COLOR="black">"*+"</FONT></TD></TR>
+</TABLE><!--TOC subsubsection Случай посложней-->
+<H4 CLASS="subsubsection"><!--SEC ANCHOR -->Случай посложней</H4><!--SEC END --><P>Синтаксический анализ при помощи потоков предсказуем, он облагает грамматику
+двумя условиями:</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+	В правилах грамматики не должно быть левой рекурсии. Правило
+называется рекурсивным слева, если его правый член начинается с нетерминального
+символа, который является левой частью правила. Например: <TT>Exp ::= Exp +
+Exp</TT><P>	</P></LI><LI CLASS="li-itemize">Не должно существовать правил начинающихся одним и тем же выражением.
+</LI></UL><P>Грамматика арифметических выражений, приведённая на стр.
+<A HREF="#page_ref:Production_and_Recognition">??</A>, не подходит для нисходящего
+анализа: они не удовлетворяют ни одному из условий. Для того, чтобы применить
+нисходящий анализ необходимо переформулировать грамматику таким образом, чтобы
+удалить левую рекурсию и неопределённость правил. Вот полученный результат:</P><DIV CLASS="center">
+	<TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>		Exp</TD><TD ALIGN=center NOWRAP>::=</TD><TD ALIGN=left NOWRAP>Atom NextExpr</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		NextExpr</TD><TD ALIGN=center NOWRAP>::=</TD><TD ALIGN=left NOWRAP>+ Atom</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>- Atom</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>* Atom</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>/ Atom</TD></TR>
+<TR><TD ALIGN=right NOWRAP> 		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>ε</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		 Atom</TD><TD ALIGN=center NOWRAP>::=</TD><TD ALIGN=left NOWRAP>integer</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>( Expr )</TD></TR>
+</TABLE>
+</DIV><P>Заметьте использование пустого слова ε в определении
+<TT>NextExpr</TT>. Оно необходимо, если мы хотим чтобы просто целое число
+являлось выражением.</P><P>Следующий анализатор есть просто перевод вышеуказанной грамматики в код. Он
+реализует абстрактное синтаксическое дерево арифметических выражений.</P><TABLE CLASS="lstframe" STYLE="padding:1ex;border-style:none none none solid;"><TR><TD CLASS="lstlisting"># <FONT COLOR="black">let</FONT> <FONT COLOR="black">rec</FONT> <FONT COLOR="black">rest</FONT> = <FONT COLOR="black">parser</FONT>
+    [&lt; '<FONT COLOR="black">Lsymbol</FONT> <FONT COLOR="black">"+"</FONT>; <FONT COLOR="black">e2</FONT> = <FONT COLOR="black">atom</FONT> &gt;] -&gt; <FONT COLOR="black">Some</FONT> (<FONT COLOR="black">PLUS</FONT>,<FONT COLOR="black">e2</FONT>)
+  | [&lt; '<FONT COLOR="black">Lsymbol</FONT> <FONT COLOR="black">"-"</FONT>; <FONT COLOR="black">e2</FONT> = <FONT COLOR="black">atom</FONT> &gt;] -&gt; <FONT COLOR="black">Some</FONT> (<FONT COLOR="black">MINUS</FONT>,<FONT COLOR="black">e2</FONT>)
+  | [&lt; '<FONT COLOR="black">Lsymbol</FONT> <FONT COLOR="black">"*"</FONT>; <FONT COLOR="black">e2</FONT> = <FONT COLOR="black">atom</FONT> &gt;] -&gt; <FONT COLOR="black">Some</FONT> (<FONT COLOR="black">MULT</FONT>,<FONT COLOR="black">e2</FONT>)
+  | [&lt; '<FONT COLOR="black">Lsymbol</FONT> <FONT COLOR="black">"/"</FONT>; <FONT COLOR="black">e2</FONT> = <FONT COLOR="black">atom</FONT> &gt;] -&gt; <FONT COLOR="black">Some</FONT> (<FONT COLOR="black">DIV</FONT>,<FONT COLOR="black">e2</FONT>)
+  | [&lt; &gt;] -&gt; <FONT COLOR="black">None</FONT>
+ <FONT COLOR="blue"><B>and</B></FONT> <FONT COLOR="black">atom</FONT> = <FONT COLOR="black">parser</FONT>
+     [&lt; '<FONT COLOR="black">Lint</FONT> <FONT COLOR="black">i</FONT> &gt;] -&gt; <FONT COLOR="black">ExpInt</FONT> <FONT COLOR="black">i</FONT>
+   | [&lt; '<FONT COLOR="black">Lsymbol</FONT> <FONT COLOR="black">"("</FONT>; <FONT COLOR="black">e</FONT> = <FONT COLOR="black">expr</FONT> ; '<FONT COLOR="black">Lsymbol</FONT> <FONT COLOR="black">")"</FONT> &gt;] -&gt; <FONT COLOR="black">e</FONT>
+ <FONT COLOR="blue"><B>and</B></FONT> <FONT COLOR="black">expr</FONT> <FONT COLOR="black">s</FONT> =
+   <FONT COLOR="black">match</FONT> <FONT COLOR="black">s</FONT> <FONT COLOR="black">with</FONT> <FONT COLOR="black">parser</FONT>
+     [&lt; <FONT COLOR="black">e1</FONT> = <FONT COLOR="black">atom</FONT> &gt;] -&gt;
+       <FONT COLOR="black">match</FONT> <FONT COLOR="black">rest</FONT> <FONT COLOR="black">s</FONT> <FONT COLOR="black">with</FONT>
+          <FONT COLOR="black">None</FONT> -&gt; <FONT COLOR="black">e1</FONT>
+        | <FONT COLOR="black">Some</FONT> (<FONT COLOR="black">op</FONT>,<FONT COLOR="black">e2</FONT>) -&gt; <FONT COLOR="black">ExpBin</FONT>(<FONT COLOR="black">e1</FONT>,<FONT COLOR="black">op</FONT>,<FONT COLOR="black">e2</FONT>) ;;
+<FONT COLOR="black">val</FONT> <FONT COLOR="black">rest</FONT> : <FONT COLOR="black">lexeme</FONT> <FONT COLOR="black">Stream</FONT>.<FONT COLOR="black">t</FONT> -&gt; (<FONT COLOR="black">bin_op</FONT> * <FONT COLOR="black">expression</FONT>) <FONT COLOR="black">option</FONT> = &lt;<FONT COLOR="black">fun</FONT>&gt;
+<FONT COLOR="black">val</FONT> <FONT COLOR="black">atom</FONT> : <FONT COLOR="black">lexeme</FONT> <FONT COLOR="black">Stream</FONT>.<FONT COLOR="black">t</FONT> -&gt; <FONT COLOR="black">expression</FONT> = &lt;<FONT COLOR="black">fun</FONT>&gt;
+<FONT COLOR="black">val</FONT> <FONT COLOR="black">expr</FONT> : <FONT COLOR="black">lexeme</FONT> <FONT COLOR="black">Stream</FONT>.<FONT COLOR="black">t</FONT> -&gt; <FONT COLOR="black">expression</FONT> = &lt;<FONT COLOR="black">fun</FONT>&gt;</TD></TR>
+</TABLE><P>Сложность использования нисходящего анализа заключается в том, что грамматика
+должна быть очень ограниченной формы. Если язык выражен естественно с
+использованием левой рекурсии (как в инфиксных выражениях), то не всегда легко
+определить эквивалентную грамматику, то есть определяющую такой же язык, которая
+бы удовлетворяла требованиям нисходящего анализа. По этой причине, средства
+<TT>yacc</TT> и <TT>ocamlyacc</TT> реализуют восходящий анализ, который
+разрешает определение более естественных грамматик. Однако, мы увидим, что даже
+в этом случае существуют ограничения.</P><!--TOC subsection Восходящий анализ-->
+<H3 CLASS="subsection"><!--SEC ANCHOR --><A NAME="htoc25">11.4.4</A>  Восходящий анализ</H3><!--SEC END --><P>Мы уже вкратце представили на странице <A HREF="#??">??</A> принципы восходящего
+анализа: сдвиг и вывод <SUP><A NAME="text4" HREF="#note4">4</A></SUP>.
+После каждого подобного действия, состояние стека изменяется. Из этой
+последовательности можно вывести правила грамматики, в случае если грамматика
+это позволяет, как в примере с нисходящим анализом. Опять же, сложности
+возникают из-за неопределённости правил, когда невозможно выбрать между
+продвинутся или сократить. Проиллюстрируем действие восходящего анализа и его
+недостатки на все тех же арифметических выражениях в постфиксном и инфиксном
+написании.</P><!--TOC subsubsection Положительная сторона-->
+<H4 CLASS="subsubsection"><!--SEC ANCHOR -->Положительная сторона</H4><!--SEC END --><P>Упрощённая постфиксная грамматика арифметических выражений выглядит так:</P><DIV CLASS="center">
+	<TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>		Exp</TD><TD ALIGN=center NOWRAP>::=</TD><TD ALIGN=left NOWRAP><I>integer</I></TD><TD ALIGN=center NOWRAP>(R1)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>Exp Exp +</TD><TD ALIGN=center NOWRAP>(R2)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>Exp Exp -</TD><TD ALIGN=center NOWRAP>(R3)</TD></TR>
+<TR><TD ALIGN=right NOWRAP></TD></TR>
+</TABLE>
+</DIV><P>Данная грамматика является двойственной по отношению к префиксной: для того
+чтобы точно знать какое правило следует применить, необходимо дождаться
+окончания анализа. В действительности анализ подобных выражений схож с
+вычислением при помощи стека. Только вместо проталкивания результата вычисления,
+проталкиваются грамматические символы. Если в начале стек пустой, то после того
+как ввод закончен, необходимо получить стек содержащий лишь нетерминальную
+аксиому. Приведём изменение стека: если мы продвигаемся, то проталкивается
+текущий нетерминальный символ; если сокращаем, то первые символы стека
+соответствуют правому члену (в обратном порядке) правила и тогда мы заменяем эти
+элементы соответствующими нетерминальными элементами.</P><P>В таблице <A HREF="#tbl:bottom-up_parsing">??</A> приведён восходящий анализ выражения 1 2
++ 3 * 4 +. Считываемая лексическая единица подчёркивается для более удобного
+чтения. Конец потока помечается символом $.</P><BLOCKQUOTE CLASS="table"><DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV>
+	<DIV CLASS="caption"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD VALIGN=top ALIGN=left>Тадлица 11.2: Восходящий анализ</TD></TR>
+</TABLE></DIV>
+	<DIV CLASS="center">
+	<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD ALIGN=left NOWRAP>	Действие</TD><TD ALIGN=left NOWRAP>Вход</TD><TD ALIGN=right NOWRAP>Стек</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	</TD><TD ALIGN=left NOWRAP><U>1</U> 2 + 3 * 4 + $</TD><TD ALIGN=right NOWRAP>[]</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	Сдвиг</TD><TD ALIGN=left NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	</TD><TD ALIGN=left NOWRAP><U>2</U> + 3 * 4 + $</TD><TD ALIGN=right NOWRAP>[1]</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	Сократить <I>(R1)</I></TD><TD ALIGN=left NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	</TD><TD ALIGN=left NOWRAP><U>2</U> + 3 * 4 + $</TD><TD ALIGN=right NOWRAP>[Exp]</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	Сдвиг</TD><TD ALIGN=left NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	</TD><TD ALIGN=left NOWRAP><U>+</U> 3 * 4 + $</TD><TD ALIGN=right NOWRAP>[2 Exp]</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	Сдвиг, Сократить <I>(R1)</I></TD><TD ALIGN=left NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	</TD><TD ALIGN=left NOWRAP><U>+</U> 3 * 4 + $</TD><TD ALIGN=right NOWRAP>[Exp Exp]</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	Сдвиг, Сократить <I>(R2)</I></TD><TD ALIGN=left NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	</TD><TD ALIGN=left NOWRAP><U>3</U> * 4 + $</TD><TD ALIGN=right NOWRAP>[Exp]</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	Сдвиг, Сократить <I>(R1)</I></TD><TD ALIGN=left NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	</TD><TD ALIGN=left NOWRAP><U>*</U> 4 + $</TD><TD ALIGN=right NOWRAP>[Exp Exp]</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	Сдвиг, Сократить <I>(R3)</I></TD><TD ALIGN=left NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	</TD><TD ALIGN=left NOWRAP><U>4</U> + $</TD><TD ALIGN=right NOWRAP>[Exp]</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	Сдвиг, Сократить <I>(R1)</I></TD><TD ALIGN=left NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	</TD><TD ALIGN=left NOWRAP><U>+</U> $</TD><TD ALIGN=right NOWRAP>[Exp Exp]</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	Сдвиг, Сократить <I>(R2)</I></TD><TD ALIGN=left NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	</TD><TD ALIGN=left NOWRAP><U>$</U></TD><TD ALIGN=right NOWRAP>[Exp]</TD></TR>
+<TR><TD ALIGN=left NOWRAP></TD></TR>
+</TABLE>
+	</DIV>
+	<A NAME="tbl:bottom-up_parsing"></A>
+<DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV></BLOCKQUOTE><!--TOC subsubsection Отрицательная сторона-->
+<H4 CLASS="subsubsection"><!--SEC ANCHOR -->Отрицательная сторона</H4><!--SEC END --><P>Вся трудность перехода от грамматики к программе распознающей язык заключается в
+определении действия, которое необходимо применить. Проиллюстрируем эту проблему
+на трёх примерах, приводящих к трём неопределённостям.</P><P>Первый пример есть грамматика выражений использующих операцию сложения:</P><DIV CLASS="center">
+	<TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>		E0</TD><TD ALIGN=center NOWRAP>::=</TD><TD ALIGN=left NOWRAP><I>integer</I></TD><TD ALIGN=center NOWRAP>(R1)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>E0 + E0</TD><TD ALIGN=center NOWRAP>(R2)</TD></TR>
+<TR><TD ALIGN=right NOWRAP></TD></TR>
+</TABLE>
+</DIV><P>Неопределённость данной грамматики проявляется при использовании правила <I>R2</I>. Предположим следующую ситуацию:</P><BLOCKQUOTE CLASS="table"><DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV>
+	<DIV CLASS="center">
+	<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD ALIGN=left NOWRAP>	Действие</TD><TD ALIGN=left NOWRAP>Вход</TD><TD ALIGN=right NOWRAP>Стек</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	:</TD><TD ALIGN=left NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	</TD><TD ALIGN=left NOWRAP><U>+</U></TD><TD ALIGN=right NOWRAP>E0 + E0 …</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	:</TD><TD ALIGN=left NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP></TD></TR>
+</TABLE>
+	</DIV>
+<DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV></BLOCKQUOTE><P>В подобном случае невозможно определить необходимо сдвинуть и протолкнуть в стек
++ или сократить в соответствии с правилом <I>(R2)</I> оба E0 и присутствующий в
+стеке +. Подобная ситуация называется конфликтом сдвиг-вывод (shift/reduce). Она
+является следствием того, что выражение <I>integer</I> + <I>integer</I> + <I>integer</I> может быть выведено справа двумя способами.</P><P>Первый вариант:</P><DIV CLASS="center">
+	<TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>		E0</TD><TD ALIGN=left NOWRAP>(<I>R2</I>) E0 + <U>E0</U></TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=left NOWRAP>(<I>R1</I>) <U>E0</U> + <I>integer</I></TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=left NOWRAP>(<I>R2</I>) E0 + <U>E0</U> + <I>integer</I></TD></TR>
+<TR><TD ALIGN=right NOWRAP></TD></TR>
+</TABLE>
+</DIV><P>Второй вариант:</P><DIV CLASS="center">
+	<TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>		E0</TD><TD ALIGN=left NOWRAP>(<I>R2</I>) E0 + <U>E0</U></TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=left NOWRAP>(<I>R1</I>) E0 + E0 + <U>E0</U> + <I>integer</I></TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=left NOWRAP>(<I>R2</I>) E0 + <U>E0</U> + <I>integer</I></TD></TR>
+<TR><TD ALIGN=right NOWRAP></TD></TR>
+</TABLE>
+</DIV><P>Выражения, полученные двумя выводами, могут показаться одинаковыми с точки
+зрения вычисления выражения,</P><P>(<I>integer</I> + <I>integer</I>) + <I>integer</I> и <I>integer</I> + (<I>integer</I>
++ <I>integer</I>)</P><P>но разными для конструкции синтаксического дерева (см. рис. <A HREF="#??">??</A> на стр.
+<A HREF="#??">??</A>)</P><P>Второй пример грамматики, порождающей конфликт между сдвиг-вывод, содержит
+такую же неопределённость: явное заключение в скобки. Но в отличии от
+предыдущего случая, выбор сдвиг-вывод изменяет смысл выражения. Пусть есть
+грамматика:</P><DIV CLASS="center">
+	<TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>		E1</TD><TD ALIGN=center NOWRAP>::=</TD><TD ALIGN=left NOWRAP><I>integer</I> (<I>R1</I>)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>E1 + E1 (<I>R2</I>)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>E1 * E1 (<I>R3</I>)</TD></TR>
+</TABLE>
+</DIV><P>Здесь мы снова получаем предыдущий конфликт как в случае с + так и для *, но к
+этому добавляется другой, между + и *. Опять же, одно и то же выражение может
+быть получено двумя способами, так как у него существует два вывода справа:</P><P><I>integer</I> + <I>integer</I> * <I>integer</I></P><P>Первый вариант:</P><DIV CLASS="center">
+	<TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>		E1</TD><TD ALIGN=left NOWRAP>(<I>R3</I>) E0 * <U>E1</U></TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=left NOWRAP>(<I>R1</I>) <U>E1</U> * <I>integer</I></TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=left NOWRAP>(<I>R2</I>) E1 + <U>E1</U> * <I>integer</I></TD></TR>
+</TABLE>
+</DIV><P>Второй вариант:</P><DIV CLASS="center">
+	<TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>		E1</TD><TD ALIGN=left NOWRAP>(<I>R2</I>) E1 + <U>E1</U></TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=left NOWRAP>(<I>R2</I>) E1 + E1 * <U>E1</U></TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=left NOWRAP>(<I>R1</I>) E1 + <U>E1</U> * <I>integer</I></TD></TR>
+</TABLE>
+</DIV><P>В данном выражении обе пары скобок имеют разный смысл:</P><P>(<I>integer</I> + <I>integer</I>) * <I>integer</I> ≠ <I>integer</I> + (<I>integer</I> * <I>integer</I>)</P><P>Подобную проблему, мы уже встречали в выражениях Basic (см. стр. <A HREF="#??">??</A>).
+Она была разрешена при помощи приоритетов, которые присваиваются операторам:
+сначала редуцируется правило (R3), затем (R2), что соответствует заключению в
+скобки произведения.</P><P>Данную проблему выбора между + и * можно решить изменив грамматику. Для того,
+введём два новых терминальных символа: член T (<I>term</I>) и множитель F
+(<I>factor</I>). Отсюда получаем:</P><DIV CLASS="center">
+	<TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>		E</TD><TD ALIGN=center NOWRAP>::=</TD><TD ALIGN=left NOWRAP>E + T</TD><TD ALIGN=center NOWRAP>(<I>R1</I>)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>T</TD><TD ALIGN=center NOWRAP>(<I>R2</I>)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		T</TD><TD ALIGN=center NOWRAP>::=</TD><TD ALIGN=left NOWRAP>T + F</TD><TD ALIGN=center NOWRAP>(<I>R3</I>)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>|</TD><TD ALIGN=left NOWRAP>F</TD><TD ALIGN=center NOWRAP>(<I>R4</I>)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		F</TD><TD ALIGN=center NOWRAP>::=</TD><TD ALIGN=left NOWRAP>T + <I>integer</I></TD><TD ALIGN=center NOWRAP>(<I>R5</I>)</TD></TR>
+<TR><TD ALIGN=right NOWRAP></TD></TR>
+</TABLE>
+</DIV><P>После этого, единственный способ получить <I>integer</I> + <I>integer</I> *
+<I>integer</I>: посредством правила (<I>R1</I>).</P><P>Третий и последний случай касается условных конструкций языка программирования.
+На пример в Pascal существует две конструкции: <TT>if .. then</TT> и <TT>if
+.. then .. else</TT>. Пусть существует следующая грамматика:</P><DIV CLASS="center">
+	<TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=right NOWRAP>		Instr</TD><TD ALIGN=center NOWRAP>::=</TD><TD ALIGN=left NOWRAP><I>if</I> EXP <I>then</I> Instr</TD><TD ALIGN=center NOWRAP>(<I>R1</I>)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>-</TD><TD ALIGN=left NOWRAP><I>if</I> EXP <I>then</I> Instr <I>else</I> Instr</TD><TD ALIGN=center NOWRAP>(<I>R2</I>)</TD></TR>
+<TR><TD ALIGN=right NOWRAP>		</TD><TD ALIGN=center NOWRAP>-</TD><TD ALIGN=left NOWRAP>etc …</TD><TD ALIGN=center NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=right NOWRAP></TD></TR>
+</TABLE>
+</DIV><P>И в следующей ситуации:</P><BLOCKQUOTE CLASS="table"><DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV>
+	<DIV CLASS="center">
+	<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD ALIGN=left NOWRAP>	Действие</TD><TD ALIGN=left NOWRAP>Вход</TD><TD ALIGN=right NOWRAP>Стек</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	:</TD><TD ALIGN=left NOWRAP>&nbsp;</TD><TD ALIGN=right NOWRAP>&nbsp;</TD></TR>
+<TR><TD ALIGN=left NOWRAP>	</TD><TD ALIGN=left NOWRAP><I>else</I></TD><TD ALIGN=right NOWRAP>[Instr <I>then</I> Epx <I>if</I> …]</TD></TR>
+<TR><TD ALIGN=left NOWRAP></TD></TR>
+</TABLE>
+	</DIV>
+<DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV></BLOCKQUOTE><P>Невозможно определить соответствуют ли элементы стека правила (<I>R1</I>) и в
+этом случае необходимо сократить или соответствуют первому <TT>Instr</TT>
+правила (<I>R2</I>) и тогда необходимо сдвинуть.</P><P>Кроме конфликтов сдвиг-вывод, восходящий анализ вызывает конфликт вывод-вывод.</P><P>Мы представим здесь инструмент <TT>ocamlyacc</TT>, который использует подобную
+технику может встретить указанные конфликты.
+</P><!--TOC section Пересмотренный Basic-->
+<H2 CLASS="section"><!--SEC ANCHOR --><A NAME="htoc26">11.5</A>  Пересмотренный Basic</H2><!--SEC END --><P>Теперь, используя совместно <TT>ocamllex</TT> и <TT>ocamlyacc</TT>, заменим
+функцию <TT>parse</TT> для Бэйсика, приведённую на странице <A HREF="#??">??</A>, на
+функции полученные при помощи файлов спецификации лексики и синтаксиса языка.</P><P>Для этого, мы не сможем воспользоваться типами лексических единиц, в таком виде
+как они были определены. Необходимо определить более точные типы, чтобы
+различать операторы, команды и ключевые слова.</P><P>Так же, нам понадобится изолировать в отдельном файле <TT>basic_types.mli</TT>
+декларации типов, относящиеся к абстрактному синтаксису. В нем будут содержатся
+декларации типа <TT>sentences</TT>, а так же других типы необходимые этому.</P><!--TOC subsection Файл <TT>basic_parser.mly</TT>-->
+<H3 CLASS="subsection"><!--SEC ANCHOR --><A NAME="htoc27">11.5.1</A>  Файл <TT>basic_parser.mly</TT></H3><!--SEC END --><!--TOC subsubsection Заголовок-->
+<H4 CLASS="subsubsection"><!--SEC ANCHOR -->Заголовок</H4><!--SEC END --><P>Данный файл содержит вызовы деклараций типов абстрактного синтаксиса и две
+функции перевода строк символов в их эквивалент абстрактного синтаксиса.</P><TABLE CLASS="lstframe" STYLE="padding:1ex;border-style:none none none solid;"><TR><TD CLASS="lstlisting">%{
+<FONT COLOR="black">open</FONT> <FONT COLOR="black">Basic_types</FONT> ;;
+
+<FONT COLOR="black">let</FONT> <FONT COLOR="black">phrase_of_cmd</FONT> <FONT COLOR="black">c</FONT> =
+ <FONT COLOR="black">match</FONT> <FONT COLOR="black">c</FONT> <FONT COLOR="black">with</FONT>
+   <FONT COLOR="black">"RUN"</FONT> -&gt; <FONT COLOR="black">Run</FONT>
+ | <FONT COLOR="black">"LIST"</FONT> -&gt; <FONT COLOR="black">List</FONT>
+ | <FONT COLOR="black">"END"</FONT> -&gt; <FONT COLOR="black">End</FONT>
+ | <FONT COLOR="black">_</FONT> -&gt; <FONT COLOR="black">failwith</FONT> <FONT COLOR="black">"line : unexpected command"</FONT>
+;;
+
+<FONT COLOR="black">let</FONT> <FONT COLOR="black">bin_op_of_rel</FONT> <FONT COLOR="black">r</FONT> =
+ <FONT COLOR="black">match</FONT> <FONT COLOR="black">r</FONT> <FONT COLOR="black">with</FONT>
+   <FONT COLOR="black">"="</FONT> -&gt; <FONT COLOR="black">EQUAL</FONT>
+ | <FONT COLOR="black">"&lt;"</FONT> -&gt; <FONT COLOR="black">INF</FONT>
+ | <FONT COLOR="black">"&lt;="</FONT> -&gt; <FONT COLOR="black">INFEQ</FONT>
+ | <FONT COLOR="black">"&gt;"</FONT> -&gt; <FONT COLOR="black">SUP</FONT>
+ | <FONT COLOR="black">"&gt;="</FONT> -&gt; <FONT COLOR="black">SUPEQ</FONT>
+ | <FONT COLOR="black">"&lt;&gt;"</FONT> -&gt; <FONT COLOR="black">DIFF</FONT>
+ | <FONT COLOR="black">_</FONT> -&gt; <FONT COLOR="black">failwith</FONT> <FONT COLOR="black">"line : unexpected relation symbol"</FONT>
+;;
+
+%}</TD></TR>
+</TABLE><!--TOC subsubsection Декларации-->
+<H4 CLASS="subsubsection"><!--SEC ANCHOR -->Декларации</H4><!--SEC END --><P>Здесь содержится три части: декларация лексем, декларация правил ассоциативности
+и приоритетов, декларация стартового символа <TT>line</TT>, которая
+соответствует анализу линии программы или команды.</P><P>Ниже представлены лексические единицы:</P><TABLE CLASS="lstframe" STYLE="padding:1ex;border-style:none none none solid;"><TR><TD CLASS="lstlisting">%<FONT COLOR="black">token</FONT> &lt;<FONT COLOR="black">int</FONT>&gt; <FONT COLOR="black">Lint</FONT>
+%<FONT COLOR="black">token</FONT> &lt;<FONT COLOR="black">string</FONT>&gt; <FONT COLOR="black">Lident</FONT>
+%<FONT COLOR="black">token</FONT> &lt;<FONT COLOR="black">string</FONT>&gt; <FONT COLOR="black">Lstring</FONT>
+%<FONT COLOR="black">token</FONT> &lt;<FONT COLOR="black">string</FONT>&gt; <FONT COLOR="black">Lcmd</FONT>
+%<FONT COLOR="black">token</FONT> <FONT COLOR="black">Lplus</FONT> <FONT COLOR="black">Lminus</FONT> <FONT COLOR="black">Lmult</FONT> <FONT COLOR="black">Ldiv</FONT> <FONT COLOR="black">Lmod</FONT>
+%<FONT COLOR="black">token</FONT> &lt;<FONT COLOR="black">string</FONT>&gt; <FONT COLOR="black">Lrel</FONT>
+%<FONT COLOR="black">token</FONT> <FONT COLOR="black">Land</FONT> <FONT COLOR="black">Lor</FONT> <FONT COLOR="black">Lneg</FONT>
+%<FONT COLOR="black">token</FONT> <FONT COLOR="black">Lpar</FONT> <FONT COLOR="black">Rpar</FONT>
+%<FONT COLOR="black">token</FONT> &lt;<FONT COLOR="black">string</FONT>&gt; <FONT COLOR="black">Lrem</FONT>
+%<FONT COLOR="black">token</FONT> <FONT COLOR="black">Lrem</FONT> <FONT COLOR="black">Llet</FONT> <FONT COLOR="black">Lprint</FONT> <FONT COLOR="black">Linput</FONT> <FONT COLOR="black">Lif</FONT> <FONT COLOR="black">Lthen</FONT> <FONT COLOR="black">Lgoto</FONT>
+%<FONT COLOR="black">token</FONT> <FONT COLOR="black">Lequal</FONT>
+%<FONT COLOR="black">token</FONT> <FONT COLOR="black">Leol</FONT></TD></TR>
+</TABLE><P>Имена деклараций говорят сами за себя и они описаны в файле
+<TT>basic_lexer.mll</TT> (см. стр. <A HREF="#??">??</A>).</P><P>Правила приоритета операторов схожи со значениями, которые определяются
+функциями <TT>priority_uop</TT> и <TT>priority_binop</TT>, которые были
+определены грамматикой Бейсика (см. стр. <A HREF="#??">??</A>).</P><TABLE CLASS="lstframe" STYLE="padding:1ex;border-style:none none none solid;"><TR><TD CLASS="lstlisting">%<FONT COLOR="black">right</FONT> <FONT COLOR="black">Lneg</FONT>
+%<FONT COLOR="black">left</FONT> <FONT COLOR="black">Land</FONT> <FONT COLOR="black">Lor</FONT>
+%<FONT COLOR="black">left</FONT> <FONT COLOR="black">Lequal</FONT> <FONT COLOR="black">Lrel</FONT>
+%<FONT COLOR="black">left</FONT> <FONT COLOR="black">Lmod</FONT>
+%<FONT COLOR="black">left</FONT> <FONT COLOR="black">Lplus</FONT> <FONT COLOR="black">Lminus</FONT>
+%<FONT COLOR="black">left</FONT> <FONT COLOR="black">Lmult</FONT> <FONT COLOR="black">Ldiv</FONT>
+%<FONT COLOR="black">nonassoc</FONT> <FONT COLOR="black">Lop</FONT></TD></TR>
+</TABLE><P>Символ <TT>Lop</TT> необходим для обработки унарных минусов. Он не является
+терминальным символом, а псевдо–терминальным. Благодаря этому, получаем
+перегрузку операторов, когда в двух случаях использования одного и того же
+оператора, приоритет меняется в зависимости от контекста. Мы вернёмся к этому
+случаю, когда будем рассматривать правила грамматики.</P><P>Здесь нетерминалом является <TT>line</TT>. Полученная функция возвращает дерево
+абстрактного синтаксиса, которое соответствует проанализированной линии.</P><TABLE CLASS="lstframe" STYLE="padding:1ex;border-style:none none none solid;"><TR><TD CLASS="lstlisting">%<FONT COLOR="black">start</FONT> <FONT COLOR="black">line</FONT>
+%<FONT COLOR="black">type</FONT> &lt;<FONT COLOR="black">Basic_types</FONT>.<FONT COLOR="black">phrase</FONT>&gt; <FONT COLOR="black">line</FONT></TD></TR>
+</TABLE><!--TOC subsubsection Правила грамматики-->
+<H4 CLASS="subsubsection"><!--SEC ANCHOR -->Правила грамматики</H4><!--SEC END --><P>Грамматика делится на 3 нетерминальных элемента: <TT>line</TT> для линии,
+<TT>inst</TT> для инструкции и <TT>exp</TT> для выражений. Действия, которые
+привязаны к каждому правилу лишь создают соответствующую часть абстрактного
+синтаксиса.</P><TABLE CLASS="lstframe" STYLE="padding:1ex;border-style:none none none solid;"><TR><TD CLASS="lstlisting"> %%
+<FONT COLOR="black">line</FONT> :
+   <FONT COLOR="black">Lint</FONT> <FONT COLOR="black">inst</FONT> <FONT COLOR="black">Leol</FONT>               { <FONT COLOR="black">Line</FONT> {<FONT COLOR="black">num</FONT>=<FONT COLOR="black">$1</FONT>; <FONT COLOR="black">inst</FONT>=<FONT COLOR="black">$2</FONT>} }
+ | <FONT COLOR="black">Lcmd</FONT> <FONT COLOR="black">Leol</FONT>                    { <FONT COLOR="black">phrase_of_cmd</FONT> <FONT COLOR="black">$1</FONT> }
+ ;
+
+<FONT COLOR="black">inst</FONT> :
+   <FONT COLOR="black">Lrem</FONT>                         { <FONT COLOR="black">Rem</FONT> <FONT COLOR="black">$1</FONT> }
+ | <FONT COLOR="black">Lgoto</FONT> <FONT COLOR="black">Lint</FONT>                   { <FONT COLOR="black">Goto</FONT> <FONT COLOR="black">$2</FONT> }
+ | <FONT COLOR="black">Lprint</FONT> <FONT COLOR="black">exp</FONT>                   { <FONT COLOR="black">Print</FONT> <FONT COLOR="black">$2</FONT> }
+ | <FONT COLOR="black">Linput</FONT> <FONT COLOR="black">Lident</FONT>                { <FONT COLOR="black">Input</FONT> <FONT COLOR="black">$2</FONT> }
+ | <FONT COLOR="black">Lif</FONT> <FONT COLOR="black">exp</FONT> <FONT COLOR="black">Lthen</FONT> <FONT COLOR="black">Lint</FONT>           { <FONT COLOR="black">If</FONT> (<FONT COLOR="black">$2</FONT>, <FONT COLOR="black">$4</FONT>) }
+ | <FONT COLOR="black">Llet</FONT> <FONT COLOR="black">Lident</FONT> <FONT COLOR="black">Lequal</FONT> <FONT COLOR="black">exp</FONT>        { <FONT COLOR="black">Let</FONT> (<FONT COLOR="black">$2</FONT>, <FONT COLOR="black">$4</FONT>) }
+ ;
+
+<FONT COLOR="black">exp</FONT> :
+   <FONT COLOR="black">Lint</FONT>                         { <FONT COLOR="black">ExpInt</FONT> <FONT COLOR="black">$1</FONT> }
+ | <FONT COLOR="black">Lident</FONT>                       { <FONT COLOR="black">ExpVar</FONT> <FONT COLOR="black">$1</FONT> }
+ | <FONT COLOR="black">Lstring</FONT>                      { <FONT COLOR="black">ExpStr</FONT> <FONT COLOR="black">$1</FONT> }
+ | <FONT COLOR="black">Lneg</FONT> <FONT COLOR="black">exp</FONT>                     { <FONT COLOR="black">ExpUnr</FONT> (<FONT COLOR="black">NOT</FONT>, <FONT COLOR="black">$2</FONT>) }
+ | <FONT COLOR="black">exp</FONT> <FONT COLOR="black">Lplus</FONT> <FONT COLOR="black">exp</FONT>                { <FONT COLOR="black">ExpBin</FONT> (<FONT COLOR="black">$1</FONT>, <FONT COLOR="black">PLUS</FONT>, <FONT COLOR="black">$3</FONT>) }
+ | <FONT COLOR="black">exp</FONT> <FONT COLOR="black">Lminus</FONT> <FONT COLOR="black">exp</FONT>               { <FONT COLOR="black">ExpBin</FONT> (<FONT COLOR="black">$1</FONT>, <FONT COLOR="black">MINUS</FONT>, <FONT COLOR="black">$3</FONT>) }
+ | <FONT COLOR="black">exp</FONT> <FONT COLOR="black">Lmult</FONT> <FONT COLOR="black">exp</FONT>                { <FONT COLOR="black">ExpBin</FONT> (<FONT COLOR="black">$1</FONT>, <FONT COLOR="black">MULT</FONT>, <FONT COLOR="black">$3</FONT>) }
+ | <FONT COLOR="black">exp</FONT> <FONT COLOR="black">Ldiv</FONT> <FONT COLOR="black">exp</FONT>                 { <FONT COLOR="black">ExpBin</FONT> (<FONT COLOR="black">$1</FONT>, <FONT COLOR="black">DIV</FONT>, <FONT COLOR="black">$3</FONT>) }
+ | <FONT COLOR="black">exp</FONT> <FONT COLOR="black">Lmod</FONT> <FONT COLOR="black">exp</FONT>                 { <FONT COLOR="black">ExpBin</FONT> (<FONT COLOR="black">$1</FONT>, <FONT COLOR="black">MOD</FONT>, <FONT COLOR="black">$3</FONT>) }
+ | <FONT COLOR="black">exp</FONT> <FONT COLOR="black">Lequal</FONT> <FONT COLOR="black">exp</FONT>                { <FONT COLOR="black">ExpBin</FONT> (<FONT COLOR="black">$1</FONT>, <FONT COLOR="black">EQUAL</FONT>, <FONT COLOR="black">$3</FONT>) }
+ | <FONT COLOR="black">exp</FONT> <FONT COLOR="black">Lrel</FONT> <FONT COLOR="black">exp</FONT>                 { <FONT COLOR="black">ExpBin</FONT> (<FONT COLOR="black">$1</FONT>, (<FONT COLOR="black">bin_op_of_rel</FONT> <FONT COLOR="black">$2</FONT>), <FONT COLOR="black">$3</FONT>) }
+ | <FONT COLOR="black">exp</FONT> <FONT COLOR="black">Land</FONT> <FONT COLOR="black">exp</FONT>                 { <FONT COLOR="black">ExpBin</FONT> (<FONT COLOR="black">$1</FONT>, <FONT COLOR="blue"><B>AND</B></FONT>, <FONT COLOR="black">$3</FONT>) }
+ | <FONT COLOR="black">exp</FONT> <FONT COLOR="black">Lor</FONT> <FONT COLOR="black">exp</FONT>                  { <FONT COLOR="black">ExpBin</FONT> (<FONT COLOR="black">$1</FONT>, <FONT COLOR="black">OR</FONT>, <FONT COLOR="black">$3</FONT>) }
+ | <FONT COLOR="black">Lminus</FONT> <FONT COLOR="black">exp</FONT> %<FONT COLOR="black">prec</FONT> <FONT COLOR="black">Lop</FONT>        { <FONT COLOR="black">ExpUnr</FONT>(<FONT COLOR="black">OPPOSITE</FONT>, <FONT COLOR="black">$2</FONT>) }
+ | <FONT COLOR="black">Lpar</FONT> <FONT COLOR="black">exp</FONT> <FONT COLOR="black">Rpar</FONT>                { <FONT COLOR="black">$2</FONT> }
+ ;
+ %%</TD></TR>
+</TABLE><P>Данные правила не нуждаются в особых комментариях, кроме следующего:</P><TABLE CLASS="lstframe" STYLE="padding:1ex;border-style:none none none solid;"><TR><TD CLASS="lstlisting"><FONT COLOR="black">exp</FONT> :
+ ...
+ | <FONT COLOR="black">Lminus</FONT> <FONT COLOR="black">exp</FONT> %<FONT COLOR="black">prec</FONT> <FONT COLOR="black">Lop</FONT> { <FONT COLOR="black">ExpUnr</FONT>(<FONT COLOR="black">OPPOSITE</FONT>, <FONT COLOR="black">$2</FONT>) }</TD></TR>
+</TABLE><P>Это правило касается использования унарного минуса -. Ключевое слово
+<TT>%prec</TT> означает, что указанная конструкция получает приоритет от
+<TT>Lop</TT> (в данном случае наивысший).</P><!--TOC subsection Файл <TT>basic_lexer.mll</TT>-->
+<H3 CLASS="subsection"><!--SEC ANCHOR --><A NAME="htoc28">11.5.2</A>  Файл <TT>basic_lexer.mll</TT></H3><!--SEC END --><P>Лексический анализ содержит лишь одно множество: <TT>lexer</TT>, которое точно
+соответствует старой функции <TT>lexer</TT> (см. стр. <A HREF="#??">??</A>).</P><P>Семантическое действие, которое связано с распознаванием лексических единиц,
+возвращает результат соответствующего конструктора. Необходимо загрузить файл
+синтаксических правил, так как в нем декларируется тип лексических единиц.
+Добавим так же функцию, которая удаляет кавычки вокруг строк.</P><TABLE CLASS="lstframe" STYLE="padding:1ex;border-style:none none none solid;"><TR><TD CLASS="lstlisting">{
+ <FONT COLOR="black">open</FONT> <FONT COLOR="black">Basic_parser</FONT> ;;
+
+ <FONT COLOR="black">let</FONT> <FONT COLOR="black">string_chars</FONT> <FONT COLOR="black">s</FONT> = <FONT COLOR="black">String</FONT>.<FONT COLOR="black">sub</FONT> <FONT COLOR="black">s</FONT> 1 ((<FONT COLOR="black">String</FONT>.<FONT COLOR="black">length</FONT> <FONT COLOR="black">s</FONT>)-2) ;;
+}
+
+<FONT COLOR="black">rule</FONT> <FONT COLOR="black">lexer</FONT> = <FONT COLOR="black">parse</FONT>
+   [' ' '\<FONT COLOR="black">t</FONT>']            { <FONT COLOR="black">lexer</FONT> <FONT COLOR="black">lexbuf</FONT> }
+
+ | '\<FONT COLOR="black">n</FONT>'                  { <FONT COLOR="black">Leol</FONT> }
+
+ | '!'                   { <FONT COLOR="black">Lneg</FONT> }
+ | '&amp;'                   { <FONT COLOR="black">Land</FONT> }
+ | '|'                   { <FONT COLOR="black">Lor</FONT> }
+ | '='                   { <FONT COLOR="black">Lequal</FONT> }
+ | '%'                   { <FONT COLOR="black">Lmod</FONT> }
+ | '+'                   { <FONT COLOR="black">Lplus</FONT> }
+ | '-'                   { <FONT COLOR="black">Lminus</FONT> }
+ | '*'                   { <FONT COLOR="black">Lmult</FONT> }
+ | '/'                   { <FONT COLOR="black">Ldiv</FONT> }
+
+ | ['&lt;' '&gt;']             { <FONT COLOR="black">Lrel</FONT> (<FONT COLOR="black">Lexing</FONT>.<FONT COLOR="black">lexeme</FONT> <FONT COLOR="black">lexbuf</FONT>) }
+ | <FONT COLOR="black">"&lt;="</FONT>                  { <FONT COLOR="black">Lrel</FONT> (<FONT COLOR="black">Lexing</FONT>.<FONT COLOR="black">lexeme</FONT> <FONT COLOR="black">lexbuf</FONT>) }
+ | <FONT COLOR="black">"&gt;="</FONT>                  { <FONT COLOR="black">Lrel</FONT> (<FONT COLOR="black">Lexing</FONT>.<FONT COLOR="black">lexeme</FONT> <FONT COLOR="black">lexbuf</FONT>) }
+
+ | <FONT COLOR="black">"REM"</FONT> [^ '\<FONT COLOR="black">n</FONT>']*       { <FONT COLOR="black">Lrem</FONT> (<FONT COLOR="black">Lexing</FONT>.<FONT COLOR="black">lexeme</FONT> <FONT COLOR="black">lexbuf</FONT>) }
+ | <FONT COLOR="black">"LET"</FONT>                 { <FONT COLOR="black">Llet</FONT> }
+ | <FONT COLOR="black">"PRINT"</FONT>               { <FONT COLOR="black">Lprint</FONT> }
+ | <FONT COLOR="black">"INPUT"</FONT>               { <FONT COLOR="black">Linput</FONT> }
+ | <FONT COLOR="black">"IF"</FONT>                  { <FONT COLOR="black">Lif</FONT> }
+ | <FONT COLOR="black">"THEN"</FONT>                { <FONT COLOR="black">Lthen</FONT> }
+ | <FONT COLOR="black">"GOTO"</FONT>                { <FONT COLOR="black">Lgoto</FONT> }
+
+ | <FONT COLOR="black">"RUN"</FONT>                { <FONT COLOR="black">Lcmd</FONT> (<FONT COLOR="black">Lexing</FONT>.<FONT COLOR="black">lexeme</FONT> <FONT COLOR="black">lexbuf</FONT>) }
+ | <FONT COLOR="black">"LIST"</FONT>               { <FONT COLOR="black">Lcmd</FONT> (<FONT COLOR="black">Lexing</FONT>.<FONT COLOR="black">lexeme</FONT> <FONT COLOR="black">lexbuf</FONT>) }
+ | <FONT COLOR="black">"END"</FONT>                { <FONT COLOR="black">Lcmd</FONT> (<FONT COLOR="black">Lexing</FONT>.<FONT COLOR="black">lexeme</FONT> <FONT COLOR="black">lexbuf</FONT>) }
+
+ | ['0'-'9']+           { <FONT COLOR="black">Lint</FONT> (<FONT COLOR="black">int_of_string</FONT> (<FONT COLOR="black">Lexing</FONT>.<FONT COLOR="black">lexeme</FONT> <FONT COLOR="black">lexbuf</FONT>)) }
+ | ['<FONT COLOR="black">A</FONT>'-'<FONT COLOR="black">z</FONT>']+           { <FONT COLOR="black">Lident</FONT> (<FONT COLOR="black">Lexing</FONT>.<FONT COLOR="black">lexeme</FONT> <FONT COLOR="black">lexbuf</FONT>) }
+ | '<FONT COLOR="black">"' [^ '"</FONT>']* '<FONT COLOR="black">"'     { Lstring (string_chars (Lexing.lexeme lexbuf)) }</FONT></TD></TR>
+</TABLE><P>Заметьте, что нам пришлось изолировать символ =, который используется
+одновременно в выражениях и приравниваниях.</P><P>Для двух рациональных выражений необходимо привести определённые объяснения.
+Линия комментариев соответствует выражению <TT>("REM"
+[</TT><TT>∧</TT><TT>’</TT><TT>\</TT><TT>n’]*)</TT>, где за ключевым словом <TT>REM</TT> следует какое
+угодно количество символов и затем перевод строки. Правило, которое
+соответствует символьным строкам, <TT>(’"’ [</TT><TT>∧</TT><TT> ’"’]* ’"’)</TT>,
+подразумевает последовательность символов, отличных от " и заключённых в
+кавычки ".</P><!--TOC subsection Компиляция, компоновка-->
+<H3 CLASS="subsection"><!--SEC ANCHOR --><A NAME="htoc29">11.5.3</A>  Компиляция, компоновка</H3><!--SEC END --><P>Компиляция должна быть реализована в определённом порядке. Это связано с
+взаимозависимостью деклараций лексем. Поэтому в нашем случае, необходимо
+выполнить команды в следующем порядке:</P><TABLE CLASS="lstframe" STYLE="padding:1ex;border-style:none none none solid;"><TR><TD CLASS="lstlisting"><FONT COLOR="black">ocamlc</FONT> -<FONT COLOR="black">c</FONT> <FONT COLOR="black">basic_types</FONT>.<FONT COLOR="black">mli</FONT>
+<FONT COLOR="black">ocamlyacc</FONT> <FONT COLOR="black">basic_parser</FONT>.<FONT COLOR="black">mly</FONT>
+<FONT COLOR="black">ocamllex</FONT> <FONT COLOR="black">basic_lexer</FONT>.<FONT COLOR="black">mll</FONT>
+<FONT COLOR="black">ocamlc</FONT> -<FONT COLOR="black">c</FONT> <FONT COLOR="black">basic_parser</FONT>.<FONT COLOR="black">mli</FONT>
+<FONT COLOR="black">ocamlc</FONT> -<FONT COLOR="black">c</FONT> <FONT COLOR="black">basic_lexer</FONT>.<FONT COLOR="black">ml</FONT>
+<FONT COLOR="black">ocamlc</FONT> -<FONT COLOR="black">c</FONT> <FONT COLOR="black">basic_parser</FONT>.<FONT COLOR="black">ml</FONT></TD></TR>
+</TABLE><P>После чего получим файлы <TT>basic_lexer.cmo</TT> и <TT>basic_parser.cmo</TT>,
+которые можно использовать в нашей программе.</P><P>Теперь, у нас есть весь необходимый арсенал, для того чтобы переделать
+программу.</P><P>Удалим все типы и функции параграфов лексический анализ (стр.
+<A HREF="#??">??</A>) и синтаксический анализ (стр. <A HREF="#??">??</A>) для программы
+Бэйсик. Также в функции <TT>one_command</TT> (стр. <A HREF="#??">??</A>) заменим
+выражение:</P><TABLE CLASS="lstframe" STYLE="padding:1ex;border-style:none none none solid;"><TR><TD CLASS="lstlisting"><FONT COLOR="black">match</FONT> <FONT COLOR="black">parse</FONT> (<FONT COLOR="black">input_line</FONT> <FONT COLOR="black">stdin</FONT>) <FONT COLOR="black">with</FONT></TD></TR>
+</TABLE><P>на</P><TABLE CLASS="lstframe" STYLE="padding:1ex;border-style:none none none solid;"><TR><TD CLASS="lstlisting"><FONT COLOR="black">match</FONT> <FONT COLOR="black">line</FONT> <FONT COLOR="black">lexer</FONT> (<FONT COLOR="black">Lexing</FONT>.<FONT COLOR="black">from_string</FONT> ((<FONT COLOR="black">input_line</FONT> <FONT COLOR="black">stdin</FONT>)^<FONT COLOR="black">"\n"</FONT>)) <FONT COLOR="black">with</FONT></TD></TR>
+</TABLE><P>Заметьте, что необходимо поместить в конце линии символ конца ’\n’,
+который был удалён функцией <TT>input_line</TT>. Это необходимо, потому что
+данный символ используется для указания конца командной линии (<TT>Leol</TT>).
+</P><!--TOC section Exercises-->
+<H2 CLASS="section"><!--SEC ANCHOR --><A NAME="htoc30">11.6</A>  Exercises</H2><!--SEC END --><!--TOC section Резюме-->
+<H2 CLASS="section"><!--SEC ANCHOR --><A NAME="htoc31">11.7</A>  Резюме</H2><!--SEC END --><P>В данной главе были описаны различные средства лексического и синтаксического
+анализа Objective CAML. По порядку описания:</P><UL CLASS="itemize"><LI CLASS="li-itemize">
+	модуль <TT>Str</TT> для фильтрования рациональных выражений<P>	</P></LI><LI CLASS="li-itemize">модуль <TT>Genlex</TT> для быстрого создания простых лексических
+анализаторов<P>	</P></LI><LI CLASS="li-itemize"><TT>ocamllex</TT> представитель семейства <TT>lex</TT><P>	</P></LI><LI CLASS="li-itemize"><TT>ocamlyacc</TT> представитель семейства <TT>yacc</TT><P>	</P></LI><LI CLASS="li-itemize">потоки, для построения нисходящих анализаторов, в том числе и
+контекстных
+</LI></UL><P>При помощи инструментов o<TT>camllex</TT> и <TT>ocamlyacc</TT> мы переделали
+синтаксический анализ Бэйсика, который проще поддерживать, чем анализатор
+представленный на стр. <A HREF="#??">??</A>.
+</P><!--TOC section To Learn More-->
+<H2 CLASS="section"><!--SEC ANCHOR --><A NAME="htoc32">11.8</A>  To Learn More</H2><!--SEC END --><!--BEGIN NOTES chapter-->
+<HR CLASS="footnoterule"><DL CLASS="thefootnotes"><DT CLASS="dt-thefootnotes">
+<A NAME="note1" HREF="#text1">1</A></DT><DD CLASS="dd-thefootnotes">тип
+<TT>lexeme</TT> определён на стр. <A HREF="#??">??</A>
+</DD><DT CLASS="dt-thefootnotes"><A NAME="note2" HREF="#text2">2</A></DT><DD CLASS="dd-thefootnotes">традиционно, такое слово обозначается греческой буквой эпсилон:
+ε
+</DD><DT CLASS="dt-thefootnotes"><A NAME="note3" HREF="#text3">3</A></DT><DD CLASS="dd-thefootnotes">анализируемая часть выражения подчёркнута, а так же
+указано используемое правило 
+</DD><DT CLASS="dt-thefootnotes"><A NAME="note4" HREF="#text4">4</A></DT><DD CLASS="dd-thefootnotes">Обычно на русский язык термины <B>shift</B> и
+<B>reduce</B> переводят как сдвиг и вывод, но в данной книге для термина <B>reduce</B> будет также использоваться перевод сокращение — прим. пер. 
+</DD></DL>
+<!--END NOTES-->
+<!--TOC chapter Взаимодействие с языком C-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc33">Глава 12</A>  Взаимодействие с языком C</H1><!--SEC END --><!--TOC chapter Приложения-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc34">Глава 13</A>  Приложения</H1><!--SEC END --><!--TOC part Устройство программы-->
+<TABLE CLASS="center"><TR><TD><H1 CLASS="part"><!--SEC ANCHOR --><A NAME="htoc35">Часть III</A><BR>
+Устройство программы</H1></TD></TR>
+</TABLE><!--SEC END --><!--TOC chapter Модульное программирование-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc36">Глава 14</A>  Модульное программирование</H1><!--SEC END --><!--TOC chapter Объектно-ориентированное программирование-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc37">Глава 15</A>  Объектно-ориентированное программирование</H1><!--SEC END --><!--TOC chapter Сравнение моделей устройств программ-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc38">Глава 16</A>  Сравнение моделей устройств программ</H1><!--SEC END --><!--TOC chapter Приложения-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc39">Глава 17</A>  Приложения</H1><!--SEC END --><!--TOC part Параллелизм и распределение-->
+<TABLE CLASS="center"><TR><TD><H1 CLASS="part"><!--SEC ANCHOR --><A NAME="htoc40">Часть IV</A><BR>
+Параллелизм и распределение</H1></TD></TR>
+</TABLE><!--SEC END --><!--TOC chapter Процессы и связь между процессами-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc41">Глава 18</A>  Процессы и связь между процессами</H1><!--SEC END --><!--TOC chapter Параллельное программирование-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc42">Глава 19</A>  Параллельное программирование</H1><!--SEC END --><!--TOC chapter Распределённое программирование-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc43">Глава 20</A>  Распределённое программирование</H1><!--SEC END --><!--TOC chapter Приложения-->
+<H1 CLASS="chapter"><!--SEC ANCHOR --><A NAME="htoc44">Глава 21</A>  Приложения</H1><!--SEC END --><!--TOC part Разработка программ с помощью Objective CAML-->
+<TABLE CLASS="center"><TR><TD><H1 CLASS="part"><!--SEC ANCHOR --><A NAME="htoc45">Часть V</A><BR>
+Разработка программ с помощью Objective CAML</H1></TD></TR>
+</TABLE><!--SEC END --><!--TOC part Приложения-->
+<TABLE CLASS="center"><TR><TD><H1 CLASS="part"><!--SEC ANCHOR --><A NAME="htoc46">Часть VI</A><BR>
+Приложения</H1></TD></TR>
+</TABLE><!--SEC END --><!--CUT END -->
+<!--HTMLFOOT-->
+<!--ENDHTML-->
+<!--FOOTER-->
+<HR SIZE=2><BLOCKQUOTE CLASS="quote"><EM>Этот документ был преобразован из L<sup>A</sup>T<sub>E</sub>X
+</EM><A HREF="http://hevea.inria.fr/index.html"><EM>H</EM><EM><FONT SIZE=2><sup>E</sup></FONT></EM><EM>V</EM><EM><FONT SIZE=2><sup>E</sup></FONT></EM><EM>A</EM></A><EM>.</EM></BLOCKQUOTE></BODY>
+</HTML>
