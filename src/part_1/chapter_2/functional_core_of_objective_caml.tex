@@ -1,0 +1,568 @@
+\section{Функциональное ядро Objective CAML}
+\label{sec:caml_kernel}
+
+Как любой другой язык функционального программирования, Objective CAML --- это
+язык выражений, состоящий в основном из создания функций и их применения.
+Результатом вычисления одного из таких выражений является значение данного языка
+(value in the language) и выполнение программы заключается в вычислении всех
+выражений из которых она состоит.
+
+\subsection{Значения, функции и базовые типы}
+\label{sec:values_funcs_base_types}
+
+В Objective CAML определены следующие типы: целые числа, числа с плавающей
+запятой, символьный, строковый и логический.
+
+\subsubsection{Числа}
+
+Различают целые \texttt{int} и числа с плавающей запятой \texttt{float}.
+Objective CAML следует спецификации IEEE 754 для представления чисел с плавающей
+запятой двойной точности. Операции с этими числами описаны в таблице
+\ref{tbl:operations_on_numbers}. Если результат целочисленной операции выходит
+за интервал значений типа \texttt{int}, то это не приведёт к ошибке. Результат
+будет находиться в интервале целых чисел, то есть все действия над целыми
+ограниченны операцией \texttt{modulo} с границами интервала.
+
+\begin{table}[hl]
+\begin{center}
+	\caption{Операции над числами}
+	\begin{tabular}{|p{7.2cm}|p{7.2cm}|}
+	\hline
+	целые & плавающие \\
+	\hline
+	+ сложение & +. сложение \\
+	\hline
+	- вычитание и унарный минус & -. вычитание и унарный минус \\
+	\hline
+	* умножение & *. умножение \\
+	\hline
+	/ деление & /. деление \\
+	\hline
+	\texttt{mod} остаток целочисленного деления & ** возведение в степень \\
+	\hline
+	\end{tabular}
+%\vspace{12}
+	\begin{tabular}{|p{7.2cm}|p{7.2cm}|}
+	\hline
+{\begin{lstlisting}[language=OCaml,frame=none]
+# 1 ;;
+- : int = 1
+# 1 + 2 ;;
+- : int = 3
+# 9 / 2 ;;
+- : int = 4
+# 11 mod 3 ;;
+- : int = 2
+(* limits of the representation  *)
+(* of integers                   *)
+# 2147483650 ;;
+- : int = 2
+\end{lstlisting}}
+ &
+{\begin{lstlisting}[language=OCaml,frame=none]
+# 2.0 ;;
+- : float = 2
+# 1.1 +. 2.2 ;;
+- : float = 3.3
+# 9.1 /. 2.2 ;;
+- : float = 4.13636363636
+# 1. /. 0. ;;
+- : float = inf
+(* limits of the representation  *)
+(* of floating-point numbers     *)
+# 222222222222.11111 ;;
+- : float = 222222222222
+\end{lstlisting}}
+\\
+	\hline
+	\end{tabular}
+	\label{tbl:operations_on_numbers}
+\end{center}
+\end{table}
+
+\subsubsection{Разница между целыми числами и числами с плавающей запятой.}
+
+Значения разных типов, таких как \texttt{float} и \texttt{int}, не могут
+сравниваться между собой напрямую. Для этого существует функции перевода одного
+типа в другой (\texttt{float\_of\_int} и \texttt{int\_of\_float}).
+
+\begin{lstlisting}[language=OCaml]
+# 2 = 2.0;;
+Error: This expression has type float but an expression was expected of type
+         int
+# 3.0 = float_of_int 3;;
+- : bool = true
+\end{lstlisting}
+
+Аналогично, операции над целыми числами и числами с плавающей запятой различны:
+
+\begin{lstlisting}[language=OCaml]
+# 3 + 2;;
+- : int = 5
+# 3.0 +. 2.0;;
+- : float = 5.
+# 3.0 + 2.0;;
+Error: This expression has type float but an expression was expected of type
+         int
+# sin 3.14159;;
+- : float = 2.65358979335273e-06
+\end{lstlisting}
+
+Неопределенный результат, например получаемый при делении на ноль, приведет к
+возникновению исключения (см. \ref{??}, стр. \pageref{??}), которое остановит
+вычисление. Числа с плавающей запятой имеют специальные значения для бесконечных
+величин (\texttt{Inf}) и для не определённого результата (\texttt{NaN}
+\footnote{Not a Number}). Основные операции над этими числами приведены в
+таблице \ref{tbl:functions_on_floats}
+
+\begin{table}[hl]
+\begin{center}
+	\caption{Функции над числами с плавающей запятой}
+	\begin{tabular}{|p{7.2cm}|p{7.2cm}|}
+	\hline
+	\texttt{ceil} & \texttt{cos} косинус \\
+	\hline
+	\texttt{floor} & \texttt{sin} синус \\
+	\hline
+	\texttt{sqrt} --- квадратный корень & \texttt{tan} тангенс \\
+	\hline
+	\texttt{exp} --- экспонента & \texttt{acos} арккосинус \\
+	\hline
+	\texttt{log} --- натуральный логарифм & \texttt{asin} арксинус \\
+	\hline
+	\texttt{log10} --- логарифм по базе 10 & \texttt{atan} арктангенс \\
+	\hline
+	\end{tabular}
+%\vspace{12}
+	\begin{tabular}{|p{7.2cm}|p{7.2cm}|}
+	\hline
+{\begin{lstlisting}[language=OCaml,frame=none]
+# ceil 3.4 ;;
+- : float = 4.
+# floor 3.4 ;;
+- : float = 3.
+# ceil (-.3.4) ;;
+- : float = -3.
+# floor (-.3.4) ;;
+- : float = -4.
+\end{lstlisting}}
+ &
+{\begin{lstlisting}[language=OCaml,frame=none]
+# sin 1.57078 ;;
+- : float = 0.999999999866717837
+# sin (asin 0.707) ;;
+- : float = 0.707
+# acos 0.0 ;;
+- : float = 1.57079632679489656
+# asin 3.14 ;;
+- : float = nan
+\end{lstlisting}}
+\\
+	\hline
+	\end{tabular}
+	\label{tbl:functions_on_floats}
+\end{center}
+\end{table}
+
+\subsubsection{Символы и строки}
+
+Символы, тип \texttt{char}, соответствуют целым числам в интервале от 0 до 255,
+первые 128 значений соответствуют кодам ASCII. Функция \texttt{char\_of\_int} и
+\texttt{int\_of\_char} преобразуют один тип в другой. Строки, тип
+\texttt{string} --- это последовательность символов определенной длинны (не
+длиннее $224^{24} - 6$). Оператором объединения строк (конкатенации) является
+шапка $\wedge$. Следующие функции необходимы для перевода типов
+\texttt{int\_of\_string}, \texttt{string\_of\_int}, \texttt{string\_of\_float} и
+\texttt{float\_of\_string}.
+
+\begin{lstlisting}[language=OCaml]
+# 'B' ;;
+- : char = 'B'
+# int_of_char 'B' ;;
+- : int = 66
+# "est une chaîne" ;;
+- : string = "est une cha\195\174ne"
+# (string_of_int 1987) ^ " est l'année de la création de CAML" ;;
+- : string = "1987 est l'ann\195\169e de la cr\195\169ation de CAML"
+\end{lstlisting}
+
+Если строка состоит из цифр, то мы не сможем использовать ее в численных
+операциях, не выполнив явного преобразования.
+
+\begin{lstlisting}[language=OCaml]
+# "1999" + 1 ;;
+Error: This expression has type string but an expression was expected of type
+         int
+# (int_of_string "1999") + 1 ;;
+- : int = 2000
+\end{lstlisting}
+
+В модуле \texttt{String} собрано много функций для работы со строками (стр.
+\pageref{??})
+
+\subsubsection{Булевый тип}
+
+Значение типа \texttt{boolean} принадлежит множеству состоящему из двух
+элементов: \texttt{true} и \texttt{false}. Основные операторы описаны в таблице
+\ref{tbl:boolean_operations}. По историческим причинам операторы \texttt{and} и
+\texttt{or} имеют две формы.
+
+\begin{table}[hl]
+\begin{center}
+	\caption{Булевы операторы}
+	\begin{tabular}{|p{5cm}|p{5cm}|}
+	\hline
+	not --- отрицание & \\
+	\hline
+	\&\& логическое и & \& синоним \&\& \\
+	\hline
+	|| логическое или & \texttt{or} синоним | \\
+	\hline
+	\end{tabular}
+\end{center}
+	\label{tbl:boolean_operations}
+\end{table}
+
+\begin{lstlisting}[language=OCaml]
+# true ;;
+- : bool = true
+# not true ;;
+- : bool = false
+# true && false ;;
+- : bool = false
+\end{lstlisting}
+
+Операторы \&\& и || или их синонимы, вычисляют аргумент слева и в зависимости от
+его значения, вычисляют правый аргумент. Они могут быть переписаны в виде
+условной структуры (см. \ref{??} стр. \pageref{??}).
+
+\begin{table}[hl]
+\begin{center}
+	\caption{Операторы сравнения и равенства}
+	\begin{tabular}{|p{5cm}|p{5cm}|}
+	\hline
+	= равенство структурное & < меньше \\
+	\hline
+	== равенство физическое & > больше \\
+	\hline
+	<> отрицание = & <= меньше или равно \\
+	\hline
+	!= отрицание == & >= больше или равно \\
+	\hline
+	\end{tabular}
+\end{center}
+	\label{tbl:comparison_operations}
+\end{table}
+
+Операторы сравнения и равенства описаны в таблице
+\ref{tbl:comparison_operations}. Это полиморфные операторы, то есть они
+применимы как для сравнения двух целых, так и двух строк. Единственное
+ограничение это то что операнды должны быть одного типа (см. \ref{} стр.
+\pageref{}).
+
+\begin{lstlisting}[language=OCaml]
+# 1<=118 && (1=2 || not(1=2)) ;;
+- : bool = true
+# 1.0 <= 118.0 && (1.0 = 2.0 || not (1.0 = 2.0)) ;;
+- : bool = true
+# "one" < "two" ;;
+- : bool = true
+# 0 < '0' ;;
+Error: This expression has type char but an expression was expected of type
+         int
+\end{lstlisting}
+
+Структурное равенство при проверке двух переменных сравнивает значение полей
+структуры, тогда как физическое равенство проверяет занимают ли эти переменные
+одно и то же место в памяти. Оба оператора возвращают одинаковый результат для
+простых типов: \texttt{boolean}, \texttt{char}, \texttt{int} и константные
+конструкторы (см. \ref{??} стр. \pageref{??}).
+
+\subsubsection{Осторожно}
+
+Числа с плавающей запятой и строки рассматриваются как структурные типы.
+
+\subsubsection{Объединения}
+
+Тип \texttt{unit} определяет множество из всего одного элемента, обозначается:
+()
+
+\begin{lstlisting}[language=OCaml]
+# () ;;
+- : unit = ()
+\end{lstlisting}
+
+Это значение будет широко использоваться в императивных программах (см. \ref{}
+стр. \pageref{}), в функциях с побочным эффектом. Функции, результат которых
+равен (), соответствуют понятию процедуры, которое отсутствует в Objective CAML,
+так же как и аналог типа \texttt{void} в языке C.
+
+\subsubsection{Декартово произведение, кортежи}
+
+Значения разных типов могут быть сгруппированы в кортежи. Значения из которых
+состоит кортеж разделяются запятой. Для конструкции кортежа, используется символ
+\texttt{*}. \texttt{int*string} есть кортеж, в котором первый элемент целое
+число и второй строка.
+
+\begin{lstlisting}[language=OCaml]
+# ( 12 , "October" ) ;;
+- : int * string = (12, "October")
+\end{lstlisting}
+
+Иногда мы можем использовать более простую форму записи.
+
+\begin{lstlisting}[language=OCaml]
+# 12 , "October" ;;
+- : int * string = (12, "October")
+\end{lstlisting}
+
+Функции \texttt{fst} и \texttt{snd} дают доступ первому и второму элементу
+соответственно.
+
+\begin{lstlisting}[language=OCaml]
+# fst ( 12 , "October" ) ;;
+- : int = 12
+# snd ( 12 , "October" ) ;;
+- : string = "October"
+\end{lstlisting}
+
+Эти обе функции полиморфные, входной аргумент может быть любого типа.
+
+\begin{lstlisting}[language=OCaml]
+# fst;;
+- : 'a * 'b -> 'a = <fun>
+# fst ( "October", 12 ) ;;
+- : string = "October"
+\end{lstlisting}
+
+Тип \texttt{int*char*string} --- это триплет, в котором первый элемент типа
+\texttt{int}, второй \texttt{char}, а третий --- \texttt{string}.
+
+\begin{lstlisting}[language=OCaml]
+# ( 65 , 'B' , "ascii" ) ;;
+- : int * char * string = (65, 'B', "ascii")
+\end{lstlisting}
+
+\subsubsection{Осторожно}
+
+Если аргумент функций \texttt{fst} и \texttt{snd} не пара, а другой n--кортеж,
+то мы получим ошибку.
+
+\begin{lstlisting}[language=OCaml]
+# snd ( 65 , 'B' , "ascii" ) ;;
+Error: This expression has type int * char * string
+       but an expression was expected of type 'a * 'b
+\end{lstlisting}
+
+Существует разница между парой и триплетом: тип \texttt{int*int*int} отличен от
+\texttt{(int*int)*int} и \texttt{int*(int*int)}. Методы доступа к элементам
+триплета (и других кортежей) не определены в стандартной библиотеке. В случае
+необходимости мы используем сопоставление с образцом (см. \ref{}).
+
+\subsubsection{Списки}
+
+Значения одного и того же типа могут быть объединены в списки. Список может быть
+либо пустым, либо содержать однотипные элементы.
+
+\begin{lstlisting}[language=OCaml]
+# [] ;;
+- : 'a list = []
+# [ 1 ; 2 ; 3 ] ;;
+- : int list = [1; 2; 3]
+# [ 1 ; "two" ; 3 ] ;;
+Error: This expression has type string but an expression was expected of type
+         int
+\end{lstlisting}
+
+Для того чтобы добавить элемент в начало списка существует следующая функция в
+виде инфиксного оператора :: --- аналог \texttt{cons} в Caml.
+
+\begin{lstlisting}[language=OCaml]
+# 1 :: 2 :: 3 :: [] ;;
+- : int list = [1; 2; 3]
+\end{lstlisting}
+
+Для объединения (конкатенации) списков существует инфиксный оператор: @.
+
+\begin{lstlisting}[language=OCaml]
+# [ 1 ]  @  [ 2 ; 3 ] ;;
+- : int list = [1; 2; 3]
+# [ 1 ; 2 ]  @  [ 3 ] ;;
+- : int list = [1; 2; 3]
+\end{lstlisting}
+
+Остальные функции манипуляции списками определены в библиотеке \texttt{List}.
+Функции \texttt{hd} и \texttt{tl} дают доступ к первому и последнему элементу
+списка.
+
+\begin{lstlisting}[language=OCaml]
+# List.hd [ 1 ; 2 ; 3 ] ;;
+- : int = 1
+# List.hd [] ;;
+Exception: Failure "hd".
+\end{lstlisting}
+
+В последнем примере получить первый элемент пустого списка действительно
+\enq{сложно}, поэтому возбуждается исключение (см. \ref{}).
+
+\subsection{Структуры условного контроля}
+
+Одна из структур контроля необходимая в каждом языка программирования ---
+условный оператор.
+
+Синтаксис:
+
+\begin{lstlisting}[language=OCaml]
+if expr1 then expr2 else expr3
+\end{lstlisting}
+
+Тип выражения \texttt{expr1} равен \texttt{bool}. Выражения \texttt{expr2} и
+\texttt{expr3} должны быть одного и того же типа.
+
+\begin{lstlisting}[language=OCaml]
+# if 3=4 then 0 else 4 ;;
+- : int = 4
+# if 3=4 then "0" else "4" ;;
+- : string = "4"
+# if 3=4 then 0 else  "4";;
+Error: This expression has type string but an expression was expected of type
+         int
+\end{lstlisting}
+
+\subsubsection{Замечание}
+Ветка \texttt{else} может быть опущена, в этом случае будет подставлено значение
+по умолчанию равное \texttt{else ()}, в соответствии с этим выражение
+\texttt{expr2} должно быть типа \texttt{unit} (см. \ref{} стр. \pageref{}).
+
+\subsection{Объявление значений}
+
+Определение связывает имя со значением. Различают глобальные и локальные
+определения. В первом случае, объявленные имена видны во всех выражениях,
+следуют за ним, во втором --- имена доступны только в текущем выражении. Мы
+также можем одновременно объявить несколько пар имя-значение.
+
+\subsubsection{Глобальные объявления}
+
+Синтаксис:
+
+\begin{lstlisting}[language=OCaml]
+let name = expr ;;
+\end{lstlisting}
+
+Глобальное объявление определяет связь имени \texttt{nom} со значением выражения
+\texttt{expr}, которое будет доступно всем следующим выражениям.
+
+\begin{lstlisting}[language=OCaml]
+# let yr = "1999" ;;
+val yr : string = "1999"
+# let x = int_of_string(yr) ;;
+val x : int = 1999
+# x ;;
+- : int = 1999
+# x + 1 ;;
+- : int = 2000
+# let new_yr = string_of_int (x + 1) ;;
+val new_yr : string = "2000"
+\end{lstlisting}
+
+\subsubsection{Одновременное глобальное объявление}
+
+Синтаксис:
+
+\begin{lstlisting}[language=OCaml]
+let nom1 = expr1
+and nom2 = expr2
+:
+and nomn = exprn;;
+\end{lstlisting}
+
+При одновременном объявлении переменные будут известны только к концу всех
+объявлений.
+
+\begin{lstlisting}[language=OCaml]
+# let x = 1 and y = 2 ;;
+val x : int = 1
+val y : int = 2
+# x + y ;;
+- : int = 3
+# let z = 3 and t = z + 2 ;;
+Error: Unbound value z
+\end{lstlisting}
+
+Можно сгруппировать несколько глобальных объявлений в одной фразе, вывод типов и
+значений произойдёт к концу фразы, отмеченной \enq{;;}. В данном случае
+объявления будут вычислены по порядку.
+
+\begin{lstlisting}[language=OCaml]
+# let x = 2
+  let y = x + 3  ;;
+val x : int = 2
+val y : int = 5
+\end{lstlisting}
+
+Глобальное объявление может быть скрыто локальным с тем же именем (см. \ref{??}
+стр. \pageref{??}).
+
+\subsubsection{Локальное объявление}
+
+Синтаксис:
+
+\begin{lstlisting}[language=OCaml]
+let nom = expr1 in expr2;;
+\end{lstlisting}
+
+Имя \texttt{nom} связанное с выражением \texttt{expr1} известно только для
+вычисления \texttt{expr2}.
+
+\begin{lstlisting}[language=OCaml]
+# let xl = 3 in xl * xl ;;
+- : int = 9
+\end{lstlisting}
+
+Локальное объявление, которое связывает \texttt{xl} со значением \texttt{3},
+существует только в ходе вычисления \texttt{xl*xl}.
+
+\begin{lstlisting}[language=OCaml]
+# xl ;;
+Error: Unbound value xl
+\end{lstlisting}
+
+Локальное объявление скрывает любое глобальные с тем же именем, но как только мы
+выходим из блока в котором была оно определено, мы находим старое значение
+связанное с этим именем.
+
+\begin{lstlisting}[language=OCaml]
+# let x = 2 ;;
+val x : int = 2
+# let x = 3 in x * x ;;
+- : int = 9
+# x * x ;;
+- : int = 4
+\end{lstlisting}
+
+Локальное объявление --- это обычное выражение, соответственно оно может быть
+использовано для построения других выражений.
+
+\begin{lstlisting}[language=OCaml]
+# (let x = 3 in x * x) + 1 ;;
+- : int = 10
+\end{lstlisting}
+
+Локальные объявления так же могут быть одновременными.
+
+\begin{lstlisting}[language=OCaml]
+let 	name1 = expr1
+and 	name2 = expr2
+:
+and 	namen = exprn
+in 	expr ;;
+\end{lstlisting}
+
+\begin{lstlisting}[language=OCaml]
+# let a = 3.0 and b = 4.0 in sqrt (a*.a +. b*.b) ;;
+- : float = 5.
+# b ;;
+Error: Unbound value b
+\end{lstlisting}
+
+\subsection{Функциональное выражение, функции}

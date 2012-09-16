@@ -1,51 +1,64 @@
 \@titleaux{Разработка программ с помощью Objective Caml\\
 Developing Applications with Objective Caml}
-\@addtocsec{htoc}{1}{-1}{\@print{Глава 1}\quad{}Как заполучить Objective CAML{}}
-\@addtocsec{htoc}{2}{-2}{\@print{Часть I}\quad{}Основы языка{}}
-\@addtocsec{htoc}{3}{-1}{\@print{Глава 2}\quad{}Функциональное программирование{}}
-\@addtocsec{htoc}{4}{-1}{\@print{Глава 3}\quad{}Императивное программирование{}}
-\@addtocsec{htoc}{5}{-1}{\@print{Глава 4}\quad{}Функциональный и императивный стиль{}}
-\@addtocsec{htoc}{6}{-1}{\@print{Глава 5}\quad{}Графический интерфейс{}}
-\@addtocsec{htoc}{7}{-1}{\@print{Глава 6}\quad{}Приложения{}}
-\@addtocsec{htoc}{8}{-2}{\@print{Часть II}\quad{}Средства разработки{}}
-\@addtocsec{htoc}{9}{-1}{\@print{Глава 7}\quad{}Компиляция и переносимость{}}
-\@addtocsec{htoc}{10}{-1}{\@print{Глава 8}\quad{}Библиотеки{}}
-\@addtocsec{htoc}{11}{-1}{\@print{Глава 9}\quad{}Автоматический сборщик мусора{}}
-\@addtocsec{htoc}{12}{-1}{\@print{Глава 10}\quad{}Средства анализа программ{}}
-\@addtocsec{htoc}{13}{-1}{\@print{Глава 11}\quad{}Средства лексического и синтаксического анализа{}}
-\@addtocsec{htoc}{14}{0}{\@print{11.1}\quad{}Введение{}}
-\@addtocsec{htoc}{15}{0}{\@print{11.2}\quad{}План главы{}}
-\@addtocsec{htoc}{16}{0}{\@print{11.3}\quad{}Лексика{}}
-\@addtocsec{htoc}{17}{1}{\@print{11.3.1}\quad{}Модуль \texttt{Genlex}{}}
-\@addtocsec{htoc}{18}{1}{\@print{11.3.2}\quad{}Использование потоков{}}
-\@addtocsec{htoc}{19}{1}{\@print{11.3.3}\quad{}Регулярные выражения{}}
+\@@addtocsec{htoc}{sec2}{-1}{\@print{Глава 1}\quad{}Как заполучить Objective CAML{}}
+\@@addtocsec{htoc}{sec3}{-2}{\@print{Часть I}\quad{}Основы языка{}}
+\@@addtocsec{htoc}{sec4}{-1}{\@print{Глава 2}\quad{}Функциональное программирование{}}
+\@@addtocsec{htoc}{sec5}{0}{\@print{2.1}\quad{}Введение{}}
+\@@addtocsec{htoc}{sec6}{0}{\@print{2.2}\quad{}План главы{}}
+\@@addtocsec{htoc}{sec7}{0}{\@print{2.3}\quad{}Функциональное ядро Objective CAML{}}
+\newlabel{sec:caml_kernel}{{2.3}{X}}
+\@@addtocsec{htoc}{sec8}{1}{\@print{2.3.1}\quad{}Значения, функции и базовые типы{}}
+\newlabel{sec:values_funcs_base_types}{{2.3.1}{X}}
+\newlabel{tbl:operations_on_numbers}{{2.1}{X}}
+\newlabel{tbl:functions_on_floats}{{2.2}{X}}
+\newlabel{tbl:boolean_operations}{{2.3.1}{X}}
+\newlabel{tbl:comparison_operations}{{2.3.1}{X}}
+\@@addtocsec{htoc}{sec18}{1}{\@print{2.3.2}\quad{}Структуры условного контроля{}}
+\@@addtocsec{htoc}{sec20}{1}{\@print{2.3.3}\quad{}Объявление значений{}}
+\@@addtocsec{htoc}{sec24}{1}{\@print{2.3.4}\quad{}Функциональное выражение, функции{}}
+\@@addtocsec{htoc}{sec25}{-1}{\@print{Глава 3}\quad{}Императивное программирование{}}
+\@@addtocsec{htoc}{sec26}{-1}{\@print{Глава 4}\quad{}Функциональный и императивный стиль{}}
+\@@addtocsec{htoc}{sec27}{-1}{\@print{Глава 5}\quad{}Графический интерфейс{}}
+\@@addtocsec{htoc}{sec28}{-1}{\@print{Глава 6}\quad{}Приложения{}}
+\@@addtocsec{htoc}{sec29}{-2}{\@print{Часть II}\quad{}Средства разработки{}}
+\@@addtocsec{htoc}{sec30}{-1}{\@print{Глава 7}\quad{}Компиляция и переносимость{}}
+\@@addtocsec{htoc}{sec31}{-1}{\@print{Глава 8}\quad{}Библиотеки{}}
+\@@addtocsec{htoc}{sec32}{-1}{\@print{Глава 9}\quad{}Автоматический сборщик мусора{}}
+\@@addtocsec{htoc}{sec33}{-1}{\@print{Глава 10}\quad{}Средства анализа программ{}}
+\@@addtocsec{htoc}{sec34}{-1}{\@print{Глава 11}\quad{}Средства лексического и синтаксического анализа{}}
+\@@addtocsec{htoc}{sec35}{0}{\@print{11.1}\quad{}Введение{}}
+\@@addtocsec{htoc}{sec36}{0}{\@print{11.2}\quad{}План главы{}}
+\@@addtocsec{htoc}{sec37}{0}{\@print{11.3}\quad{}Лексика{}}
+\@@addtocsec{htoc}{sec38}{1}{\@print{11.3.1}\quad{}Модуль \texttt{Genlex}{}}
+\@@addtocsec{htoc}{sec39}{1}{\@print{11.3.2}\quad{}Использование потоков{}}
+\@@addtocsec{htoc}{sec40}{1}{\@print{11.3.3}\quad{}Регулярные выражения{}}
 \newlabel{tbl:reg_exps}{{11.1}{X}}
-\@addtocsec{htoc}{20}{1}{\@print{11.3.4}\quad{}Инструмент \texttt{Ocamllex}{}}
-\@addtocsec{htoc}{21}{0}{\@print{11.4}\quad{}Синтаксис{}}
-\@addtocsec{htoc}{22}{1}{\@print{11.4.1}\quad{}Грамматика{}}
-\@addtocsec{htoc}{23}{1}{\@print{11.4.2}\quad{}Порождение и распознавание{}}
+\@@addtocsec{htoc}{sec46}{1}{\@print{11.3.4}\quad{}Инструмент \texttt{Ocamllex}{}}
+\@@addtocsec{htoc}{sec48}{0}{\@print{11.4}\quad{}Синтаксис{}}
+\@@addtocsec{htoc}{sec49}{1}{\@print{11.4.1}\quad{}Грамматика{}}
+\@@addtocsec{htoc}{sec50}{1}{\@print{11.4.2}\quad{}Порождение и распознавание{}}
 \newlabel{page_ref:Production_and_Recognition}{{11.4.2}{X}}
-\@addtocsec{htoc}{24}{1}{\@print{11.4.3}\quad{}Нисходящий анализ{}}
-\@addtocsec{htoc}{25}{1}{\@print{11.4.4}\quad{}Восходящий анализ{}}
+\@@addtocsec{htoc}{sec51}{1}{\@print{11.4.3}\quad{}Нисходящий анализ{}}
+\@@addtocsec{htoc}{sec54}{1}{\@print{11.4.4}\quad{}Восходящий анализ{}}
 \newlabel{tbl:bottom-up_parsing}{{11.2}{X}}
-\@addtocsec{htoc}{26}{0}{\@print{11.5}\quad{}Пересмотренный Basic{}}
-\@addtocsec{htoc}{27}{1}{\@print{11.5.1}\quad{}Файл \texttt{basic\_parser.mly}{}}
-\@addtocsec{htoc}{28}{1}{\@print{11.5.2}\quad{}Файл \texttt{basic\_lexer.mll}{}}
-\@addtocsec{htoc}{29}{1}{\@print{11.5.3}\quad{}Компиляция, компоновка{}}
-\@addtocsec{htoc}{30}{0}{\@print{11.6}\quad{}Exercises{}}
-\@addtocsec{htoc}{31}{0}{\@print{11.7}\quad{}Резюме{}}
-\@addtocsec{htoc}{32}{0}{\@print{11.8}\quad{}To Learn More{}}
-\@addtocsec{htoc}{33}{-1}{\@print{Глава 12}\quad{}Взаимодействие с языком C{}}
-\@addtocsec{htoc}{34}{-1}{\@print{Глава 13}\quad{}Приложения{}}
-\@addtocsec{htoc}{35}{-2}{\@print{Часть III}\quad{}Устройство программы{}}
-\@addtocsec{htoc}{36}{-1}{\@print{Глава 14}\quad{}Модульное программирование{}}
-\@addtocsec{htoc}{37}{-1}{\@print{Глава 15}\quad{}Объектно-ориентированное программирование{}}
-\@addtocsec{htoc}{38}{-1}{\@print{Глава 16}\quad{}Сравнение моделей устройств программ{}}
-\@addtocsec{htoc}{39}{-1}{\@print{Глава 17}\quad{}Приложения{}}
-\@addtocsec{htoc}{40}{-2}{\@print{Часть IV}\quad{}Параллелизм и распределение{}}
-\@addtocsec{htoc}{41}{-1}{\@print{Глава 18}\quad{}Процессы и связь между процессами{}}
-\@addtocsec{htoc}{42}{-1}{\@print{Глава 19}\quad{}Параллельное программирование{}}
-\@addtocsec{htoc}{43}{-1}{\@print{Глава 20}\quad{}Распределённое программирование{}}
-\@addtocsec{htoc}{44}{-1}{\@print{Глава 21}\quad{}Приложения{}}
-\@addtocsec{htoc}{45}{-2}{\@print{Часть V}\quad{}Разработка программ с помощью Objective CAML{}}
-\@addtocsec{htoc}{46}{-2}{\@print{Часть VI}\quad{}Приложения{}}
+\@@addtocsec{htoc}{sec57}{0}{\@print{11.5}\quad{}Пересмотренный Basic{}}
+\@@addtocsec{htoc}{sec58}{1}{\@print{11.5.1}\quad{}Файл \texttt{basic\_parser.mly}{}}
+\@@addtocsec{htoc}{sec62}{1}{\@print{11.5.2}\quad{}Файл \texttt{basic\_lexer.mll}{}}
+\@@addtocsec{htoc}{sec63}{1}{\@print{11.5.3}\quad{}Компиляция, компоновка{}}
+\@@addtocsec{htoc}{sec64}{0}{\@print{11.6}\quad{}Exercises{}}
+\@@addtocsec{htoc}{sec65}{0}{\@print{11.7}\quad{}Резюме{}}
+\@@addtocsec{htoc}{sec66}{0}{\@print{11.8}\quad{}To Learn More{}}
+\@@addtocsec{htoc}{sec67}{-1}{\@print{Глава 12}\quad{}Взаимодействие с языком C{}}
+\@@addtocsec{htoc}{sec68}{-1}{\@print{Глава 13}\quad{}Приложения{}}
+\@@addtocsec{htoc}{sec69}{-2}{\@print{Часть III}\quad{}Устройство программы{}}
+\@@addtocsec{htoc}{sec70}{-1}{\@print{Глава 14}\quad{}Модульное программирование{}}
+\@@addtocsec{htoc}{sec71}{-1}{\@print{Глава 15}\quad{}Объектно-ориентированное программирование{}}
+\@@addtocsec{htoc}{sec72}{-1}{\@print{Глава 16}\quad{}Сравнение моделей устройств программ{}}
+\@@addtocsec{htoc}{sec73}{-1}{\@print{Глава 17}\quad{}Приложения{}}
+\@@addtocsec{htoc}{sec74}{-2}{\@print{Часть IV}\quad{}Параллелизм и распределение{}}
+\@@addtocsec{htoc}{sec75}{-1}{\@print{Глава 18}\quad{}Процессы и связь между процессами{}}
+\@@addtocsec{htoc}{sec76}{-1}{\@print{Глава 19}\quad{}Параллельное программирование{}}
+\@@addtocsec{htoc}{sec77}{-1}{\@print{Глава 20}\quad{}Распределённое программирование{}}
+\@@addtocsec{htoc}{sec78}{-1}{\@print{Глава 21}\quad{}Приложения{}}
+\@@addtocsec{htoc}{sec79}{-2}{\@print{Часть V}\quad{}Разработка программ с помощью Objective CAML{}}
+\@@addtocsec{htoc}{sec80}{-2}{\@print{Часть VI}\quad{}Приложения{}}
