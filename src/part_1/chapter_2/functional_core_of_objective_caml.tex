@@ -566,3 +566,744 @@ Error: Unbound value b
 \end{lstlisting}
 
 \subsection{Функциональное выражение, функции}
+
+Функциональное выражение состоит из параметра и тела. Формальный параметр — это
+имя переменной, а тело --- это выражение. Обычно говорят что формальный параметр
+является абстрактным, по этой причине функциональное выражение тоже называется
+абстракцией.
+
+Синтаксис:
+
+\begin{lstlisting}[language=OCaml]
+function p -> expr
+\end{lstlisting}
+
+Таким образом функция возведения в квадрат будет выглядеть так:
+
+\begin{lstlisting}[language=OCaml]
+# function x -> x*x ;;
+- : int -> int = <fun>
+\end{lstlisting}
+
+Objective CAML сам определяет тип. Функциональный тип \texttt{int->int} это
+функция с параметром типа \texttt{int}, возвращающая значение типа \texttt{int}.
+
+Функция с одним аргументом пишется как функция и аргумент следующий за ней.
+
+\begin{lstlisting}[language=OCaml]
+# (function x -> x * x) 5 ;;
+- : int = 25
+\end{lstlisting}
+
+Вычисление функции состоит в вычисление её тела, в данном случае \texttt{x*x},
+где формальный параметр \texttt{x}, заменён значением аргумента (эффективным
+параметром), здесь он равен 5.
+
+При конструкции функционального выражения \texttt{expr} может быть любым
+выражением, в частности функциональным.
+
+\begin{lstlisting}[language=OCaml]
+# function x -> (function y -> 3*x + y) ;;
+- : int -> int -> int = <fun>
+\end{lstlisting}
+
+Скобки не обязательны, мы можем писать просто:
+
+\begin{lstlisting}[language=OCaml]
+# function x -> function y -> 3*x + y ;;
+- : int -> int -> int = <fun>
+\end{lstlisting}
+
+В простом случае мы скажем, что функция ожидает два аргумента целого типа на
+входе и возвращает значение целого типа. Но когда речь идёт о функциональном
+языке, таком как Objective CAML, то скорее это соответствует типу функции с
+входным аргументом типа \texttt{int} и возвращающая функциональное значение типа
+\texttt{int->int}:
+
+\begin{lstlisting}[language=OCaml]
+# (function x -> function y -> 3*x + y) 5 ;;
+- : int -> int = <fun>
+\end{lstlisting}
+
+Естественно, мы можем применить это функциональное выражение к двум аргументам.
+Для этого напишем:
+
+\begin{lstlisting}[language=OCaml]
+# (function x -> function y -> 3*x + y) 4 5 ;;
+- : int = 17
+\end{lstlisting}
+
+Когда мы пишем \texttt{f a b}, подразумевается применение \texttt{(f a) к b}.
+
+Давайте подробно рассмотрим выражение
+
+\begin{lstlisting}[language=OCaml]
+(function x -> function y -> 3*x + y) 4 5
+\end{lstlisting}
+
+Для того чтобы вычислить это выражение, необходимо сначала вычислить значение
+
+\begin{lstlisting}[language=OCaml]
+(function x -> function y -> 3*x + y) 4
+\end{lstlisting}
+
+что есть {\it функциональное выражение} равное
+
+\begin{lstlisting}[language=OCaml]
+function y -> 3*4 + y
+\end{lstlisting}
+
+в котором \texttt{x} заменён на 4 в выражении \texttt{3 * x + y}. Применяя это
+значение (являющееся функцией) к 5, мы получаем конечное значение \texttt{3 * 4
++ 5 = 17}:
+
+\begin{lstlisting}[language=OCaml]
+# (function x -> function y -> 3*x + y) 4 5 ;;
+- : int = 17
+\end{lstlisting}
+
+\subsubsection{Арность функции}
+
+Арностью функции называется число аргументов функции. По правилам,
+унаследованным из математики, аргументы функции задаются в скобках после имени
+функции. Мы пишем: \texttt{f(4,5)}. Как было указанно ранее, в Objective CAML мы
+чаще используем следующий синтаксис: \texttt{f 4 5}. Естественно, можно написать
+функциональное выражение применимое к (\texttt{4,5)}:
+
+\begin{lstlisting}[language=OCaml]
+# function (x,y) -> 3*x + y ;;
+- : int * int -> int = <fun>
+\end{lstlisting}
+
+Но в данном случае, функция ожидает не два аргумента, а один; тип которого пара
+целых. Попытка применить два аргумента к функции ожидающей пару или наоборот,
+передать пару функции для двух аргументов приведёт к ошибке:
+
+\begin{lstlisting}[language=OCaml]
+# (function (x,y) -> 3*x + y) 4 5 ;;
+Error: This function is applied to too many arguments;
+maybe you forgot a `;'
+#  (function x -> function y -> 3*x + y) (4, 5) ;;
+Error: This expression has type int * int
+       but an expression was expected of type int
+\end{lstlisting}
+
+\subsubsection{Альтернативный синтаксис}
+
+Существует более компактная форма записи функций с несколькими аргументами,
+которая дошла к нам из старых версий {\it Caml}. Выглядит она так:
+
+Синтаксис 
+
+\begin{lstlisting}[language=OCaml]
+fun p1 ... pn -> expr
+\end{lstlisting}
+
+Это позволяет не повторять слово \texttt{function} и стрелки. Данная запись
+эквивалентна
+
+\begin{lstlisting}[language=OCaml]
+function p1 -> -> function pn -> expr
+# fun x y -> 3*x + y ;;
+- : int -> int -> int = <fun>
+# (fun x y -> 3*x + y) 4 5 ;;
+- : int = 17
+\end{lstlisting}
+
+Эту форму можно часто встретить в библиотеках идущих в поставку с Objective
+CAML.
+
+\subsubsection{Замыкание}
+
+Objective CAML рассматривает функциональное выражение также как любое другое.
+Значение возвращаемое функциональным выражением называется замыканием. Каждое
+выражение Objective CAML вычисляется в окружении состоящем из соответствий
+имя–значение, которые были объявлены до вычисляемого выражения. Замыкание может
+быть описано как триплет, состоящий из имени формального параметра, тела функции
+и окружения выражения. Нам необходимо хранить это окружение, поскольку в теле
+функции кроме формальных параметров могут использоваться другие переменные. В
+функциональном выражении эти переменные называются свободными, нам понадобится
+их значение в момент применения функционального выражения.
+
+\begin{lstlisting}[language=OCaml]
+# let m = 3 ;;
+val m : int = 3
+# function x -> x + m ;;
+- : int -> int = <fun>
+#  (function x -> x + m) 5 ;;
+- : int = 8
+\end{lstlisting}
+
+В случае когда применение замыкания к аргументу возвращает новое замыкание, оно
+(новое замыкание) получает в своё окружение все необходимые связи для следующего
+применения. Раздел \ref{??} подробно рассматривает эти понятия. В главе
+\ref{??}, а так же в главе \ref{??} мы вернёмся к тому как замыкание
+представляется в памяти.
+
+До сих пор рассмотренные функциональные выражения были {\it анонимными}, однако
+мы можем дать им имя.
+Объявление функциональных значений
+
+\subsubsection{Объявление функциональных значений}
+
+Функциональное значение объявляется так же как и другие, при помощи конструктора
+\texttt{let}
+
+\begin{lstlisting}[language=OCaml]
+# let succ = function x -> x + 1 ;;
+val succ : int -> int = <fun>
+# succ 420 ;;
+- : int = 421
+# let g = function x -> function y -> 2*x + 3*y ;;
+val g : int -> int -> int = <fun>
+# g 1 2;;
+- : int = 8
+\end{lstlisting}
+
+Для упрощения записи, можно использовать следующий синтаксис:
+
+Синтаксис:
+
+\begin{lstlisting}[language=OCaml]
+let nom p1...pn=expr
+\end{lstlisting}
+
+что эквивалентно:
+
+\begin{lstlisting}[language=OCaml]
+let nom=function p1->->function pn-> expr
+\end{lstlisting}
+
+Следующие объявления \texttt{succ} и g эквивалентны предыдущим:
+
+\begin{lstlisting}[language=OCaml]
+# let succ x = x + 1 ;;
+val succ : int -> int = <fun>
+# let g x y = 2*x + 3*y ;;
+val g : int -> int -> int = <fun>
+\end{lstlisting}
+
+В следующем примере демонстрируется функциональная сторона Objective CAML, где
+функция \texttt{h1} получена применением \texttt{g} к аргументу. В данном случае
+мы имеем дело с частичным применением.
+
+\begin{lstlisting}[language=OCaml]
+# let h1 = g 1 ;;
+val h1 : int -> int = <fun>
+# h1 2 ;;
+- : int = 8
+\end{lstlisting}
+
+С помощью \texttt{g} мы можем определить другую функцию \texttt{h2} фиксируя
+значение второго параметра \texttt{y}:
+
+\begin{lstlisting}[language=OCaml]
+# let h2 = function x -> g x 2 ;;
+val h2 : int -> int = <fun>
+# h2 1 ;;
+- : int = 8
+\end{lstlisting}
+
+\subsubsection{Объявление инфиксных функций}
+
+Некоторые бинарные функции могут быть использованы в инфиксной форме. Например
+при сложении двух целых мы пишем \texttt{3 + 5} для применения \texttt{+} к
+\texttt{3} и \texttt{5}. Для того чтобы использовать символ \texttt{+} как
+классическое функциональное значение, необходимо указать это, окружая символ
+скобками (\texttt{op}).
+
+В следующем примере определяется функция \texttt{succ} используя \texttt{(+)}:
+
+\begin{lstlisting}[language=OCaml]
+# (+) ;;
+- : int -> int -> int = <fun>
+# let succ = (+) 1 ;;
+val succ : int -> int = <fun>
+# succ 3 ;;
+- : int = 4
+\end{lstlisting}
+
+Таким образом мы можем определить новые операторы, что мы и сделаем определив
+\texttt{++} для сложения двух пар целых.
+
+\begin{lstlisting}[language=OCaml]
+# let (++) c1 c2 = (fst c1)+(fst c2), (snd c1)+(snd c2) ;;
+val ( ++ ) : int * int -> int * int -> int * int = <fun>
+# let c = (2,3) ;;
+val c : int * int = (2, 3)
+# c ++ c ;;
+- : int * int = (4, 6)
+\end{lstlisting}
+
+Существуют однако ограничения на определение новых операторов, они должны
+содержать только {\it символы} (такие как \texttt{*,+,\$}, etc.), исключая буквы
+и цифры. Следующие функции являются исключением:
+
+\begin{lstlisting}[language=OCaml]
+or mod land lor lxor lsr asr
+\end{lstlisting}
+
+\subsubsection{Функции высшего порядка}
+
+Функциональное значение (замыкание) может быть возвращено как результат, а так
+же передано как аргумент функции. Такие функции, берущие на входе или
+возвращающие функциональные значения, называются функциями высшего порядка.
+
+\begin{lstlisting}[language=OCaml]
+# let h = function f -> function y -> (f y) + y ;;
+val h : (int -> int) -> int -> int = <fun>
+\end{lstlisting}
+
+{\it Замечание}
+Выражения группируются справа налево, но функциональные типы объединяются слева
+направо. Таким образом тип функции \texttt{h} может быть написан:
+
+\begin{lstlisting}[language=OCaml]
+(int -> int) -> int -> int или (int -> int) -> (int -> int)
+\end{lstlisting}
+
+При помощи функций высшего порядка можно элегантно обрабатывать списки. К
+примеру функция \texttt{List.map} применяет какую-нибудь функцию ко всем
+элементам списка и возвращает список результатов.
+
+\begin{lstlisting}[language=OCaml]
+# List.map ;;
+- : ('a -> 'b) -> 'a list -> 'b list = <fun>
+# let square x = string_of_int (x*x) ;;
+val square : int -> string = <fun>
+# List.map square [1; 2; 3; 4] ;;
+- : string list = ["1"; "4"; "9"; "16"]
+\end{lstlisting}
+
+Другой пример --- функция \texttt{List.for\_all} проверяет соответствуют ли
+элементы списка определённому критерию.
+
+\begin{lstlisting}[language=OCaml]
+# List.for_all ;;
+- : ('a -> bool) -> 'a list -> bool = <fun>
+# List.for_all (function n -> n<>0) [-3; -2; -1; 1; 2; 3] ;;
+- : bool = true
+# List.for_all (function n -> n<>0) [-3; -2; 0; 1; 2; 3] ;;
+- : bool = false
+\end{lstlisting}
+
+\subsubsection{Видимость переменных}
+
+Для вычисления выражения, необходимо чтобы все используемые им переменные были
+определены, как, например, выражение \texttt{e} в определении
+
+\begin{lstlisting}[language=OCaml]
+let p=e
+\end{lstlisting}
+
+Переменная \texttt{p} не известна в этом выражении, она может быть использована
+только в случае если \texttt{p} была объявлена ранее.
+
+\begin{lstlisting}[language=OCaml]
+# let p = p ^ "-suffixe" ;;
+Error: Unbound value p
+# let p = "préfixe" ;;
+val p : string = "pr\195\169fixe"
+# let p = p ^ "-suffixe" ;;
+val p : string = "pr\195\169fixe-suffixe"
+\end{lstlisting}
+
+В Objective CAML переменные связаны статически. При применении замыкания
+используется окружение в момент её (замыкания) объявления (статическая
+видимость), а не в момент её применения (динамическая видимость)
+
+\begin{lstlisting}[language=OCaml]
+# let p = 10 ;;
+val p : int = 10
+# let k x = (x, p, x+p) ;;
+val k : int -> int * int * int = <fun>
+# k p ;;
+- : int * int * int = (10, 10, 20)
+# let p = 1000 ;;
+val p : int = 1000
+# k p ;;
+- : int * int * int = (1000, 10, 1010)
+\end{lstlisting}
+
+В функции \texttt{k} имеется свободная переменная \texttt{p}, которая была
+определена в глобальном окружении, поэтому определение \texttt{k} принято. Связь
+между именем \texttt{p} и значением 10 в окружении замыкания \texttt{k}
+статическая, то есть не зависит от последнего определения \texttt{p}.
+
+\subsubsection{Рекурсивное объявление}
+
+Объявление переменной называется рекурсивным, если оно использует свой
+собственный идентификатор в своём определении. Эта возможность часто
+используется для определения рекурсивных функций. Как мы видели ранее,
+\texttt{let} не позволяет делать это, поэтому необходимо использовать
+специальный синтаксис:
+
+\begin{lstlisting}[language=OCaml]
+let rec nom = expr ;;
+\end{lstlisting}
+
+Другой способ записи для функции с аргументами:
+
+\begin{lstlisting}[language=OCaml]
+let rec nom p1 ... pn = expr ;;
+\end{lstlisting}
+
+Определим функцию \texttt{sigma} вычисляющую сумму целых от \texttt{0} до
+значения указанного аргументом:
+
+\begin{lstlisting}[language=OCaml]
+# let rec sigma x = if x = 0 then 0 else x + sigma (x-1) ;;
+val sigma : int -> int = <fun>
+# sigma 10 ;;
+- : int = 55
+\end{lstlisting}
+
+Как заметил читатель, эта функция рискует \enq{не закончится} если входной
+аргумент меньше 0.
+
+Обычно, рекурсивное значение --- это функция, компилятор не принимает некоторые
+рекурсивные объявления, значения которых не функциональные.
+
+\begin{lstlisting}[language=OCaml]
+# let rec x = x + 1 ;;
+Error: This kind of expression is not allowed as right-hand side of `let rec'
+\end{lstlisting}
+
+Как мы увидим позднее, такие определения все таки возможны в некоторых случаях
+(см. \ref{??} стр. \pageref{??}).
+
+Объявление \texttt{let rec} может быть скомбинировано с \texttt{and}. В этом
+случае функции определённые на одном и том же уровне, видны всем остальным. Это
+может быть полезно при декларации взаимно рекурсивных функций.
+
+\begin{lstlisting}[language=OCaml]
+# let rec pair n = (n<>1) && ((n=0) or (impair (n-1))) and impair n = (n<>0) &&
+((n=1) or (pair (n-1)));;
+val pair : int -> bool = <fun>
+val impair : int -> bool = <fun>
+# pair 4 ;;
+- : bool = true
+# impair 5 ;;
+- : bool = true
+\end{lstlisting}
+
+По тому же принципу, локальные функции могут быть рекурсивными. Новое
+определение функции \texttt{sigma} проверяет корректность входного аргумента,
+перед тем как посчитать сумму локальной функцией \texttt{sigma\_rec}.
+
+\begin{lstlisting}[language=OCaml]
+# let sigma x = let rec sigma_rec x = if x = 0 then 0 else x + sigma_rec (x-1)
+in if (x<0) then "erreur : argument negatif" else "sigma = " ^ (string_of_int
+(sigma_rec x)) ;;
+val sigma : int -> string = <fun>
+\end{lstlisting}
+
+{\it Замечание}
+
+Мы вынужденны были определить возвращаемый тип как \texttt{string}, поскольку
+необходимо чтобы он был один и тот же, независимо от входного аргумента,
+отрицательного или положительного. Какое значение должна вернуть \texttt{sigma}
+если аргумент больше нуля? Далее, мы увидим правильный способ решения этой
+проблемы (см. \ref{??} стр. \ref{??}).
+
+\subsection{Полиморфизм и ограничение типа}
+
+Некоторые функции выполняют одни и те же инструкции независимо от типа
+аргументов. К примеру, для создание пары из двух значений нет смысла определять
+функции для каждого известного типа. Другой пример, доступ к первому полю пары
+не зависит от того, какого типа это поле.
+
+\begin{lstlisting}[language=OCaml]
+# let make_pair a b = (a,b) ;;
+val make_pair : 'a -> 'b -> 'a * 'b = <fun>
+# let p = make_pair "papier" 451 ;;
+val p : string * int = ("papier", 451)
+# let a = make_pair 'B' 65 ;;
+val a : char * int = ('B', 65)
+# fst p ;;
+- : string = "papier"
+# fst a ;;
+- : char = 'B'
+\end{lstlisting}
+
+Функция, для которой не нужно указывать тип входного аргумента или возвращаемого
+значения называется полиморфной. Синтезатор типов, включённый в компилятор
+Objective CAML находит наиболее общий тип для каждого выражения. В этом случае
+Objective CAML использует переменные, здесь они обозначены как \texttt{'a} и
+\texttt{'b}, для указания общих типов. Эти переменные конкретизируются типом
+аргумента в момент применения функции.
+
+При помощи полиморфных функций, мы получаем возможность написания универсального
+кода для любого типа переменных, сохраняя при этом надёжность статической
+типизации. Действительно, несмотря на то что \texttt{make\_paire} полиморфная,
+значение созданное (\texttt{make\_paire '6' 65}) имеет строго определённый тип,
+который отличен от (\texttt{make\_paire "paire" 451}). Проверка типов
+реализуется в момент компиляции, таким образом универсальность кода никак не
+сказывается на эффективности программы.
+
+\subsubsection{Пример функций и полиморфных значений}
+
+В следующем примере приведена полиморфная функция с входным параметром
+функционального типа.
+
+\begin{lstlisting}[language=OCaml]
+# let app = function f -> function x -> f x ;;
+val app : ('a -> 'b) -> 'a -> 'b = <fun>
+\end{lstlisting}
+
+Мы можем применить её к функции \texttt{impaire}, которая была определена ранее.
+
+\begin{lstlisting}[language=OCaml]
+# app impair 2;;
+- : bool = false
+\end{lstlisting}
+
+Функция тождества (\texttt{id}) возвращает полученный аргумент.
+
+\begin{lstlisting}[language=OCaml]
+# let id x = x ;;
+val id : 'a -> 'a = <fun>
+# app id 1 ;;
+- : int = 1
+\end{lstlisting}
+
+Следующая функция, \texttt{compose} принимает на входе две функции и ещё один
+аргумент, к которому применяет две первые.
+
+\begin{lstlisting}[language=OCaml]
+# let compose f g x = f (g x) ;;
+val compose : ('a -> 'b) -> ('c -> 'a) -> 'c -> 'b = <fun>
+# let add1 x = x+1 and mul5 x = x*5 in compose mul5 add1 9 ;;
+- : int = 50
+\end{lstlisting}
+
+Как мы видим, тип результата возвращаемого \texttt{g} должен быть таким же как и
+тип входного аргумента \texttt{f}.
+
+Не только функциональные значения могут быть полиморфными, проиллюстрируем это
+на примере пустого списка.
+
+\begin{lstlisting}[language=OCaml]
+# let l = [] ;;
+val l : 'a list = []
+\end{lstlisting}
+
+Следующий пример иллюстрирует тот факт, что создание типов основывается на
+разрешении ограничений, накладываемых применением функций, а вовсе не на
+значениях, полученных в процессе выполнения.
+
+\begin{lstlisting}[language=OCaml]
+# let q = List.tl [2] ;;
+val q : int list = []
+\end{lstlisting}
+
+Здесь тип равен \texttt{List.tl 'a list->'a list}, то есть эта функция
+применяется к списку целых и возвращает список целых. Тот факт что в момент
+выполнения возвращён пустой список, не влияет на его тип.
+
+Objective CAML создаёт параметризованные типы для каждой функции, которые не
+зависят от её аргументов. Этот вид полиморфизма называется {\it параметрическим
+полиморфизмом} \footnote{Некоторые встроенные функции не подчиняются этому
+правилу, особенно функция структурного равенства (\texttt{=}), которая является
+полиморфной (её тип \texttt{'a -> 'a -> bool}), но она исследует структуру своих
+аргументов для проверки равенства.}.
+
+\subsubsection{Ограничение типа}
+
+Синтезатор типа Objective CAML образует самый общий тип и иногда бывает
+необходимо уточнить тип выражения.
+
+Синтаксис ограничения типа следующий:
+
+\begin{lstlisting}[language=OCaml]
+(expr:t)
+\end{lstlisting}
+
+В этом случае синтезатор типа воспользуется этим ограничением при конструкции
+типа выражения. Использование ограничения типа позволяет
+
+\begin{itemize}
+	\item сделать видимым тип параметра функции
+
+	\item запретить использование функции вне свой области применения
+
+	\item уточнить тип выражения, это окажется необходимым в случае физически
+изменяемых значений (см. \ref{??} стр. \pageref{??}).
+\end{itemize}
+
+Рассмотрим использование ограничения типа.
+
+\begin{lstlisting}[language=OCaml]
+# let add (x:int) (y:int) = x + y ;;
+val add : int -> int -> int = <fun>
+# let make_pair_int (x:int) (y:int) = x,y;;
+val make_pair_int : int -> int -> int * int = <fun>
+# let compose_fn_int (f : int -> int) (g : int -> int) (x:int) = compose f g x;;
+val compose_fn_int : (int -> int) -> (int -> int) -> int -> int = <fun>
+# let nil = ([] : string list);;
+val nil : string list = []
+# 'H'::nil;;
+Error: This expression has type string list
+       but an expression was expected of type char list
+\end{lstlisting}
+
+Это ограничение полиморфизма позволяет лучше контролировать тип выражений, тем
+самым ограничивая тип определённый системой. В таких выражениях можно
+использовать любой определённый тип.
+
+\begin{lstlisting}[language=OCaml]
+# let llnil = ([] : 'a list list) ;;
+val llnil : 'a list list = []
+# [1;2;3]:: llnil ;;
+- : int list list = [[1; 2; 3]]
+\end{lstlisting}
+
+\texttt{llint} является списком списков любого типа.
+
+В данном случае подразумевается ограничение типа, а не явная типизация
+заменяющая тип, который определил Objective CAML. В частности, мы не можем
+обобщить тип, более чем это позволяет вывод типов Objective CAML.
+
+\begin{lstlisting}[language=OCaml]
+# let add_general (x:'a) (y:'b) = add x y ;;
+val add_general : int -> int -> int = <fun>
+\end{lstlisting}
+
+Ограничения типа будут использованы в интерфейсах модулей \ref{??}, а так же в
+декларации классов \ref{??}
+
+\subsection{Примеры}
+
+В этом параграфе мы приведём несколько примеров функций. Большинство из них уже
+определены в Objective CAML, мы делаем это только в \enq{педагогических} целях.
+
+Тест остановки рекурсивных функций реализован при помощи проверки, имеющей стиль
+более близкий к \texttt{Lisp}. Мы увидим как это сделать в стиле ML (см.
+\ref{??}).
+
+\subsubsection{Размер списка}
+
+Начнём с функции проверяющей пустой список или нет.
+
+\begin{lstlisting}[language=OCaml]
+# let null l = (l=[]);;
+val null : 'a list -> bool = <fun>
+\end{lstlisting}
+
+Определим функцию \texttt{size} вычисления размера списка (т.е. число
+элементов).
+
+\begin{lstlisting}[language=OCaml]
+# let rec size l = if null l then 0 else 1+(size(List.tl l));;
+val size : 'a list -> int = <fun>
+# size [] ;;
+- : int = 0
+# size [1;2;18;22] ;;
+- : int = 4
+\end{lstlisting}
+
+Функция \texttt{size} проверяет список: если он пуст возвращает 0, иначе
+прибавляет 1 к длине остатка списка.
+
+\subsubsection{Итерация композиций (Iteration of composition)}
+
+Выражение \texttt{iterate n f} вычисляет $f^n$, соответствующее применение
+функции \texttt{f n} раз.
+
+\begin{lstlisting}[language=OCaml]
+# let rec iterate n f =
+   if n = 0 then (function x -> x)
+   else compose f (iterate (n-1) f) ;;
+val iterate : int -> ('a -> 'a) -> 'a -> 'a = <fun>
+\end{lstlisting}
+
+Функция \texttt{iterate} проверяет аргумент n на равенство нулю, если аргумент
+равен, то возвращаем функцию идентичности, иначе возвращаем композицию
+\texttt{f} с итерацией \texttt{f n-1} раз.
+
+Используя \texttt{iterate} можно определить операцию возведения в степень, как
+итерацию умножения.
+
+\begin{lstlisting}[language=OCaml]
+# let rec power i n =
+  let i_times = ( * ) i in
+   iterate n i_times 1 ;;
+val power : int -> int -> int = <fun>
+# power 2 8 ;;
+- : int = 256
+\end{lstlisting}
+
+Функция \texttt{power} повторяет n раз функциональное выражение
+\texttt{i\_times}, затем применяет этот результат к 1, таким образом мы получаем
+n-ю степень целого числа.
+
+\subsubsection{Таблица умножения}
+
+Напишем функцию \texttt{multab}, которая вычисляет ряд таблицы умножения
+соответствующую целому числу переданному в аргументе.
+
+Для начала определим функцию \texttt{apply\_fun\_list}. Пусть \texttt{f\_list}
+список функций, тогда вызов \texttt{apply\_fun\_list x f\_list} возвращает
+список результатов применения каждого элемента списка \texttt{f\_list} к
+\texttt{x}.
+
+\begin{lstlisting}[language=OCaml]
+# let rec apply_fun_list x f_list =
+  if null f_list then []
+  else ((List.hd f_list) x)::(apply_fun_list x (List.tl f_list)) ;;
+val apply_fun_list : 'a -> ('a -> 'b) list -> 'b list = <fun>
+# apply_fun_list 1 [(+) 1;(+) 2;(+) 3] ;;
+- : int list = [2; 3; 4]
+\end{lstlisting}
+
+Функция \texttt{mk\_mult\_fun\_list} возвращает список функций умножающих их
+аргумент на i, \texttt{0<=i<=n}.
+
+\begin{lstlisting}[language=OCaml]
+# let mk_mult_fun_list n =
+    let rec mmfl_aux p =
+      if p = n then [ ( * ) n ]
+      else (( * ) p) :: (mmfl_aux (p+1))
+    in  (mmfl_aux 1) ;;
+val mk_mult_fun_list : int -> (int -> int) list = <fun>
+\end{lstlisting}
+
+Подсчитаем ряд для 7
+
+\begin{lstlisting}[language=OCaml]
+# let multab n = apply_fun_list n (mk_mult_fun_list 10) ;;
+val multab : int -> int list = <fun>
+# multab 7 ;;
+- : int list = [7; 14; 21; 28; 35; 42; 49; 56; 63; 70]
+\end{lstlisting}
+
+\subsubsection{Итерация в списке}
+
+Вызов функции \texttt{fold\_left f a [e1; e2; $\ldots$; en]} возвращает
+\texttt{f$\ldots$(f (f a e1) e2) $\ldots$ en}, значит получаем n применений.
+
+\begin{lstlisting}[language=OCaml]
+# let rec fold_left f a l =
+   if null l then a
+   else fold_left f ( f a (List.hd l)) (List.tl l) ;;
+val fold_left : ('a -> 'b -> 'a) -> 'a -> 'b list -> 'a = <fun>
+\end{lstlisting}
+
+С помощью функции \texttt{fold\_left} можно компактно определить функцию
+вычисления суммы элементов списка целых чисел.
+
+\begin{lstlisting}[language=OCaml]
+# let sum_list = fold_left (+) 0 ;;
+val sum_list : int list -> int = <fun>
+# sum_list [2;4;7] ;;
+- : int = 13
+\end{lstlisting}
+
+Или, например, конкатенация элементов списка строк.
+
+\begin{lstlisting}[language=OCaml]
+# let sum_list = fold_left (+) 0 ;;
+val sum_list : int list -> int = <fun>
+# sum_list [2;4;7] ;;
+- : int = 13
+\end{lstlisting}
