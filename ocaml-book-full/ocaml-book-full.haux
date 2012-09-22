@@ -16,51 +16,20 @@ Developing Applications with Objective Caml}
 \@@addtocsec{htoc}{sec18}{1}{\@print{2.3.2}\quad{}Структуры условного контроля{}}
 \@@addtocsec{htoc}{sec20}{1}{\@print{2.3.3}\quad{}Объявление значений{}}
 \@@addtocsec{htoc}{sec24}{1}{\@print{2.3.4}\quad{}Функциональное выражение, функции{}}
+\newlabel{sec:def_func_val_let}{{2.3.4}{X}}
 \@@addtocsec{htoc}{sec33}{1}{\@print{2.3.5}\quad{}Полиморфизм и ограничение типа{}}
 \@@addtocsec{htoc}{sec36}{1}{\@print{2.3.6}\quad{}Примеры{}}
-\@@addtocsec{htoc}{sec41}{-1}{\@print{Глава 3}\quad{}Императивное программирование{}}
-\@@addtocsec{htoc}{sec42}{-1}{\@print{Глава 4}\quad{}Функциональный и императивный стиль{}}
-\@@addtocsec{htoc}{sec43}{-1}{\@print{Глава 5}\quad{}Графический интерфейс{}}
-\@@addtocsec{htoc}{sec44}{-1}{\@print{Глава 6}\quad{}Приложения{}}
-\@@addtocsec{htoc}{sec45}{-2}{\@print{Часть II}\quad{}Средства разработки{}}
-\@@addtocsec{htoc}{sec46}{-1}{\@print{Глава 7}\quad{}Компиляция и переносимость{}}
-\@@addtocsec{htoc}{sec47}{-1}{\@print{Глава 8}\quad{}Библиотеки{}}
-\@@addtocsec{htoc}{sec48}{-1}{\@print{Глава 9}\quad{}Автоматический сборщик мусора{}}
-\@@addtocsec{htoc}{sec49}{-1}{\@print{Глава 10}\quad{}Средства анализа программ{}}
-\@@addtocsec{htoc}{sec50}{-1}{\@print{Глава 11}\quad{}Средства лексического и синтаксического анализа{}}
-\@@addtocsec{htoc}{sec51}{0}{\@print{11.1}\quad{}Введение{}}
-\@@addtocsec{htoc}{sec52}{0}{\@print{11.2}\quad{}План главы{}}
-\@@addtocsec{htoc}{sec53}{0}{\@print{11.3}\quad{}Лексика{}}
-\@@addtocsec{htoc}{sec54}{1}{\@print{11.3.1}\quad{}Модуль \texttt{Genlex}{}}
-\@@addtocsec{htoc}{sec55}{1}{\@print{11.3.2}\quad{}Использование потоков{}}
-\@@addtocsec{htoc}{sec56}{1}{\@print{11.3.3}\quad{}Регулярные выражения{}}
-\newlabel{tbl:reg_exps}{{11.1}{X}}
-\@@addtocsec{htoc}{sec62}{1}{\@print{11.3.4}\quad{}Инструмент \texttt{Ocamllex}{}}
-\@@addtocsec{htoc}{sec64}{0}{\@print{11.4}\quad{}Синтаксис{}}
-\@@addtocsec{htoc}{sec65}{1}{\@print{11.4.1}\quad{}Грамматика{}}
-\@@addtocsec{htoc}{sec66}{1}{\@print{11.4.2}\quad{}Порождение и распознавание{}}
-\newlabel{page_ref:Production_and_Recognition}{{11.4.2}{X}}
-\@@addtocsec{htoc}{sec67}{1}{\@print{11.4.3}\quad{}Нисходящий анализ{}}
-\@@addtocsec{htoc}{sec70}{1}{\@print{11.4.4}\quad{}Восходящий анализ{}}
-\newlabel{tbl:bottom-up_parsing}{{11.2}{X}}
-\@@addtocsec{htoc}{sec73}{0}{\@print{11.5}\quad{}Пересмотренный Basic{}}
-\@@addtocsec{htoc}{sec74}{1}{\@print{11.5.1}\quad{}Файл \texttt{basic\_parser.mly}{}}
-\@@addtocsec{htoc}{sec78}{1}{\@print{11.5.2}\quad{}Файл \texttt{basic\_lexer.mll}{}}
-\@@addtocsec{htoc}{sec79}{1}{\@print{11.5.3}\quad{}Компиляция, компоновка{}}
-\@@addtocsec{htoc}{sec80}{0}{\@print{11.6}\quad{}Exercises{}}
-\@@addtocsec{htoc}{sec81}{0}{\@print{11.7}\quad{}Резюме{}}
-\@@addtocsec{htoc}{sec82}{0}{\@print{11.8}\quad{}To Learn More{}}
-\@@addtocsec{htoc}{sec83}{-1}{\@print{Глава 12}\quad{}Взаимодействие с языком C{}}
-\@@addtocsec{htoc}{sec84}{-1}{\@print{Глава 13}\quad{}Приложения{}}
-\@@addtocsec{htoc}{sec85}{-2}{\@print{Часть III}\quad{}Устройство программы{}}
-\@@addtocsec{htoc}{sec86}{-1}{\@print{Глава 14}\quad{}Модульное программирование{}}
-\@@addtocsec{htoc}{sec87}{-1}{\@print{Глава 15}\quad{}Объектно-ориентированное программирование{}}
-\@@addtocsec{htoc}{sec88}{-1}{\@print{Глава 16}\quad{}Сравнение моделей устройств программ{}}
-\@@addtocsec{htoc}{sec89}{-1}{\@print{Глава 17}\quad{}Приложения{}}
-\@@addtocsec{htoc}{sec90}{-2}{\@print{Часть IV}\quad{}Параллелизм и распределение{}}
-\@@addtocsec{htoc}{sec91}{-1}{\@print{Глава 18}\quad{}Процессы и связь между процессами{}}
-\@@addtocsec{htoc}{sec92}{-1}{\@print{Глава 19}\quad{}Параллельное программирование{}}
-\@@addtocsec{htoc}{sec93}{-1}{\@print{Глава 20}\quad{}Распределённое программирование{}}
-\@@addtocsec{htoc}{sec94}{-1}{\@print{Глава 21}\quad{}Приложения{}}
-\@@addtocsec{htoc}{sec95}{-2}{\@print{Часть V}\quad{}Разработка программ с помощью Objective CAML{}}
-\@@addtocsec{htoc}{sec96}{-2}{\@print{Часть VI}\quad{}Приложения{}}
+\newlabel{sec:caml_kernel:examples}{{2.3.6}{X}}
+\@@addtocsec{htoc}{sec41}{0}{\@print{2.4}\quad{}Объявления типов и сопоставление с образцом{}}
+\newlabel{sec:types_and_pattern_matching}{{2.4}{X}}
+\@@addtocsec{htoc}{sec42}{1}{\@print{2.4.1}\quad{}Сопоставление с образцом{}}
+\newlabel{sec:caml_kernel:examples:lstlisting}{{2.4.1}{X}}
+\@@addtocsec{htoc}{sec53}{1}{\@print{2.4.2}\quad{}Декларация типов{}}
+\@@addtocsec{htoc}{sec54}{1}{\@print{2.4.3}\quad{}Записи{}}
+\@@addtocsec{htoc}{sec55}{1}{\@print{2.4.4}\quad{}Тип сумма (sum){}}
+\@@addtocsec{htoc}{sec58}{1}{\@print{2.4.5}\quad{}Рекурсивный тип{}}
+\@@addtocsec{htoc}{sec59}{1}{\@print{2.4.6}\quad{}Параметризованный тип{}}
+\@@addtocsec{htoc}{sec60}{1}{\@print{2.4.7}\quad{}Видимость описания{}}
+\@@addtocsec{htoc}{sec61}{1}{\@print{2.4.8}\quad{}Функциональные типы{}}
+\@@addtocsec{htoc}{sec62}{1}{\@print{2.4.9}\quad{}Пример: реализация деревьев{}}
+\newlabel{fig:bin_search_tree}{{2.1}{X}}

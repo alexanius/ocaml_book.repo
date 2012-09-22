@@ -1,0 +1,186 @@
+\section{Калькулятор}
+
+Для того чтобы понять как организуются программы на Objective CAML, необходимо
+самим реализовать такую программу. Напишем калькулятор манипулирующий целыми
+числами при помощи 4 стандартных операций.
+
+Для начала, определим тип \texttt{key}, для представления кнопки калькулятора.
+Всего таких кнопок будет 15: по одной для каждой операции, для каждой цифры и
+для кнопки равно.
+
+\begin{lstlisting}[language=OCaml]
+# type key = Plus | Minus | Times | Div | Equals | Digit of int ;;
+\end{lstlisting}
+
+Заметим, что цифровые кнопки сгруппированы под одним конструктором
+\texttt{Digit} с аргументом целого типа. Таким образом, некоторые значения типа
+\texttt{key} не являются на самом деле кнопкой. Например, (\texttt{Digit 32})
+есть значение типа \texttt{key}, но не представляет ни одну кнопку калькулятора.
+
+Напишем функцию \texttt{valid} которая проверяет входной аргумент на
+принадлежность к типу \texttt{key}. Тип функции \texttt{key->bool}.
+
+На первом этапе определим функцию проверяющую что число принадлежит интервалу
+0-9. Объявим её с именем \texttt{is\_digit}.
+
+\begin{lstlisting}[language=OCaml]
+# let est_chiffre = function x -> (x>=0) && (x<=9) ;;
+val est_chiffre : int -> bool = <fun>
+\end{lstlisting}
+
+Теперь функция \texttt{valid} фильтрующая свой аргумент тип которого
+\texttt{key}:
+
+\begin{lstlisting}[language=OCaml]
+let valide tch = match tch with
+     Chiffre n -> est_chiffre n
+   | _ -> true ;;
+val valide : touche -> bool = <fun>
+\end{lstlisting}
+
+Первый фильтр применяется в случае если входной аргумент построен конструктором
+\texttt{Digit}, в этом случае он проверяется функцией \texttt{is\_digit}. Второй
+фильтр применяется в любом другом случае. Напомним, что благодаря фильтру, тип
+фильтруемого значения обязательно будет \texttt{key}.
+
+Перед тем как начать реализовывать алгоритм калькулятора, определим модель
+формально описывающую реакцию на нажатие кнопок. Мы подразумеваем что
+калькулятор располагает памятью в которой хранится результат последней операции,
+последняя нажатая кнопка, последний использованный оператор и число выведенное
+на экран. Все эти 4 значения назовем состоянием калькулятора, оно изменяется
+каждый раз при нажатии на одну из кнопок. Это изменение называется переходом, а
+теория управляющая подобным механизмом есть теория автоматов.
+
+Состояние представлено следующим типом:
+
+\begin{lstlisting}[language=OCaml]
+type etat = {
+   dce : int;    (* dernier calcul effectué     *)
+   dta : touche; (* dernière touche actionnée   *)
+   doa : touche; (* dernier opérateur actionné  *)
+   vaf : int     (* valeur affichée             *)
+ } ;;
+\end{lstlisting}
+
+В таблице \ref{tbl:transitions_for_3+21*2=} приведён пример состояний
+калькулятора.
+
+\begin{table}[hl]
+\begin{center}
+	\caption{Переходы 3+21*2=}
+	\begin{tabular}{|c|c|c|}
+	\hline
+	 & Состояние & Значение \\
+	\hline
+	 & $(0, =, =, 0)$ & 3 \\
+	\hline
+	$\to$ & $(0, 3, =, 3)$ & + \\
+	\hline
+	$\to$ & $(3, +, +, 3)$ & 2 \\
+	\hline
+	$\to$ & $(3, 2, +, 2)$ & 1 \\
+	\hline
+	$\to$ & $(3, 1, +, 21)$ & * \\
+	\hline
+	$\to$ & $(24, *, *, 24)$ & 2 \\
+	\hline
+	$\to$ & $(24, 2, *, 2)$ & = \\
+	\hline
+	$\to$ & $(48, =, =, 48)$ & \\
+	\hline
+	\end{tabular}
+\end{center}
+	\label{tbl:transitions_for_3+21*2=}
+\end{table}
+
+Нам нужна функция \texttt{evaluate} с тремя аргументами: двумя операндами и
+оператором, она возвращает результат операции. Для этого функция фильтрует
+входной аргумент типа \texttt{key}:
+
+\begin{lstlisting}[language=OCaml]
+# let evalue x y tch = match tch with
+     Plus  -> x + y
+   | Moins -> x - y
+   | Fois  -> x * y
+   | Par   -> x / y
+   | Egal  -> y
+   | Chiffre _ -> failwith "evalue : no op";;
+val evalue : int -> int -> touche -> int = <fun>
+\end{lstlisting}
+
+Дадим определение переходам, перечисляя все возможные случаи. Предположим, что
+текущее состояние есть квадри--плет \texttt{(a, b, A, d)}:
+
+\begin{itemize}
+	\item кнопка с цифрой x нажата, есть два возможных случая:
+
+	\begin{itemize}
+		\item предыдущая нажатая кнопка тоже цифра, значит пользователь
+продолжает	набирать число и необходимо добавить \texttt{x} к значению
+выводимому на экран	то есть изменить его на \texttt{d * 10 + x}. Новое состояние
+будет:	\texttt{(a,(Digit x), A, d * 10 + x)}
+
+		\item предыдущая нажатая кнопка не цифра, тогда мы только начинаем
+писать	новое число. Новое состояние: \texttt{(a, (Digit x), A, x)}
+	\end{itemize}
+
+	\item кнопка с оператором B была нажата, значит второй операнд был полностью
+введён и теперь мы хотим \enq{что-то} сделать с двумя операндами. Для этого
+сохранена последняя операция (\texttt{А}). Новое состояние: \texttt{(A d,B,B,a A
+d)}
+\end{itemize}
+
+Для того чтобы написать функцию \texttt{transition}, достаточно дословно
+перевести в Objective CAML предыдущее описание при помощи сопоставления входного
+аргумента. Кнопку с двумя значениями обработаем локальной функцией
+\texttt{digit\_transition} при помощи сопоставления.
+
+\begin{lstlisting}[language=OCaml]
+# let transition et tou =
+   let transition_chiffre n = function
+       Chiffre _  ->  { et with dta=tou; vaf=et.vaf*10+n }
+     |  _         ->  { et with dta=tou; vaf=n }
+   in
+      match tou with
+          Chiffre p  ->  transition_chiffre p et.dta
+        |  _         ->  let res = evalue et.dce et.vaf et.doa
+                         in { dce=res; dta=tou; doa=tou; vaf=res }  ;;
+val transition : etat -> touche -> etat = <fun>
+\end{lstlisting}
+
+Эта функция из \texttt{state} и \texttt{key} считает новое состояние
+\texttt{state}.
+
+Протестируем теперь программу:
+
+\begin{lstlisting}[language=OCaml]
+# let etat_initial = { dce=0; dta=Egal; doa=Egal; vaf=0 } ;;
+val etat_initial : etat = {dce=0; dta=Egal; doa=Egal; vaf=0}
+# let etat2 = transition etat_initial (Chiffre 3) ;;
+val etat2 : etat = {dce=0; dta=Chiffre 3; doa=Egal; vaf=3}
+# let etat3 = transition etat2 Plus ;;
+val etat3 : etat = {dce=3; dta=Plus; doa=Plus; vaf=3}
+# let etat4 = transition etat3 (Chiffre 2) ;;
+val etat4 : etat = {dce=3; dta=Chiffre 2; doa=Plus; vaf=2}
+# let etat5 = transition etat4 (Chiffre 1) ;;
+val etat5 : etat = {dce=3; dta=Chiffre 1; doa=Plus; vaf=21}
+# let etat6 = transition etat5 Fois ;;
+val etat6 : etat = {dce=24; dta=Fois; doa=Fois; vaf=24}
+# let etat7 = transition etat6 (Chiffre 2) ;;
+val etat7 : etat = {dce=24; dta=Chiffre 2; doa=Fois; vaf=2}
+# let etat8 = transition etat7 Egal ;;
+val etat8 : etat = {dce=48; dta=Egal; doa=Egal; vaf=48}
+\end{lstlisting}
+
+Мы можем сделать тоже самое, передав список переходов.
+
+\begin{lstlisting}[language=OCaml]
+# let transition_liste et lt = List.fold_left transition et lt ;;
+val transition_liste : etat -> touche list -> etat = <fun>
+# let exemple = [ Chiffre 3; Plus; Chiffre 2; Chiffre 1; Fois; Chiffre 2; Egal ]
+ in transition_liste etat_initial exemple ;;
+- : etat = {dce=48; dta=Egal; doa=Egal; vaf=48}
+\end{lstlisting}
+
+
+
