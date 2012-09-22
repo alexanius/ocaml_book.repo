@@ -14,33 +14,50 @@
 \begin {document}
 \batchmode
 
-\newcommand{\yes}{\rowcolor{green} {\large $+$}}
-\newcommand{\no}{\rowcolor{red} {\large $-$}}
-\newcommand{\prt}{\rowcolor[rgb]{.8,.88,.95} {\large $\pm$}}
+%\newcommand{\yes}{\rowcolor{green} {\large $+$}}
+%\newcommand{\no}{\rowcolor{red} {\large $-$}}
+%\newcommand{\prt}{\rowcolor[rgb]{.8,.88,.95} {\large $\pm$}}
+\newcommand{\yes}{\large $+$}
+\newcommand{\no}{\large $-$}
+\newcommand{\prt}{\large $\pm$}
 
 \begin{table}[hс]
 \begin{center}
 
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
 	\hline
-	Часть & Глава & Секция & Название & Переведено & Напечатано & Проверена
-грамматика & Примеры работают & Ссылки корректны \\
+	Часть & Глава & Секция & Название & Переведено & Напечатано & Проверена грамматика & Примеры работают & Ссылки корректны \\
 	\hline
 	0 & &  & Preface & \no & \no & \no & \no & \no \\
 	\hline
 	0 & 0 & 1 & Preface & \no & \no & \no & \no & \no \\
 	\hline
 	\multicolumn{9}{|c|}{\ldots} \\
-% 	0 & 0 & Introduction & - & - & - \\
-% 	\hline
-% 	0 & 1 & How to obtain Objective CAML & - & - & - \\
-% 	\hline
 	\hline
 	\multirow{8}*{II} & \multicolumn{8}{|c|}{Часть II} \\
 	\cline{2-9}
-	 & \multirow{1}*{10} &  & Средства анализа программ & \yes & \no & \no & \no & \no \\
-	\cline{2-9}
-	\cline{2-9}
+	 & \multirow{7}*{2} &  & Функциональное программирование & \no & \no & \no & \no & \no \\
+	\cline{3-9}
+	 & & 1 & Введение & \yes & \yes & \no & \no & \no \\
+	\cline{3-9}
+	 &  & 2 & План главы & \yes & \yes & \no & \no & \no \\
+	\cline{3-9}
+	 &  & 3 &  Функциональное ядро Objective CAML & \yes & \yes & \no & \no & \no \\
+	\cline{3-9}
+	 &  & 4 & Объявления типов и сопоставление с образцом & \yes & \yes & \no & \no & \no \\
+	\cline{3-9}
+	 &  & 5 & Типизация, область определения и исключения & \yes & \yes & \no & \no & \no \\
+	\cline{3-9}
+	 &  & 6 & Полиморфизм и значения возвращаемые функциями & \yes & \yes & \no & \no & \no \\
+	\cline{3-9}
+	 &  & 7 &  Калькулятор & \yes & \yes & \no & \no & \no \\
+	\cline{3-9}
+	 &  & 8 & Exercises & \no & \no & \no & \no & \no \\
+	\cline{3-9}
+	 &  & 9 & Резюме & \yes & \yes & \no & \no & \no \\
+	\cline{3-9}
+	 &  & 10 & To learn more & \no & \no & \no & \no & \no \\
+	\hline
 	 & \multirow{7}*{11} &  & Средства лексического и
 синтаксического анализа & \yes & \no & \no & \no & \no \\
 	\cline{3-9}

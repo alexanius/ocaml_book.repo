@@ -1011,7 +1011,7 @@ type 'a arbre_bin = Empty | Node of 'a arbre_bin * 'a * 'a arbre_bin
 \texttt{Node}) представлены окружностями, в которых показаны значения.
 
 \begin{figure}[h]
-	\center{\includegraphics[width=\textwidth] {bin_search_tree.png}}
+	\center{\includegraphics[width=\textwidth] {img/bin_search_tree}}
 	\caption{Бинарное дерево поиска}
 	\label{fig:bin_search_tree}
 \end{figure}
@@ -1203,6 +1203,3 @@ val special_size : 'a list -> int = <fun>
 # let rec l1 = 1::2::l2  and  l2 = 1::2::l1 in special_size l1 ;;
 - : int = 4
 \end{lstlisting}
-
-
-
