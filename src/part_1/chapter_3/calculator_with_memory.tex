@@ -1,0 +1,132 @@
+\section{Калькулятор с памятью}
+\label{sec:calculator_with_memory}
+
+Вернёмся к нашему примеру с калькулятором описанным в предыдущей главе и добавим
+ему пользовательский интерфейс. Теперь мы будем вводить операции напрямую и
+получать результат сразу без вызова функции переходов (из одного состояния в
+другое) при каждом нажатии на кнопку.
+
+Добавим 4 новые кнопки: \texttt{C} которая очищает экран, \texttt{M} для
+сохранения результата в памяти, \texttt{m} для его вызова из памяти и
+\texttt{OFF} для выключения калькулятора. Что соответствует следующему типу:
+
+\begin{lstlisting}[language=OCaml]
+# type key = Plus | Minus | Times | Div | Equals | Digit of int
+          | Store | Recall | Clear | Off ;;
+type key =
+    Plus
+  | Minus
+  | Times
+  | Div
+  | Equals
+  | Digit of int
+  | Store
+  | Recall
+  | Clear
+  | Off
+\end{lstlisting}
+
+Теперь определим функцию, переводящую введённые символы в значение типа
+\texttt{key}. Исключение \texttt{Invalid\_key} отлавливает все символы, которые
+не соответствуют кнопкам калькулятора. Функция \texttt{code} модуля
+\texttt{Char} переводит символ в код {\it ASCII}.
+
+\begin{lstlisting}[language=OCaml]
+# exception Invalid_key ;;
+exception Invalid_key
+# let translation c = match c with
+     '+' -> Plus
+   | '-' -> Minus
+   | '*' -> Times
+   | '/' -> Div
+   | '=' -> Equals
+   | 'C' | 'c' -> Clear
+   | 'M' -> Store
+   | 'm' -> Recall
+   | 'o' | 'O' -> Off
+   | '0'..'9' as c -> Digit ((Char.code c) - (Char.code '0'))
+   | _ -> raise Invalid_key ;;
+val translation : char -> key = <fun>
+\end{lstlisting}
+
+В императивном стиле, функция перехода (\texttt{transition}) не приведёт к
+новому состоянию, а физически изменит текущее состояние калькулятора. Таким
+образом необходимо изменить тип \texttt{state} так, чтобы его поля были
+модифицируемые. Наконец, определим исключение \texttt{Key\_off} для обработки
+нажатия на кнопку \texttt{OFF}.
+
+\begin{lstlisting}[language=OCaml]
+# type state = {
+  mutable lcd : int;  (* last computation done   *)
+  mutable lka : bool; (* last key activated      *)
+  mutable loa : key;  (* last operator activated *)
+  mutable vpr : int;  (* value printed           *)
+  mutable mem : int   (* memory of calculator    *)
+ };;
+type state = {
+  mutable lcd : int;
+  mutable lka : bool;
+  mutable loa : key;
+  mutable vpr : int;
+  mutable mem : int;
+}
+# exception Key_off ;;
+exception Key_off
+# let transition s key = match key with
+     Clear ->   s.vpr <- 0
+   | Digit n -> s.vpr <- ( if s.lka then s.vpr*10+n else n );
+                s.lka <- true
+   | Store  ->  s.lka <- false ;
+                s.mem <- s.vpr
+   | Recall ->  s.lka <- false ;
+                s.vpr <- s.mem
+   | Off -> raise Key_off
+   |  _  -> let lcd = match s.loa with
+                         Plus  -> s.lcd + s.vpr
+                       | Minus -> s.lcd - s.vpr
+                       | Times  -> s.lcd * s.vpr
+                       | Div   -> s.lcd / s.vpr
+                       | Equals  -> s.vpr
+                       | _ -> failwith "transition: impossible match"
+                   in
+              s.lcd <- lcd ;
+              s.lka <- false ;
+              s.loa <- key ;
+              s.vpr <- s.lcd;;
+val transition : state -> key -> unit = <fun>
+\end{lstlisting}
+
+Определим функцию запуска калькулятора \texttt{go}, которая возвращает (), так
+как нас интересует только её эффект на окружение (ввод/вывод, изменение
+состояния). Её аргумент есть константа (), так как наш калькулятор автономен (он
+сам определяет своё начальное состояние) и интерактивен (данные необходимые для
+расчёта вводятся с клавиатуры по мере необходимости). Переходы реализуются в
+бесконечном цикле (\texttt{while true do}) из которого мы можем выйти при помощи
+исключения \texttt{Key\_off}.
+
+\begin{lstlisting}[language=OCaml]
+# let go () =
+   let state = { lcd=0; lka=false; loa=Equals; vpr=0; mem=0 }
+   in try
+        while true do
+          try
+            let input = translation (input_char stdin)
+            in transition state input ;
+               print_newline () ;
+               print_string "result: " ;
+               print_int state.vpr ;
+               print_newline ()
+          with
+            Invalid_key -> ()  (* no effect *)
+        done
+      with
+        Key_off -> () ;;
+val go : unit -> unit = <fun>
+\end{lstlisting}
+
+Заметим, что начальное состояние должно быть либо передано в параметре, либо
+объявлено локально внутри функции \texttt{go}, для того чтобы оно каждый раз
+инициализировалось при запуске этой функции. Если бы мы использовали значение
+\texttt{initial\_state} в функциональном стиле, калькулятор начинал бы работать
+со старым состоянием, которое он имел перед выключением. Таким образом было бы
+не просто использовать два калькулятора в одной программе.

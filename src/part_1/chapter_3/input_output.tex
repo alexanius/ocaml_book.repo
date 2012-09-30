@@ -1,0 +1,149 @@
+\section{Ввод/вывод}
+\label{sec:input-output}
+
+Функции в/в вычисляют значение (чаше всего типа \texttt{unit}), однако в ходе
+вычисления, они изменяют состояние устройств в/в: изменение буфера клавиатуры,
+перерисовка экрана, запись в файл и так далее. Для каналов ввода и вывода
+определены два типа: \texttt{in\_channel} и \texttt{out\_channel}. При
+обнаружении конца файла возбуждается исключение \texttt{End\_of\_file}.
+Следующие константы соответствуют стандартным каналам ввода, вывода и ошибок
+{\it a la} Unix: \texttt{stdin}, \texttt{stdout} и \texttt{stderr}.
+
+\subsection{Каналы}
+\label{subsec:channels}
+
+Функции ввода/вывода стандартной библиотеки Objective CAML, манипулируют
+каналами типа \texttt{in\_channel} и \texttt{out\_channel} соответственно. Для
+создания подобных каналов используется функция:
+
+\begin{lstlisting}[language=OCaml]
+# open_in;;
+- : string -> in_channel = <fun>
+# open_out;;
+- : string -> out_channel = <fun>
+\end{lstlisting}
+
+\texttt{open\_in} открывает файл \footnote{с правом на чтение при
+необходимости}, если он не существует, возбуждается исключение
+\texttt{Sys\_error}.
+
+\texttt{open\_out} создаёт указанный файл если такой не существует, если же он
+существует то его содержимое уничтожается.
+
+\begin{lstlisting}[language=OCaml]
+# let ic = open_in "koala";;
+val ic : in_channel = <abstr>
+# let oc = open_out "koala";;
+val oc : out_channel = <abstr>
+\end{lstlisting}
+
+Функции закрытия каналов:
+
+\begin{lstlisting}[language=OCaml]
+# close_in ;;
+- : in_channel -> unit = <fun>
+# close_out ;;
+- : out_channel -> unit = <fun>
+\end{lstlisting}
+
+\subsection{Чтение/запись}
+\label{subsec:reading_and_Writing}
+
+Стандартные функции чтения/записи:
+
+\begin{lstlisting}[language=OCaml]
+# input_line ;;
+- : in_channel -> string = <fun>
+# input ;;
+- : in_channel -> string -> int -> int -> int = <fun>
+# output ;;
+- : out_channel -> string -> int -> int -> unit = <fun>
+\end{lstlisting}
+
+\begin{itemize}
+	\item \texttt{input\_line ic}: читает из входного канала \texttt{ic} символы
+до обнаружения возврата каретки или конца файла и возвращает в форме строки (не
+включая возврат каретки).
+
+	\item \texttt{input ic s p l}: считывает \texttt{l} символов из канала
+\texttt{ic} и помешает их в строку \texttt{c} со смешением \texttt{p}. Функция
+возвращает число прочитанных символов.
+
+	\item \texttt{output oc s p l}: записывает в выходной канал \texttt{oc}
+часть строки \texttt{s} начиная с символа p длинной \texttt{l}.
+\end{itemize}
+
+Следующие функции чтения (записи) из (в) стандартного входа:
+
+\begin{lstlisting}[language=OCaml]
+# read_line ;;
+- : unit -> string = <fun>
+# print_string ;;
+- : string -> unit = <fun>
+# print_newline ;;
+- : unit -> unit = <fun>
+\end{lstlisting}
+
+Другие значения простых типов данных могут быть прочтены/записаны, значения
+таких типов могут быть переведены в тип список символов.
+
+\subsubsection{Локальное объявление и порядок выполнения}
+
+Попробуем вывести на экран выражение формы \texttt{let x=e1 in e2}. Зная, что в
+общем случае локальная переменная \texttt{x} может быть использована в
+\texttt{e2}, выражение \texttt{e1} вычислено первым и только затем \texttt{e2}.
+Если эти оба выражения есть императивные функции с побочным эффектом результат
+которых (), мы выполнили их в правильном порядке. В частности, так как нам
+известен тип возвращаемого результата \texttt{e1}: константа () типа
+\texttt{unit}, мы получим последовательный вывод на экран используя
+сопоставление с образцом ().
+
+\begin{lstlisting}[language=OCaml]
+# let () = print_string "and one," in
+ let () = print_string " and two," in
+ let () = print_string " and three" in
+    print_string " zero";;
+and one, and two, and three zero- : unit = ()
+\end{lstlisting}
+
+\subsection{Пример Больше/Меньше}
+\label{subsec:Example_Higher_Lower}
+
+В следующем примере мы приводим игру Больше/Меньше, состоящую в поиске числа,
+после каждого ответа программа выводит на экран сообщение в соответствии с тем
+что предложенное число больше или меньше загаданного.
+
+\begin{lstlisting}[language=OCaml]
+# let rec hilo n =
+     let () = print_string "type a number: " in
+     let i = read_int ()
+     in
+       if i = n then
+         let () = print_string "BRAVO" in
+         let () = print_newline ()
+         in print_newline ()
+       else
+         let () =
+           if i < n then
+             let () = print_string "Higher"
+             in print_newline ()
+           else
+             let () = print_string "Lower"
+             in print_newline ()
+         in hilo n ;;
+val hilo : int -> unit = <fun>
+\end{lstlisting}
+
+Результат запуска
+
+\begin{lstlisting}[language=OCaml]
+# hilo 64;;
+type a number: 88
+Lower
+type a number: 44
+Higher
+type a number: 64
+BRAVO
+
+- : unit = ()
+\end{lstlisting}

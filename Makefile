@@ -1,4 +1,4 @@
-all: pdf html status clean
+all: pdf status clean
 
 pdf:
 	pdflatex -halt-on-error -jobname ocaml-book src/main.tex

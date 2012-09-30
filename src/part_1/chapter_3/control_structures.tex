@@ -1,0 +1,382 @@
+\section{Структуры управления}
+\label{sec:control _structures}
+
+Операции ввода/вывода и изменяемые значения имеют побочный эффект. Их
+использование упрощено императивным стилем программирования с новыми структурами
+контроля. В этом параграфе мы поговорим о последовательных и итеративных
+структурах.
+
+Нам уже приходилось встречать (см. \ref{subsec:conditional_control_structure})
+условную структуру контроля \texttt{if then} смысл которой такой же как и в
+императивных языках программирования.
+
+Пример
+
+\begin{lstlisting}[language=OCaml]
+# let n = ref 1 ;;
+val n : int ref = {contents = 1}
+# if !n > 0 then n := !n - 1 ;;
+- : unit = ()
+\end{lstlisting}
+
+\subsection{Последовательность}
+\label{subsec:sequence}
+
+Самая типичная императивная структура --- последовательность, которая позволяет
+вычислять выражения разделённые точкой с запятой в порядке слева направо.
+
+Синтаксис
+
+\begin{lstlisting}[language=OCaml]
+expr1; ... ;exprn
+\end{lstlisting}
+
+Последовательность --- это выражение, результат которого есть результат
+последнего выражения (здесь \texttt{exprn}). Все выражения вычислены и побочный
+эффект каждой учтён.
+
+\begin{lstlisting}[language=OCaml]
+# print_string "2 = "; 1+1 ;;
+2 = - : int = 2
+\end{lstlisting}
+
+С побочным эффектом, мы получаем обычные конструкции императивного
+программирования.
+
+\begin{lstlisting}[language=OCaml]
+# let x = ref 1 ;;
+val x : int ref = {contents = 1}
+# x:=!x+1 ; x:=!x*4 ; !x ;;
+- : int = 8
+\end{lstlisting}
+
+В связи с тем что значения предшествующие точке запятой не сохранены, Objective
+CAML выводит предупреждение в случае если их тип отличен от типа \texttt{unit}.
+
+\begin{lstlisting}[language=OCaml]
+# print_int 1; 2 ; 3 ;;
+Warning 10: this expression should have type unit.
+1- : int = 3
+\end{lstlisting}
+
+Чтобы избежать этого сообщения, можно воспользоваться функцией \texttt{ignore}.
+
+\begin{lstlisting}[language=OCaml]
+# print_int 1; ignore 2; 3 ;;
+1- : int = 3
+\end{lstlisting}
+
+Другое сообщение будет выведено в случае если забыт аргумент функции
+
+\begin{lstlisting}[language=OCaml]
+# let g x y = x := y ;;
+val g : 'a ref -> 'a -> unit = <fun>
+# let a = ref 10;;
+val a : int ref = {contents = 10}
+# let u = 1 in g a ; g a u ;;
+Warning 5: this function application is partial,
+maybe some arguments are missing.
+- : unit = ()
+# let u = !a in ignore (g a) ; g a u ;;
+Warning 5: this function application is partial,
+maybe some arguments are missing.
+- : unit = ()
+\end{lstlisting}
+
+Чаще всего мы используем скобки для определения зоны видимости. Синтаксически
+расстановка скобок может принимать 2 формы:
+
+Синтаксис
+
+\begin{lstlisting}[language=OCaml]
+(expr)
+\end{lstlisting}
+
+Синтаксис
+
+\begin{lstlisting}[language=OCaml]
+begin expr end
+\end{lstlisting}
+
+Теперь мы можем написать Больше/Меньше простым стилем (стр.
+\ref{sec:control_structures}).
+
+\begin{lstlisting}[language=OCaml]
+# let rec hilo n =
+   print_string "type a number: ";
+   let i = read_int () in
+   if i = n then print_string "BRAVO\n\n"
+    else
+      begin
+        if i < n then print_string "Higher\n" else print_string "Lower\n"  ;
+        hilo n
+      end ;;
+val hilo : int -> unit = <fun>
+\end{lstlisting}
+
+\subsection{Циклы}
+\label{subsec:loops}
+
+Структуры итеративного контроля тоже не принадлежат \enq{миру} функционального
+программирования. Условие повторения цикла или выхода из него имеет смысл в
+случае когда есть физическое изменение памяти. Существует две структуры
+итеративного контроля: цикл \texttt{for} для ограниченного количества итераций и
+\texttt{while} для неограниченного. Структуры цикла возвращают константу () типа
+\texttt{unit}.
+
+Цикл \texttt{for} может быть возрастающим (\texttt{to}) или убывающим
+(\texttt{downto}) с шагом в одну единицу.
+
+\begin{lstlisting}[language=OCaml]
+for name = expr1 to expr2 do expr3 done
+for name = expr1 downto expr2 do expr3 done
+\end{lstlisting}
+
+Тип выражений \texttt{expr1} и \texttt{expr2} --- int. Если тип \texttt{expr3}
+не \texttt{unit}, компилятор выдаст предупреждение.
+
+\begin{lstlisting}[language=OCaml]
+# for i=1 to 10 do  print_int i; print_string " " done; print_newline() ;;
+1 2 3 4 5 6 7 8 9 10
+- : unit = ()
+# for i=10 downto 1 do print_int i; print_string " " done; print_newline() ;;
+10 9 8 7 6 5 4 3 2 1
+- : unit = ()
+\end{lstlisting}
+
+Неограниченный цикл \texttt{while} имеет следующий синтаксис
+
+\begin{lstlisting}[language=OCaml]
+while expr1 do expr2 done
+\end{lstlisting}
+
+Тип выражения \texttt{expr1} должен быть \texttt{bool}. И, как в случае
+\texttt{for}, если тип \texttt{expr2} не \texttt{unit}, компилятор выдаст
+предупреждение.
+
+\begin{lstlisting}[language=OCaml]
+# let r = ref 1
+ in while !r < 11  do
+      print_int !r ;
+      print_string " " ;
+      r := !r+1
+    done ;;
+1 2 3 4 5 6 7 8 9 10 - : unit = ()
+\end{lstlisting}
+
+Необходимо помнить, что циклы --- это такие же выражения как и любые другие, они
+вычисляют значение () типа \texttt{unit}.
+
+\begin{lstlisting}[language=OCaml]
+# let f () = print_string "-- end\n" ;;
+val f : unit -> unit = <fun>
+# f (for i=1 to 10 do  print_int i; print_string " " done) ;;
+1 2 3 4 5 6 7 8 9 10 -- end
+- : unit = ()
+\end{lstlisting}
+
+Обратите внимание на то, что строка \enq{\-\- end\\n} выводится после цифр 1…10:
+подтверждение того что аргументы (в данном случае цикл) вычисляются перед
+передачей функции.
+
+В императивном стиле тело цикла (выражение \texttt{expr}) не возвращает
+результата, а производит побочный эффект. В Objective CAML, если тип тела цикла
+не \texttt{unit}, то компилятор выдаёт сообщение :
+
+\begin{lstlisting}[language=OCaml]
+# let s = [5; 4; 3; 2; 1; 0] ;;
+val s : int list = [5; 4; 3; 2; 1; 0]
+# for i=0 to 5 do List.tl s done ;;
+Warning 10: this expression should have type unit.
+- : unit = ()
+\end{lstlisting}
+
+\subsection{Пример: реализация стека}
+\label{subsec:example_implementing_a_stack}
+
+В нашем примере структура данных \texttt{'a stack} будет реализована в виде
+записи с 2 полями: структура данных \texttt{stack} будет запись с двумя полями:
+массив элементов и индекс первой свободной позиции в массиве.
+
+\begin{lstlisting}[language=OCaml]
+type 'a stack = { mutable ind:int; size:int; mutable elts : 'a array } ;;
+\end{lstlisting}
+
+В поле \texttt{size} будет хранится максимальный размер стека.
+
+Операции над стеком будут \texttt{init\_stack} для инициализации, \texttt{push}
+для добавления и \texttt{pop} для удаления элемента.
+
+\begin{lstlisting}[language=OCaml]
+# let init_stack n = {ind=0; size=n; elts =[||]} ;;
+val init_stack : int -> 'a stack = <fun>
+\end{lstlisting}
+
+Эта функция не может создавать не пустой массив, так для создания массива
+необходимо передать элемент. Поэтому поле \texttt{elts} получает пустой массив.
+
+Два исключения добавлены на случай попытки удалить элемент из пустого стека и
+добавить элемент в полный. Они используются в функциях \texttt{pop} и
+\texttt{push}.
+
+\begin{lstlisting}[language=OCaml]
+# exception Stack_empty ;;
+exception Stack_empty
+# exception Stack_full ;;
+exception Stack_full
+# let pop p =
+   if p.ind = 0 then raise Stack_empty
+   else (p.ind <- p.ind - 1; p.elts.(p.ind)) ;;
+val pop : 'a stack -> 'a = <fun>
+# let push e p =
+   if p.elts = [||] then
+     (p.elts <- Array.create p.size e;
+      p.ind <- 1)
+   else if p.ind >= p.size then raise Stack_full
+   else (p.elts.(p.ind) <- e; p.ind <- p.ind + 1) ;;
+val push : 'a -> 'a stack -> unit = <fun>
+\end{lstlisting}
+
+Небольшой пример использования:
+
+\begin{lstlisting}[language=OCaml]
+# let p = init_stack 4 ;;
+val p : '_a stack = {ind = 0; size = 4; elts = [||]}
+# push 1 p ;;
+- : unit = ()
+# for i = 2 to 5 do push i p done ;;
+Exception: Stack_full.
+# p ;;
+- : int stack = {ind = 4; size = 4; elts = [|1; 2; 3; 4|]}
+# pop p ;;
+- : int = 4
+# pop p ;;
+- : int = 3
+\end{lstlisting}
+
+Чтобы избежать исключения \texttt{Stack\_full} при переполнении стека, мы можем
+каждый раз увеличивать его размер. Для этого нужно чтобы поле \texttt{size} было
+модифицируемым.
+
+\begin{lstlisting}[language=OCaml]
+# type 'a stack =
+   {mutable ind:int ; mutable size:int ; mutable elts : 'a array} ;;
+type 'a stack = {
+  mutable ind : int;
+  mutable size : int;
+  mutable elts : 'a array;
+}
+# let init_stack n = {ind=0; size=max n 1; elts = [||]} ;;
+val init_stack : int -> 'a stack = <fun>
+# let n_push e p =
+   if p.elts = [||]
+   then
+     begin
+       p.elts <- Array.create p.size e;
+       p.ind <- 1
+     end
+   else if p.ind >= p.size then
+     begin
+       let nt = 2 * p.size in
+       let nv = Array.create nt e in
+       for j=0 to p.size-1 do nv.(j) <- p.elts.(j) done ;
+       p.elts <- nv;
+       p.size <- nt;
+       p.ind <- p.ind + 1
+     end
+   else
+     begin
+       p.elts.(p.ind) <- e ;
+       p.ind <- p.ind + 1
+     end ;;
+val n_push : 'a -> 'a stack -> unit = <fun>
+\end{lstlisting}
+
+Однако необходимо быть осторожным со структурами которые могут беспредельно
+увеличиваться. Вот небольшой пример стека, увеличивающегося по необходимости.
+
+\begin{lstlisting}[language=OCaml]
+# let p = init_stack 4 ;;
+val p : '_a stack = {ind = 0; size = 4; elts = [||]}
+# for i = 1 to 5 do n_push i p done ;;
+- : unit = ()
+# p ;;
+- : int stack = {ind = 5; size = 8; elts = [|1; 2; 3; 4; 5; 5; 5; 5|]}
+# p.stack ;;
+Error: Unbound record field label stack
+\end{lstlisting}
+
+В функции \texttt{pop} желательно добавить возможность уменьшения размера стека,
+это позволит сэкономить память.
+
+\subsection{Пример: расчёт матриц}
+\label{subsec:example_Calculations on Matrices}
+
+В этом примере мы определим тип \enq{матрица} --- двумерный массив чисел с
+плавающей запятой и несколько функций. Мономорфный тип \texttt{mat} это запись,
+состоящая из размеров и элементов матрицы. Функции \texttt{create\_mat},
+\texttt{access\_mat} и \texttt{mod\_mat} служат для создания, доступа и
+изменения элементов матрицы.
+
+\begin{lstlisting}[language=OCaml]
+# type mat = { n:int; m:int; t: float array array };;
+type mat = { n : int; m : int; t : float array array; }
+# let create_mat n m = { n=n; m=m; t = Array.create_matrix n m 0.0 } ;;
+val create_mat : int -> int -> mat = <fun>
+# let access_mat m i j = m.t.(i).(j) ;;
+val access_mat : mat -> int -> int -> float = <fun>
+# let mod_mat m i j e = m.t.(i).(j) <- e ;;
+val mod_mat : mat -> int -> int -> float -> unit = <fun>
+# let a = create_mat 3 3 ;;
+val a : mat =
+  {n = 3; m = 3; t = [|[|0.; 0.; 0.|]; [|0.; 0.; 0.|]; [|0.; 0.; 0.|]|]}
+# mod_mat a 1 1 2.0; mod_mat a 1 2 1.0; mod_mat a 2 1 1.0 ;;
+- : unit = ()
+# a ;;
+- : mat =
+{n = 3; m = 3; t = [|[|0.; 0.; 0.|]; [|0.; 2.; 1.|]; [|0.; 1.; 0.|]|]}
+\end{lstlisting}
+
+Сумма двух матриц \texttt{a} и \texttt{b} есть матрица \texttt{c}, такая что $
+c_{ij} = a_{ij} + b_{ij} $
+
+\begin{lstlisting}[language=OCaml]
+# let add_mat p q =
+   if p.n = q.n && p.m = q.m then
+     let r = create_mat p.n p.m  in
+     for i = 0 to p.n-1 do
+       for j = 0 to p.m-1 do
+         mod_mat r i j  (p.t.(i).(j) +. q.t.(i).(j))
+       done
+     done ;
+     r
+   else failwith "add_mat : dimensions incompatible";;
+val add_mat : mat -> mat -> mat = <fun>
+# add_mat  a a ;;
+- : mat =
+{n = 3; m = 3; t = [|[|0.; 0.; 0.|]; [|0.; 4.; 2.|]; [|0.; 2.; 0.|]|]}
+\end{lstlisting}
+
+Произведение двух матриц \texttt{a} и \texttt{b} есть матрица \texttt{c}, такая
+что $c_{ij} = \sum_{k = 1}^m a_{ik} \cdot b_{ki}$
+
+\begin{lstlisting}[language=OCaml]
+# let mul_mat p q =
+   if p.m = q.n then
+     let r = create_mat p.n q.m in
+     for i = 0 to p.n-1 do
+       for j = 0 to q.m-1 do
+         let c = ref 0.0 in
+         for k = 0 to p.m-1 do
+            c := !c +.   (p.t.(i).(k) *. q.t.(k).(j))
+          done;
+          mod_mat r i j !c
+       done
+     done;
+     r
+   else failwith "mul_mat : dimensions incompatible" ;;
+val mul_mat : mat -> mat -> mat = <fun>
+# mul_mat a a;;
+- : mat =
+{n = 3; m = 3; t = [|[|0.; 0.; 0.|]; [|0.; 5.; 2.|]; [|0.; 2.; 1.|]|]}
+\end{lstlisting}
