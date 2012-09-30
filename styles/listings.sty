@@ -1,5 +1,9 @@
 % пакет для приведения листингов кода
 \usepackage {listings}
+\usepackage{xcolor}
+
+\definecolor{comment}{rgb}{0,128,0}
+\definecolor{string}{HTML}{006E00}
 
 \lstset{tabsize=2,
 	breaklines,
@@ -7,13 +11,14 @@
 	flexiblecolumns,
 	numbers=left,
 	numberstyle={\footnotesize},
-	extendedchars}
+	extendedchars=false
+}
 
 \usepackage{xcolor}
 \definecolor{comment}{rgb}{0,128,0}
 \definecolor{string}{HTML}{006E00}
 
-% прописываем правила подсветки JavaScript
+% прописываем правила подсветки OCaml
 \lstdefinelanguage{OCaml}{
   keywords={and, as, assert, begin, class, constraint, do, donw, downto, else,
 end, exception, external, false, for, fun, function, functor, if, in, include,
