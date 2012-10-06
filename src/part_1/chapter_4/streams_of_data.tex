@@ -1,0 +1,260 @@
+\section{Поток данных}
+\label{sec:streams_of_data}
+
+Потоки это потенциально бесконечная последовательность данных определённого
+рода. Вычисление части потока выполняется по необходимости для текущего
+вычисления --- пассивные структуры данных.
+
+\texttt{stream} абстрактный тип данных, реализация которого неизвестна. Мы
+манипулируем объектами этого типа при помощи функций конструкции и деструкции.
+Для удобства пользователя, Objective CAML предоставляет пользователю простые
+синтаксические конструкции для создания и доступа к элементам потока.
+
+\subsubsection{Предупреждение}
+
+Это особенность является расширением языка и может измениться в следующих
+версиях.
+
+\subsection{Создание}
+\label{subsec:construction}
+
+Упрощённый синтаксис конструкции потоков похож на синтаксис конструкции списков
+или векторов. Пустой поток создаётся следующим способом:
+
+\begin{lstlisting}[language=OCaml]
+# [< >] ;;
+- : 'a Stream.t = <abstr>
+\end{lstlisting}
+
+Другой способ конструкции потока состоит в перечислении элементов этого потока,
+где перед каждым из них ставится апостроф.
+
+\begin{lstlisting}[language=OCaml]
+# [< '0; '2; '4 >] ;;
+- : int Stream.t = <abstr>
+\end{lstlisting}
+
+Выражения, перед которыми не стоит апостроф, рассматриваются как под--потоки.
+
+\begin{lstlisting}[language=OCaml]
+# [< '0; [< '1; '2; '3 >]; '4 >] ;;
+- : int Stream.t = <abstr>
+# let s1 = [< '1; '2; '3 >] in [< s1; '4 >] ;;
+- : int Stream.t = <abstr>
+# let concat_stream a b = [< a ; b >] ;;
+val concat_stream : 'a Stream.t -> 'a Stream.t -> 'a Stream.t = <fun>
+# concat_stream [< '"if"; '"c";'"then";'"1" >] [< '"else";'"2" >] ;;
+- : string Stream.t = <abstr>
+\end{lstlisting}
+
+Остальные функции сгруппированы в модуле \texttt{Stream}. На пример, функции
+\texttt{of\_channel} и \texttt{of\_string} возвращают поток состоящий из
+символов полученных из входного потока или строки символов.
+
+\begin{lstlisting}[language=OCaml]
+# Stream.of_channel ;;
+- : in_channel -> char Stream.t = <fun>
+# Stream.of_string ;;
+- : string -> char Stream.t = <fun>
+\end{lstlisting}
+
+Отложенное вычисление потоков позволяет использовать бесконечные структуры
+данных, как это было в случае с типом \texttt{'a enum} на стр.
+\pageref{subsubsec:infinite_data_structures}. Определим поток натуральных чисел
+при помощи первого элемента и функции вычисляющей поток из следующих элементов.
+
+\begin{lstlisting}[language=OCaml]
+# let rec nat_stream n = [< 'n ; nat_stream (n+1) >] ;;
+val nat_stream : int -> int Stream.t = <fun>
+# let nat = nat_stream 0 ;;
+val nat : int Stream.t = <abstr>
+\end{lstlisting}
+
+\subsection{Уничтожение и сопоставление потоков}
+\label{subsec:destruction_and_matching_of_streams}
+
+Элементарная операция \texttt{next} одновременно вычисляет, возвращает и
+извлекает первый элемент потока.
+
+\begin{lstlisting}[language=OCaml]
+# for i=0 to 10 do
+   print_int (Stream.next nat) ;
+   print_string "  "
+   done ;;
+0  1  2  3  4  5  6  7  8  9  10  - : unit = ()
+# Stream.next nat ;;
+- : int = 11
+\end{lstlisting}
+
+Когда данные в потоке закончились возбуждается исключение.
+
+\begin{lstlisting}[language=OCaml]
+# Stream.next [< >] ;;
+Uncaught exception: Stream.Failure
+\end{lstlisting}
+
+Для использования потоков Objective CAML предоставляет специальное сопоставление
+для потоков --- уничтожающее сопоставление (destructive matching).
+Сопоставляемое значение вычисляется и удаляется из потока. Понятие
+исчерпываемости сопоставления (exhaustive match) не существует для потоков, так
+как мы используем пассивные и потенциально бесконечные структуры данных.
+Синтаксис сопоставления следующий:
+
+Синтаксис
+
+\begin{lstlisting}[language=OCaml]
+match expr with parser [< 'p1 ...>] -> expr1 | ...
+\end{lstlisting}
+
+Функция \texttt{next} может быть переписана в следующей форме:
+
+\begin{lstlisting}[language=OCaml]
+# let next s = match s with parser [< 'x >] -> x ;;
+val next : 'a Stream.t -> 'a = <fun>
+# next nat;;
+- : int = 12
+\end{lstlisting}
+
+Заметьте, что перечисление чисел началось с того места где мы остановились.
+
+Существует другая форма синтаксиса для фильтрации функционального параметра типа
+\texttt{Stream.t}.
+
+Синтаксис
+
+\begin{lstlisting}[language=OCaml]
+parser p -> ...
+\end{lstlisting}
+
+Перепишем функцию \texttt{next} используя новый синтаксис. 
+
+\begin{lstlisting}[language=OCaml]
+# let next = parser [<'x>] -> x ;;
+val next : 'a Stream.t -> 'a = <fun>
+# next nat ;;
+- : int = 13
+\end{lstlisting}
+
+Мы можем сопоставлять пустой поток, но необходимо помнить о следующем: образец
+потока \texttt{[<>]} сопоставляется с каким угодно потоком. То есть, поток
+\texttt{s} всегда равен потоку \texttt{[< [<>]; s >]}. Поэтому нужно поменять
+обычный порядок сопоставления.
+
+\begin{lstlisting}[language=OCaml]
+# let rec it_stream f s =
+  match s with parser
+    [< 'x ; ss >] -> f x ; it_stream f ss
+  | [<>] -> () ;;
+val it_stream : ('a -> 'b) -> 'a Stream.t -> unit = <fun>
+# let print_int1 n = print_int n ; print_string" " ;;
+val print_int1 : int -> unit = <fun>
+# it_stream print_int1 [<'1; '2; '3>] ;;
+1 2 3 - : unit = ()
+\end{lstlisting}
+
+Используя тот факт что сопоставление уничтожающее, перепишем предыдущую функцию.
+
+\begin{lstlisting}[language=OCaml]
+# let rec it_stream f s =
+  match s with parser
+    [< 'x >] -> f x ; it_stream f s
+  | [<>] -> () ;;
+val it_stream : ('a -> 'b) -> 'a Stream.t -> unit = <fun>
+# it_stream print_int1 [<'1; '2; '3>] ;;
+1 2 3 - : unit = ()
+\end{lstlisting}
+
+Несмотря на то что потоки пассивные, они добровольно и с \enq{восторгом} отдают
+свой первый элемент, который после этого будет утерян для потока. Эта
+особенность отображается на сопоставлении. Следующая функция есть попытка
+(обречённая на неудачу) вывода на экран двух чисел из потока, в конце потока
+может остаться один элемент.
+
+\begin{lstlisting}[language=OCaml]
+# let print_int2 n1
+ n2 =
+  print_string "(" ; print_int n1 ; print_string "," ;
+  print_int n2 ; print_string ")" ;;
+val print_int2 : int -> int -> unit = <fun>
+# let rec print_stream s =
+  match s with parser
+    [< 'x; 'y >] -> print_int2 x y; print_stream s
+  | [< 'z >] -> print_int1 z; print_stream s
+  | [<>] -> print_newline() ;;
+val print_stream : int Stream.t -> unit = <fun>
+# print_stream [<'1; '2; '3>];;
+(1,2)Uncaught exception: Stream.Error("")
+\end{lstlisting}
+
+Два первых элемента потока были выведены на экран без проблем, однако во время
+вычисления рекурсивного вызова (\texttt{print\_stream [< 3 >]}) образец
+обнаружил \texttt{x}, который был \enq{употреблён}, но для y в потоке ничего
+нет. Это и привело к ошибке. Дело в том что второй образец абсолютно
+бесполезный, если поток не пустой то первый образец всегда совпадёт.
+
+Для того, чтобы получить ожидаемый результат необходимо упорядочить
+сопоставление.
+
+\begin{lstlisting}[language=OCaml]
+# let rec print_stream s =
+  match s with parser
+    [< 'x >]
+     -> (match s with parser
+           [< 'y >] -> print_int2 x y; print_stream s
+         | [<>] -> print_int1 x; print_stream s)
+  | [<>] -> print_newline() ;;
+val print_stream : int Stream.t -> unit = <fun>
+# print_stream [<'1; '2; '3>];;
+(1,2)3
+- : unit = ()
+\end{lstlisting}
+
+Если сопоставление не срабатывает на первом элементе образца, то фильтр работает
+как обычно. 
+
+\begin{lstlisting}[language=OCaml]
+# let rec print_stream s =
+  match s with parser
+    [< '1; 'y >] -> print_int2 1 y; print_stream s
+  | [< 'z >] -> print_int1 z; print_stream s
+  | [<>] -> print_newline() ;;
+val print_stream : int Stream.t -> unit = <fun>
+# print_stream [<'1; '2; '3>] ;;
+(1,2)3
+- : unit = ()
+\end{lstlisting}
+
+\subsubsection{Пределы сопоставления}
+
+Из--за своего свойства уничтожения сопоставление потоков отличается от
+сопоставления типов сумма. Давайте рассмотрим на сколько глубоко они отличаются.
+
+Вот простейшая функция складывающая два элемента потока.
+
+\begin{lstlisting}[language=OCaml]
+# let rec sum s =
+  match s with parser
+    [< 'n; ss >] -> n+(sum ss)
+  | [<>] -> 0 ;;
+val sum : int Stream.t -> int = <fun>
+# sum [<'1; '2; '3; '4>] ;;
+- : int = 10
+\end{lstlisting}
+
+Однако, мы можем поглотить поток \enq{изнутри} придав имя полученному
+результату.
+
+\begin{lstlisting}[language=OCaml]
+# let rec sum s =
+  match s with parser
+    [< 'n; r = sum >] -> n+r
+  | [<>] -> 0 ;;
+val sum : int Stream.t -> int = <fun>
+# sum [<'1; '2; '3; '4>] ;;
+- : int = 10
+\end{lstlisting}
+
+В главе \ref{chpt:tools_for_lexical_analysis_and_parsing}, посвящённой
+лексическому и синтаксическому анализу, мы рассмотрим другие примеры
+использования потоков. В частности, мы увидим как \enq{поглощение} потока
+изнутри можно с выгодой использовать.
