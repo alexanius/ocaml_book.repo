@@ -1,0 +1,117 @@
+\section{Графический вывод}
+\label{sec:graphical_display}
+
+При графическом выводе следующие элементы являются базовыми: начальная точка
+(reference point), графический контекст, цвет, изображение, закраска замкнутых
+фигур, тексты и растровые изображения.
+
+\subsection{Ориентир и графический контекст}
+\label{subsec:reference_point_and_graphical_context}
+
+Библиотека \texttt{Graphics} управляет единственным и главным окном. Координаты
+ориентира окна могут меняться от нижней левой точки (0,0) до верхнего правого
+угла. Вот основные операции над этим окном:
+
+\begin{itemize}
+	\item \texttt{open\_graph}, тип которой \texttt{string -> unit}, открывает
+окно
+
+	\item \texttt{close\_graph}, тип которой \texttt{unit -> unit}, закрывает
+
+	\item \texttt{clear\_graph}, тип которой \texttt{unit -> unit}, и очищает 
+\end{itemize}
+
+Размер окна определяется функциями \texttt{size\_x} и \texttt{size\_y}.
+
+Строка, которую мы передаём функции \texttt{open\_graph}, зависит от графической
+оболочки машины где запускается программа, то есть она платформо зависимая. Если
+строка пустая, то полученное окно будет иметь свойства по умолчанию. Мы можем
+явно указать размер окна; в X-Window строка \texttt{`` 200x300''} создаст окно
+размером 200 пискелей по ширине и 300 по высоте. Заметьте, пробел --- первый
+символ строки \texttt{`` 200x300''}, обязателен.
+
+В графическом контексте есть несколько компонентов которые можно
+просмотреть/изменить:
+
+\begin{tabular}{rl}
+	текущая точка: & \texttt{current\_point : unit -> int * int} \\
+	 & moveto : \texttt{int -> int -> unit} \\
+	текущий цвет : & \texttt{set\_color : color -> unit} \\
+	ширина текущей линии : & \texttt{set\_line\_width : int -> unit} \\
+	текущий шрифт : & \texttt{set\_font : string -> unit} \\
+	размер этого шрифта : & \texttt{set\_text\_size : int -> unit} \\
+\end{tabular}
+
+\subsection{Цвета}
+\label{subsec:colors}
+
+Цвет представлен тремя байтами, каждый из которых хранит яркость основного
+цвета в модели RGB (red, green, blue) в интервале от 0 до 255. Функция rgb (с
+типом \texttt{int -> int -> int -> color}) создаёт цвет с тремя указанными
+значениями. Если все три значения равны, то мы получим серый цвет более или
+менее светлый, в зависимости от значений. Чёрный соответствует минимуму яркости
+для каждой компоненты цвета rgb(0,0,0), белый цвет --- rgb(255,255,255). Есть
+некоторые предопределённые цвета: \texttt{black, white, red, green, blue,
+yellow, cyan, magenta}.
+
+Переменные foreground и background соответствуют текущему цвету и цвету фона.
+При стирании экрана, осуществляется заполнение цветом фона.
+
+Цвет (значение типа \texttt{color}) это на самом деле целое число, которое мы
+можем разбить на три части (\texttt{from\_rgb}) или инвертировать
+(\texttt{inv\_color}).
+
+\begin{lstlisting}[language=OCaml]
+(* color == R * 256 * 256  +  G * 256  +  B  *)
+# let from_rgb (c : Graphics.color)  =
+   let r = c / 65536  and  g = c / 256 mod 256  and  b = c mod 256
+   in (r,g,b);;
+val from_rgb : Graphics.color -> int * int * int = <fun>
+# let inv_color (c : Graphics.color) =
+    let (r,g,b) = from_rgb c
+    in Graphics.rgb (255-r) (255-g) (255-b);;
+val inv_color : Graphics.color -> Graphics.color = <fun>
+\end{lstlisting}
+
+Функция \texttt{point\_color}, типа \texttt{int -> int -> color}, возвращает
+цвет точки, координаты которой указаны на входе.
+
+\subsection{Рисунок и заливка}
+\label{subsec:drawing_and_filling}
+
+Функция рисования выводит линию на экран, при этом для толщины и цвета
+используются текущие значения. Функция заливки закрашивает замкнутую форму
+текущим цветом. Различные функции рисования и заливки приведены в таблице
+\ref{tbl:drawing_and_filling_functions}
+
+Функции рисования и заливки
+\begin{table}[hl]
+	\begin{center}
+	\caption{\label{tbl:drawing_and_filling_functions} Функции рисования и
+заливки}
+	\begin{tabular}{|l|l|r|}
+		\hline
+		рисунок & заполнение & тип \\
+		\hline
+		plot & & int -> int -> unit \\
+		\hline
+		lineto & & int -> int -> unit \\
+		\hline
+		& fill\_rect & int -> int -> int -> int -> unit \\
+		\hline
+		& fill\_poly & ( int * int) array -> unit \\
+		\hline
+		draw\_arc & fill\_arc & int -> int -> int -> int -> int -> unit \\
+		\hline
+		draw\_ellipse & fill\_ellipse & int -> int -> int -> int -> unit \\
+		\hline
+		draw\_circle & fill\_circle & int -> int -> int -> unit \\
+		\hline
+	\end{tabular}
+	\end{center}
+\end{table}
+
+Заметьте, что функция \texttt{lineto} имеет побочный эффект: она изменяет
+положение текущей точки.
+
+\subsubsection{Рисование многоугольников}

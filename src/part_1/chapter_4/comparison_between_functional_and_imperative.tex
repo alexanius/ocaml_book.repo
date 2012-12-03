@@ -1,0 +1,219 @@
+\section{Сравнение между функциональным и императивным стилями}
+\label{sec:comparison_between_functional_and_imperative}
+
+Воспользуемся строками (\texttt{string}) и списками (\texttt{'a list}) для
+иллюстрации разницы между двумя стилями.
+
+\subsection{С функциональной стороны}
+\label{subsec:the_functional_side}
+
+\texttt{map} это одна из классических функций в среде функциональных языков. В
+чистом функциональном стиле она пишется так:
+
+\begin{lstlisting}[language=OCaml]
+# let rec map f l = match l with
+      []   ->  []
+   | h::q  ->  (f h) :: (map f q)  ;;
+val map : ('a -> 'b) -> 'a list -> 'b list = <fun>
+\end{lstlisting}
+
+Конечный список состоит из результатов применения функции \texttt{f} к элементам
+списка переданного в аргументе. Он рекурсивно создаётся указывая начальный
+элемент (заголовок) (\texttt{f t}) и последующую часть (хвост) (\texttt{map f
+q}). В частности, программа не указывает какой из них будет вычислен первым.
+
+При этом, для написания такой функции программисту не нужно знать физическое
+представление данных. Проблемы выделения памяти и разделения данных решаются
+Objective CAML без внешнего вмешательства программиста. Следующий пример
+иллюстрирует это:
+
+\begin{lstlisting}[language=OCaml]
+# let example = [ "one" ; "two" ; "three" ] ;;
+val example : string list = ["one"; "two"; "three"]
+# let result = map (function x -> x) example  ;;
+val result : string list = ["one"; "two"; "three"]
+\end{lstlisting}
+
+Оба списка \texttt{example} и \texttt{result} содержат одинаковые значения:
+
+\begin{lstlisting}[language=OCaml]
+# example = result ;;
+- : bool = true
+\end{lstlisting}
+
+Оба значения имеют одинаковую структуру, хоть они и представлены в памяти по
+разному. Убедимся в этом при помощи проверки на физическое равенство:
+
+\begin{lstlisting}[language=OCaml]
+# example == result ;;
+- : bool = false
+# (List.tl example) == (List.tl result) ;;
+- : bool = false
+\end{lstlisting}
+
+\subsection{Императивная сторона}
+\label{subsec:the_imperative_side}
+
+Вернёмся к предыдущему примеру и изменим строку списка \texttt{result}.
+
+\begin{lstlisting}[language=OCaml]
+# (List.hd result).[1] <- 's' ;;
+- : unit = ()
+# result ;;
+- : string list = ["ose"; "two"; "three"]
+# example ;;
+- : string list = ["ose"; "two"; "three"]
+\end{lstlisting}
+
+Определено, изменив список \texttt{result}, мы изменили список \texttt{example}.
+То есть знание физической структуры необходимо как только мы пользуемся
+императивными особенностями.
+
+Рассмотрим теперь как порядок вычисления аргументов функции может стать ловушкой
+в императивном программировании. Определим структуру изменяемого списка, а так
+же функции создания, добавления и доступа:
+
+\begin{lstlisting}[language=OCaml]
+# type 'a ilist = { mutable c : 'a list } ;;
+type 'a ilist = { mutable c : 'a list; }
+# let icreate () = { c = [] }
+ let iempty l = (l.c = [])
+ let icons x y = y.c <- x::y.c ; y
+ let ihd x = List.hd x.c
+ let itl x = x.c <- List.tl x.c ; x ;;
+val icreate : unit -> 'a ilist = <fun>
+val iempty : 'a ilist -> bool = <fun>
+val icons : 'a -> 'a ilist -> 'a ilist = <fun>
+val ihd : 'a ilist -> 'a = <fun>
+val itl : 'a ilist -> 'a ilist = <fun>
+# let rec imap f l =
+   if iempty l then icreate()
+   else icons (f (ihd l))  (imap f (itl l)) ;;
+val imap : ('a -> 'b) -> 'a ilist -> 'b ilist = <fun>
+\end{lstlisting}
+
+Несмотря на то что мы переняли общую структуру функции \texttt{map} предыдущего
+параграфа, с \texttt{imap} мы получим другой результат:
+
+\begin{lstlisting}[language=OCaml]
+# let example = icons "one" (icons "two" (icons "three" (icreate()))) ;;
+val example : string ilist = {c = ["one"; "two"; "three"]}
+# imap (function x -> x) example ;;
+Exception: Failure "hd".
+\end{lstlisting}
+
+В чем тут дело? Вычисление (\texttt{itl l}) произошло раньше чем (\texttt{ihd
+l}) и в последней итерации \texttt{imap}, список \texttt{l} пустой в момент
+обращения к его заголовку. Список \texttt{example} теперь пуст, хоть мы и не
+получили никакого результата:
+
+\begin{lstlisting}[language=OCaml]
+# example ;;
+- : string ilist = {c = []}
+\end{lstlisting}
+
+Проблема функции \texttt{imap} в недостаточном контроле смеси стилей
+программирования: мы предоставили системе выбор порядка вычисления.
+Переформулируем функцию \texttt{imap} явно указав порядок при помощи конструкции
+\texttt{let .. in ..}
+
+\begin{lstlisting}[language=OCaml]
+# let rec imap f l =
+   if iempty l then icreate()
+   else let h = ihd l  in  icons (f h)  (imap f (itl l)) ;;
+val imap : ('a -> 'b) -> 'a ilist -> 'b ilist = <fun>
+# let example = icons "one" (icons "two" (icons "three" (icreate()))) ;;
+val example : string ilist = {c = ["one"; "two"; "three"]}
+# imap (function x -> x) example ;;
+- : string ilist = {c = ["one"; "two"; "three"]}
+\end{lstlisting}
+
+Однако, начальный список опять утерян:
+
+\begin{lstlisting}[language=OCaml]
+# example ;;
+- : string ilist = {c = []}
+\end{lstlisting}
+
+Использование оператора последовательности (\texttt{sequencing operator}) и
+цикла есть другой способ явного указания порядка.
+
+\begin{lstlisting}[language=OCaml]
+# let imap f l =
+     let l_res = icreate ()
+     in while not (iempty l) do
+          ignore (icons (f (ihd l)) l_res) ;
+          ignore (itl l)
+        done ;
+        { l_res with c = List.rev l_res.c } ;;
+Warning 23: this record is defined by a `with' expression,
+but no fields are borrowed from the original.
+val imap : ('a -> 'b) -> 'a ilist -> 'b ilist = <fun>
+# let example = icons "one" (icons "two" (icons "three" (icreate()))) ;;
+val example : string ilist = {c = ["one"; "two"; "three"]}
+# imap (function x -> x) example ;;
+- : string ilist = {c = ["one"; "two"; "three"]}
+\end{lstlisting}
+
+Присутствие \texttt{ignore} --- это факт того что нас интересует побочный эффект
+функций над её аргументами, а не их (функций) результат. Так же было необходимо
+выстроить в правильном порядке элементы результата (функцией \texttt{List.rev}).
+
+\subsection{Рекурсия или итерация}
+\label{subsec:recursive_or_iterative}
+
+Часто ошибочно ассоциируют рекурсию с функциональным стилем и императивный с
+итерацией. Чисто функциональная программа не может быть итеративной, так как
+значение условия цикла не меняется никогда. Тогда как императивная программа
+может быть рекурсивной: функция \texttt{imap} тому пример.
+
+Значения аргументов функции хранятся во время её выполнения. Если она (функция)
+вызовет другую функцию, то эта последняя сохранит и свои аргументы. Эти значения
+хранятся в стеке выполнения. При возврате из функции эти значения извлечены из
+стека. Зная что пространство памяти ограничено, мы можем дойти до её предела,
+используя функцию с очень большой глубиной рекурсии. В подобных случаях
+Objective CAML возбуждает исключение \texttt{Stack\_overflow}.
+
+\begin{lstlisting}[language=OCaml]
+# let rec succ n = if n = 0 then 1 else 1 + succ (n-1) ;;
+val succ : int -> int = <fun>
+# succ 100000 ;;
+- : int = 100001
+\end{lstlisting}
+
+В итеративной версии место занимаемое функцией \texttt{succ\_iter} в стеке не
+зависит от величины аргумента.
+
+\begin{lstlisting}[language=OCaml]
+# let succ_iter n =
+   let i = ref 0 in
+     for j=0 to n do incr i done ;
+     !i ;;
+val succ_iter : int -> int = <fun>
+# succ_iter 100000 ;;
+- : int = 100001
+\end{lstlisting}
+
+У следующей версии функции {\it a priori} аналогичная глубина рекурсии, однако
+она успешно выполняется с тем же аргументом.
+
+\begin{lstlisting}[language=OCaml]
+# let succ_tr n =
+   let rec succ_aux n accu =
+     if n = 0 then accu  else succ_aux (n-1) (accu+1)
+   in
+     succ_aux 1 n ;;
+val succ_tr : int -> int = <fun>
+# succ_tr 100000 ;;
+- : int = 100001
+\end{lstlisting}
+
+Данная функция имеет специальную форму рекурсивного вызова, так называемую
+хвостовую рекурсию при которой результат вызова функции будет результатом
+функции без дополнительных вычислений. Таким образом отпадает необходимость
+хранить аргументы функции во время вычисления рекурсивного вызова. Если
+Objective CAML распознал конечную рекурсивную функцию, то перед её вызовом
+аргументы извлекаются из стека.
+
+Распознание конечной рекурсии существует во многих языках, однако это свойство
+просто необходимо функциональным языкам, где она естественно много используется.

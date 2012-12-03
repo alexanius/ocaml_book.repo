@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="351"
+   height="143"
+   id="svg5567"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   enable-background="new"
+   sodipodi:docname="graphical_notation_for_interpreters_and_compilers.svg">
+  <defs
+     id="defs5569">
+    <filter
+       inkscape:collect="always"
+       id="filter5587">
+      <feBlend
+         inkscape:collect="always"
+         mode="darken"
+         in2="BackgroundImage"
+         id="feBlend5589" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.979899"
+     inkscape:cx="98.741398"
+     inkscape:cy="5.9955713"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer3"
+     showgrid="false"
+     fit-margin-top="5"
+     fit-margin-left="5"
+     fit-margin-right="5"
+     fit-margin-bottom="5"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:window-width="1280"
+     inkscape:window-height="978"
+     inkscape:window-x="-3"
+     inkscape:window-y="23"
+     inkscape:window-maximized="1">
+    <sodipodi:guide
+       orientation="0,1"
+       position="26.160714,53.482143"
+       id="guide6119" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="32.053572,29.553572"
+       id="guide6121" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="57.321429,6.4285714"
+       id="guide6123" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="6.4285714,39.375"
+       id="guide6125" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="30.535714,33.683036"
+       id="guide6127" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="54.464286,35.714286"
+       id="guide6129" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="78.392857,62.678572"
+       id="guide6131" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata5572">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="draft"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-527.35712,-635.14789)"
+     style="filter:url(#filter5587);opacity:0.28965517">
+    <image
+       y="640.14789"
+       x="532.35712"
+       id="image5583"
+       xlink:href="data:image/png;base64,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
+YII=
+"
+       height="133"
+       width="341" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="img">
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect5591"
+       width="24.0625"
+       height="23.035715"
+       x="6.5101976"
+       y="6.4821424" />
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect5591-4"
+       width="24.0625"
+       height="35.89286"
+       x="6.530303"
+       y="41.51543" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 6.4285714,89.517857 71.9642856,0 0,23.928573 -23.928571,0 0,23.125 -23.928572,0 0,-23.125 -24.1071426,0 z"
+       id="path6133"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccccc" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="54.464287"
+       y="21.387602"
+       id="text6156"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan6158"
+         x="54.464287"
+         y="21.387602"
+         style="font-size:7px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr;text-anchor:start;font-family:Sans;-inkscape-font-specification:Sans">program written in source language (SL)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:7px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans;font-stretch:normal;font-variant:normal;text-anchor:start;text-align:start;writing-mode:lr"
+       x="54.464287"
+       y="59.34407"
+       id="text6156-1"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="54.464287"
+         y="59.34407"
+         style="font-size:7px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr;text-anchor:start;font-family:Sans;-inkscape-font-specification:Sans"
+         id="tspan6181">interpreter of source language SL written in the implementation language IL</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:7px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="15.963569"
+       y="20.164621"
+       id="text6156-1-0"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="15.963569"
+         y="20.164621"
+         style="font-size:7px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Sans;-inkscape-font-specification:Sans"
+         id="tspan6181-7">SL</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:7px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="13.295026"
+       y="53.494522"
+       id="text6156-1-0-1"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="13.295026"
+         y="53.494522"
+         style="font-size:7px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Sans;-inkscape-font-specification:Sans"
+         id="tspan6181-7-1">SL</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:7px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="16.598597"
+       y="73.494522"
+       id="text6156-1-0-4"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="16.598597"
+         y="73.494522"
+         style="font-size:7px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Sans;-inkscape-font-specification:Sans"
+         id="tspan6181-7-5">IL</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:7px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="40.129677"
+       y="130.65176"
+       id="text6156-1-0-4-1"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="40.129677"
+         y="130.65176"
+         style="font-size:7px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Sans;-inkscape-font-specification:Sans"
+         id="tspan6181-7-5-3">IL</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:7px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="64.247063"
+       y="103.37764"
+       id="text6156-1-0-4-8"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="64.247063"
+         y="103.37764"
+         style="font-size:7px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Sans;-inkscape-font-specification:Sans"
+         id="tspan6181-7-5-8">TL</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:7px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="13.294126"
+       y="103.8793"
+       id="text6156-1-0-1-7"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="13.294126"
+         y="103.8793"
+         style="font-size:7px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Sans;-inkscape-font-specification:Sans"
+         id="tspan6181-7-1-8">SL</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:7px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="93.214851"
+       y="102.2089"
+       id="text6156-1-6"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="93.214851"
+         y="102.2089"
+         style="font-size:7px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Sans;-inkscape-font-specification:Sans"
+         id="tspan6181-6">compilation of source language SL towards target language TL</tspan><tspan
+         sodipodi:role="line"
+         x="93.214851"
+         y="110.9589"
+         style="font-size:7px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Sans;-inkscape-font-specification:Sans"
+         id="tspan6320">written in the implementation language IL</tspan><tspan
+         sodipodi:role="line"
+         x="93.214851"
+         y="119.7089"
+         style="font-size:7px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Sans;-inkscape-font-specification:Sans"
+         id="tspan6322" /></text>
+  </g>
+</svg>
