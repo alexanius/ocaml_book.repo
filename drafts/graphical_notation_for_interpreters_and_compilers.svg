@@ -37,8 +37,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.979899"
-     inkscape:cx="98.741398"
-     inkscape:cy="5.9955713"
+     inkscape:cx="172.48253"
+     inkscape:cy="2.9651137"
      inkscape:document-units="px"
      inkscape:current-layer="layer3"
      showgrid="false"
@@ -99,7 +99,7 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(-527.35712,-635.14789)"
-     style="filter:url(#filter5587);opacity:0.28965517">
+     style="opacity:0.2896552;display:none;filter:url(#filter5587)">
     <image
        y="640.14789"
        x="532.35712"
