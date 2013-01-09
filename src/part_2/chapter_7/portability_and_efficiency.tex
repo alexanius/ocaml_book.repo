@@ -41,7 +41,7 @@ Objective CAML.
 эффективность выполнения.
 
 Следующий пример, хоть он и не тестирует все составные части языка, иллюстрирует
-разницу во времени выполнения между байт--код и автономным вариантом расчёта
+разницу во времени выполнения между байт--кодом и автономным вариантом расчёта
 чисел Фибоначчи. Пусть у нас есть следующая программа \texttt{fib.ml}:
 
 \begin{lstlisting}[language=OCaml]
@@ -61,7 +61,7 @@ done;;
 
 Откомпилируем их следующим образом:
 
-\begin{lstlisting}[language=OCaml]
+\begin{lstlisting}[language=Bash]
 $ ocamlc -o fib.exe fib.ml main.ml
 $ ocamlopt -o fibopt.exe fib.ml main.ml
 \end{lstlisting}

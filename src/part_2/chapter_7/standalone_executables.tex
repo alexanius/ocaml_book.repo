@@ -1,7 +1,7 @@
 \section{Автономный исполняемый файл}
 \label{sec:standalone_executables}
 
-Автономный исполняемый файл (standalone) есть исполняемый файл, независящий от
+Автономный (standalone) исполняемый файл есть исполняемый файл, независящий от
 дистрибутива Objective CAML на используемой машине. С одной стороны, бинарный
 файл упрощает распространение программ, с другой стороны, он не зависит от
 расположения дистрибутива Objective CAML на компьютере.
@@ -19,14 +19,14 @@ print_newline();;
 
 Следующая команда создаёт файл \texttt{example.exe}:
 
-\begin{lstlisting}[language=OCaml]
+\begin{lstlisting}[language=Bash]
 ocamlc -o example.exe example.ml
 \end{lstlisting}
 
 Полученный файл, размером около 8Kb, может быть выполнен при помощи следующей
 команды:
 
-\begin{lstlisting}[language=OCaml]
+\begin{lstlisting}[language=Bash]
 $ ocamlrun example.exe
 19
 \end{lstlisting}
@@ -37,20 +37,21 @@ $ ocamlrun example.exe
 Для операционной системы Unix, в первой строке такого файла находится путь к
 байт--код интерпретатору, например:
 
-\begin{lstlisting}[language=OCaml]
+\begin{lstlisting}[language=Bash]
 #!/usr/local/bin/ocamlrun
 \end{lstlisting}
 
 При помощи этой строки, файл может быть напрямую запущен интерпретатором. Таким
 образом, выполнение файла \texttt{example.exe} запускает файл, путь к которому
 находится в первой строке. Если интерпретатор не найдёт по этому пути
-программу--интерпретатор, сообщение Command not found будет выведено на экран и
+программу--интерпретатор, сообщение \texttt{Command not found} будет выведено на
+экран и
 выполнение остановится.
 
 Та же компиляция с опцией \texttt{-custom} создаст автономный файл с именем
 \texttt{exauto.exe}:
 
-\begin{lstlisting}[language=OCaml]
+\begin{lstlisting}[language=Bash]
 ocamlc -custom -o exauto.exe example.ml
 \end{lstlisting}
 

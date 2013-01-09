@@ -20,7 +20,7 @@
 	\hline
 	\texttt{ocamlrun} & интерпретатор байт--кода \\
 	\hline
-	\texttt{ocamlc} & компилятор в байт--кода \\
+	\texttt{ocamlc} & компилятор в байт--код \\
 	\hline
 	\texttt{ocamlopt} & компилятор машинного кода \\
 	\hline
@@ -36,26 +36,29 @@
 \end{table}
 
 Оптимизированные компиляторы были сами скомпилированы компилятором машинного
-кода, при этом получается более быстрый исполняемый файл.
+кода. Они компилируют быстрее, но в остальном идентичны неоптимизированным
+версиям.
 
-\subsection{Элементы компиляции}
+\subsection{Единица компиляции}
 
-Элемент компиляции соответствует наименьшей части программы на Objective CAML,
+Единица компиляции соответствует наименьшей части программы на Objective CAML,
 которая может быть скомпилирована. Для интерактивного интерпретатора таким
 элементом является фраза на языке Objective CAML, тогда как для пакетных
 компиляторов таким элементом является пара файлов: исходный код и файл
 интерфейсов, где файл интерфейсов не обязателен. Если он отсутствует, то все
 глобальные объявления файла--исходника будут видны другим элементам компиляции.
-Создание интерфейсных файлов будет рассмотрено в главе \ref{??} посвящённой
+Создание интерфейсных файлов будет рассмотрено в главе \ref{??}, посвящённой
 модульному программированию. Эти файлы отличаются друг от друга расширением
 имени файла.
 
 \subsection{Расширения файлов Objective CAML}
 
-В таблице \ref{tbl:file_extensions} представлены расширения файлов используемые
+В таблице \ref{tbl:file_extensions} представлены расширения файлов, используемые
 для программ Objective CAML и C.
 
-\begin{table}
+\begin{table}[hc]
+	\centering
+	\caption{\label{tbl:file_extensions}Расширения файлов}
 	\begin{tabular}{|l|l|}
 	\hline
 	расширение & значение \\
@@ -81,10 +84,9 @@
 	\texttt{.a} & объектный файл библиотеки C (нативный) \\
 	\hline
 	\end{tabular}
-	\caption{\label{tbl:file_extensions}Расширения файлов}
 \end{table}
 
-Файлы \texttt{example.ml} и \texttt{example.mli} формируют элемент компиляции.
+Файлы \texttt{example.ml} и \texttt{example.mli} формируют единицу компиляции.
 Скомпилированный интерфейсный файл (\texttt{example.cmi}) может быть использован
 нативным и байт--код компилятором. Файлы на \texttt{C} используются для
 интерфейса между Objective CAML и библиотеками, написанными на языке \texttt{C}
@@ -94,31 +96,34 @@
 
 Общая форма команды компиляции следующая:
 
-$$
-command options file\_name
-$$
+\begin{lstlisting}[language=Bash]
+command options file_name
+\end{lstlisting}
 
 Objective CAML подчиняется тому же правилу.
 
-$$
+\begin{lstlisting}[language=Bash]
 ocamlc -c example.ml
-$$
+\end{lstlisting}
 
 Перед параметрами компилятора ставится символ \texttt{`-'}, как это принято в
 системе \texttt{Unix}. Расширения файлов интерпретируются в соответствии с
 таблицей \ref{tbl:file_extensions}. В приведённом примере, файл
-\texttt{exemple.ml} рассматривается как исходник на Objective CAML и после его
+\texttt{exemple.ml} рассматривается как исходник на Objective CAML, и после его
 компиляции будет сгенерированно два файла \texttt{exemple.cmo} и
 \texttt{exemple.cmi}. Опция \texttt{`-c'} указывает компилятору, что необходимо
 скомпилировать только объектный файл. Без этой опции компилятор \texttt{ocamlc}
 создаст исполняемый файл \texttt{a.out}, то есть в данном случае он реализует
-редактирование связей.
+компоновку.
 
 В таблице \ref{tbl:principal_options_of_the_bytecode_compiler} описаны основные
 опции байт--код компилятора. Остальные опции приведены в таблице
 \ref{tbl:other_options_for_the_bytecode_compiler}.
 
-\begin{table}
+\begin{table}[hc]
+	\centering
+	\caption{\label{tbl:principal_options_of_the_bytecode_compiler}Основные
+опции байт--код компилятора}
 	\begin{tabular}{|l|l|}
 	\hline
 	\texttt{-a} & создать библиотеку \\
@@ -137,11 +142,11 @@ $$
 	\hline
 	\texttt{-v} & вывести версию компилятора \\
 	\hline
-	\texttt{-w} {\it список} & выбрать, в соответствии со списком, уровень
+	\texttt{-w} {\it список} & выбрать, в соответствии со {\it списком}, уровень
 предупреждений \\
 	\hline
 	\texttt{-impl} {\it файл} & указывает, что {\it файл} это исходник на Caml
-(см. таб. 6.7) \\
+(см. таб. \ref{tbl:description_of_compilation_warnings}) \\
 	\hline
 	\texttt{-intf} {\it файл} & указывает, что {\it файл} есть интерфейсный файл
 на Caml (.mli) \\
@@ -149,11 +154,12 @@ $$
 	\texttt{-I} {\it каталог} & добавить каталог в список {\it каталогов} \\
 	\hline
 	\end{tabular}
-	\caption{\label{tbl:principal_options_of_the_bytecode_compiler}Основные
-опции байт--код компилятора}
 \end{table}
 
-\begin{table}
+\begin{table}[hc]
+	\centering
+	\caption{\label{tbl:other_options_for_the_bytecode_compiler}Другие опции
+байт--код компилятора}
 	\begin{tabular}{|l|l|}
 	\hline
 	нити & \texttt{-thread} (см. \ref{??}) \\
@@ -168,8 +174,6 @@ $$
 	C interface & \texttt{-output-obj} (\ref{??}) \\
 	\hline
 	\end{tabular}
-	\caption{\label{tbl:other_options_for_the_bytecode_compiler}Другие опции
-байт--код компилятора}
 \end{table}
 
 Чтобы получить возможные опции байт--код компилятора, используйте параметр
@@ -180,7 +184,10 @@ $$
 символизируется буквой. Заглавная буква включает данный уровень, а прописная
 выключает.
 
-\begin{table}
+\begin{table}[hc]
+	\centering
+	\caption{\label{tbl:description_of_compilation_warnings}Описание
+предупреждений компилятора}
 	\begin{tabular}{|l|l|}
 	\hline
 	Уровни предупреждений & \\
@@ -198,8 +205,6 @@ $$
 	\texttt{M/m} и \texttt{V/v} & for hidden object (см. главу \ref{??}) \\
 	\hline
 	\end{tabular}
-	\caption{\label{tbl:description_of_compilation_warnings}Описание
-предупреждений компилятора}
 \end{table}
 
 По умолчанию установлен максимальный уровень предупреждений (\texttt{A}).
@@ -207,7 +212,7 @@ $$
 Пример использования байт--кода компилятора изображён на рисунке
 \ref{fig:session_with_bytecode_compiler}.
 
-\begin{figure}[h]
+\begin{figure}[hc]
 	\center{\includegraphics {img/session_with_bytecode_compiler}}
 	\caption{\label{fig:session_with_bytecode_compiler}Пример работы с байт--код
 компилятором}
@@ -221,10 +226,14 @@ $$
 \ref{tbl:principal_options_of_the_bytecode_compiler} и
 \ref{tbl:other_options_for_the_bytecode_compiler}. Однако, в таблице
 \ref{tbl:other_options_for_the_bytecode_compiler} необходимо удалить опции
-связанные \ref{tbl:options_specific_to_the_native_compiler}. Уровни
+связанные со средой исполнения. Специфические опции для нативного компилятора
+приведены в таблице \ref{tbl:options_specific_to_the_native_compiler}. Уровни
 предупреждений остаются теми же.
 
-\begin{table}
+\begin{table}[hc]
+	\centering
+	\caption{\label{tbl:options_specific_to_the_native_compiler}Специальные
+опции для нативного компилятора}
 	\begin{tabular}{|l|l|}
 	\hline
 	\texttt{-compact} & оптимизация размера кода \\
@@ -232,26 +241,25 @@ $$
 	\texttt{-S} & сохранить код на ассемблере в файле \\
 	\hline
 	\texttt{-inline} \it{уровень} & установить {\it уровень} \enq{агрессивности}
-разложения функций \\
+встраивания функций \\
 	\hline
 	\end{tabular}
-	\caption{\label{tbl:options_specific_to_the_native_compiler}Специальные
-опции для нативного компилятора}
 \end{table}
 
 Встраивание является улучшенным методом макроподстановки на стадии
 препроцессирования. Оно заменяет вызов функции, подставляя тело функции, в
 случае когда аргументы определены. Таким образом несколько вызовов функции
-соответствуют новым копиям ее тела. Разложением мы избавляемся от затрат,
+соответствуют новым копиям её тела. Встраиванием мы избавляемся от затрат,
 возникающих при инициализации вызова и возврата функции. Однако, расплатой за
-это будет увеличение размера кода. Основные уровни разложения функции следующие:
+это будет увеличение размера кода. Основные уровни встраивания функции
+следующие:
 
 \begin{itemize}
 	\item $0$: разложение разрешено, в случае если оно не увеличивает размер
 кода
 	\item $1$: значение по умолчанию, при этом допускается небольшое увеличение
 кода
-	\item $n > 1$: увеличивает терпимость к увеличению кода 
+	\item $n > 1$: увеличивает терпимость к увеличению кода
 \end{itemize}
 
 \subsection{Интерактивный интерпретатор}
@@ -271,7 +279,9 @@ $$
 \ref{tbl:toplevel_loop_directives}, они начинается с символа \texttt{`\#'} и
 заканчиваются привычным \texttt{`;;'}.
 
-\begin{table}
+\begin{table}[hc]
+	\centering
+	\caption{\label{tbl:toplevel_loop_directives}Директивы интерпретатора}
 	\begin{tabular}{|l|l|}
 	\hline
 	\texttt{\#quit ;;} & выйти из интерпретатора \\
@@ -305,7 +315,6 @@ $$
 	\texttt{\#untrace\_all ;;} & отменить все трассировки \\
 	\hline
 	\end{tabular}
-	\caption{\label{tbl:toplevel_loop_directives}Директивы интерпретатора}
 \end{table}
 
 Директивы, относящиеся к каталогам, подчиняются правилам используемой
@@ -346,17 +355,17 @@ $$
 
 Опции этой команды являются частью опций байт--код компилятора (ocamlc):
 
-$$
+\begin{lstlisting}[language=Bash]
 -cclib имя\_библиотеки, -ccopt опции, -custom, -I каталог -o имя\_файла
-$$
+\end{lstlisting}
 
-В главе о графическом интерфейсе (4 стр. ??) используется эта команда для
-создания цикла содержащего библиотеку Graphics следующим способом:
+В главе о графическом интерфейсе (\ref{??}) используется эта команда для
+создания цикла содержащего библиотеку \texttt{Graphics} следующим способом:
 
-$$
+\begin{lstlisting}[language=Bash]
 ocamlmktop -custom -o mytoplevel graphics.cma -cclib \ -I/usr/X11/lib -cclib
 -lX11
-$$
+\end{lstlisting}
 
 Эта команда создаёт исполняемый файл \texttt{mytoplevel}, содержащий байт--код
 библиотеки \texttt{graphics.cma}. Этот файл является автономным
