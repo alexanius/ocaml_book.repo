@@ -1,25 +1,27 @@
-\documentclass{book}
+\documentclass{article}
 
 \usepackage [utf8] {inputenc}
 \usepackage [russian] {babel}
 \usepackage {amsmath}
-\usepackage [landscape,a3paper] {geometry}
+\usepackage [landscape,a3paper]{geometry}
 \usepackage {colortbl}
 \usepackage {color}
+\usepackage [table]{xcolor}
 \usepackage {graphicx}
 \usepackage {multicol,multirow}
 
+\setlength{\textheight} {1800pt}
+\setlength{\paperheight}{2000pt}
+
 \pagestyle {empty}
 
-\begin {document}
-\batchmode
+\newcommand{\yes}{\cellcolor{green!50}{\large $+$}}
+\newcommand{\no}{\cellcolor{red!50} {\large $-$}}
+\newcommand{\prt}{\cellcolor[rgb]{.8,.88,.95,0.5} {\large $\pm$}}
+\setlength\arrayrulewidth{1pt}
+\setlength\doublerulesep{1pt}
 
-%\newcommand{\yes}{\rowcolor{green} {\large $+$}}
-%\newcommand{\no}{\rowcolor{red} {\large $-$}}
-%\newcommand{\prt}{\rowcolor[rgb]{.8,.88,.95} {\large $\pm$}}
-\newcommand{\yes}{\large $+$}
-\newcommand{\no}{\large $-$}
-\newcommand{\prt}{\large $\pm$}
+\begin {document}
 
 \begin{table}[hс]
 \begin{center}
@@ -37,11 +39,10 @@
 	\hline
 %=============================================================================-
 	\hline
-	\multirow{31}*{I} & \multicolumn{8}{|c|}{\Large{\bf Часть I}} \\
-	\cline{2-9}
+	\multirow{50}*{I} & \multicolumn{8}{c|}{\Large{\bf Часть I}} \\
 	\cline{2-9}
 %------------------------------------------------------------------------------
-	 & \multirow{11}*{2} & \multicolumn{2}{|c|}{\large{\it Функциональное программирование}} & \no & \no & \no & \no & \no \\
+	 & \multirow{11}*{2} & \multicolumn{2}{c|}{\large{\it Функциональное программирование}} & \no & \no & \no & \no & \no \\
 	\cline{3-9}
 	 & & 1 & Введение & \yes & \yes & \no & \no & \no \\
 	\cline{3-9}
@@ -63,9 +64,8 @@
 	\cline{3-9}
 	 &  & 10 & To learn more & \no & \no & \no & \no & \no \\
 	\cline{2-9}
-	\cline{2-9}
 %------------------------------------------------------------------------------
-	 & \multirow{11}*{3} & \multicolumn{2}{|c|}{\large{\it Императивное программирование}} & \no & \no & \no & \no & \no \\
+	 & \multirow{11}*{3} & \multicolumn{2}{c|}{\large{\it Императивное программирование}} & \no & \no & \no & \no & \no \\
 	\cline{3-9}
 	 & & 1 & Введение & \yes & \yes & \no & \no & \no \\
 	\cline{3-9}
@@ -87,9 +87,8 @@
 	\cline{3-9}
 	 &  & 10 & To learn more & \no & \no & \no & \no & \no \\
 	\cline{2-9}
-	\cline{2-9}
 %------------------------------------------------------------------------------
-	 & \multirow{10}*{4} & \multicolumn{2}{|c|}{\large{\it Функциональный и императивный стиль}} & \no & \no & \no & \no & \no \\
+	 & \multirow{10}*{4} & \multicolumn{2}{c|}{\large{\it Функциональный и императивный стиль}} & \no & \no & \no & \no & \no \\
 	\cline{3-9}
 	 & & 1 & Введение & \yes & \yes & \no & \no & \no \\
 	\cline{3-9}
@@ -109,9 +108,8 @@
 	\cline{3-9}
 	 &  & 10 & To learn more & \no & \no & \no & \no & \no \\
 	\cline{2-9}
-	\cline{2-9}
 %------------------------------------------------------------------------------
-	 & \multirow{12}*{5} & \multicolumn{2}{|c|}{\large{\it Графический интерфейс}} & \no & \no & \no & \no & \no \\
+	 & \multirow{12}*{5} & \multicolumn{2}{c|}{\large{\it Графический интерфейс}} & \no & \no & \no & \no & \no \\
 	\cline{3-9}
 	 & & 1 & Введение & \yes & \yes & \no & \no & \no \\
 	\cline{3-9}
@@ -135,14 +133,23 @@
 	\cline{3-9}
 	 &  & 11 & To learn more & \no & \no & \no & \no & \no \\
 	\cline{2-9}
+%------------------------------------------------------------------------------
+	 & \multirow{5}*{6} & \multicolumn{2}{c|}{\large{\it Программы}} & \no & \no & \no & \no & \no \\
+	\cline{3-9}
+	 & & 1 & Введение & \yes & \yes & \no & \no & \no \\
+	\cline{3-9}
+	 &  & 2 & Запросы базы данных & \yes & \yes & \no & \no & \no \\
+	\cline{3-9}
+	 &  & 3 & Интерпретатор языка BASIC & \yes & \no & \no & \no & \no \\
+	\cline{3-9}
+	 &  & 4 & Сапёр & \yes & \no & \no & \no & \no \\
 	\cline{2-9}
 %=============================================================================-
 	\hline
-	\multirow{20}*{II} & \multicolumn{8}{|c|}{\Large{\bf Часть II}} \\
-	\cline{2-9}
+	\multirow{20}*{II} & \multicolumn{8}{c|}{\Large{\bf Часть II}} \\
 	\cline{2-9}
 %------------------------------------------------------------------------------
-	 & \multirow{10}*{7} & \multicolumn{2}{|c|}{\large{\it Компиляция и переносимость}} & \yes & \no & \no & \no & \no \\
+	 & \multirow{10}*{7} & \multicolumn{2}{c|}{\large{\it Компиляция и переносимость}} & \yes & \no & \no & \no & \no \\
 	\cline{3-9}
 	 & & 1 & Введение & \yes & \yes & \yes & \yes & \yes \\
 	\cline{3-9}
@@ -163,7 +170,7 @@
 	 &  & 9 & To learn more & \no & \no & \no & \no & \no \\
 	\cline{2-9}
 %------------------------------------------------------------------------------
-	 & \multirow{9}*{11} & \multicolumn{2}{|c|}{\large{\it Средства лексического и синтаксического анализа}} & \yes & \no & \no & \no & \no \\
+	 & \multirow{9}*{11} & \multicolumn{2}{c|}{\large{\it Средства лексического и синтаксического анализа}} & \yes & \no & \no & \no & \no \\
 	\cline{3-9}
 	 & & 1 & Введение & \yes & \yes & \yes & \yes & \no \\
 	\cline{3-9}
@@ -180,9 +187,9 @@
 	 &  & 7 & Резюме & \yes & \yes & \no & \no & \no \\
 	\cline{3-9}
 	 &  & 8 & To learn more & \no & \no & \no & \no & \no \\
-	\hline
+	\cline{2-9}
 %------------------------------------------------------------------------------
-	 & \multirow{11}*{12} & \multicolumn{2}{|c|}{\large{\it Взаимодействие с языком C}} & \no & \no & \no & \no & \no \\
+	 & \multirow{11}*{12} & \multicolumn{2}{c|}{\large{\it Взаимодействие с языком C}} & \no & \no & \no & \no & \no \\
 	\cline{3-9}
 	 & & 1 & Introduction & \no & \no & \no & \no & \no \\
 	\cline{3-9}
@@ -203,9 +210,9 @@
 	 &  & 9 & Summary & \no & \no & \no & \no & \no \\
 	\cline{3-9}
 	 &  & 10 & To learn more & \no & \no & \no & \no & \no \\
-	\hline
+	\cline{2-9}
 %------------------------------------------------------------------------------
-	 & \multirow{4}*{13} & \multicolumn{2}{|c|}{\large{\it Applications}} & \no & \no & \no & \no & \no \\
+	 & \multirow{4}*{13} & \multicolumn{2}{c|}{\large{\it Applications}} & \no & \no & \no & \no & \no \\
 	\cline{3-9}
 	 & & 1 & Introduction & \yes & \yes & \no & \no & \no \\
 	\cline{3-9}
