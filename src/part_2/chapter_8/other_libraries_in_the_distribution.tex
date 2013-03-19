@@ -1,0 +1,326 @@
+\section{Другие библиотеки дистрибутива}
+\label{sec:other_libraries_in_the_distribution}
+
+Другие библиотеки, входящие в дистрибутив Objective CAML, затрагивают следующие
+расширения:
+
+\begin{description}
+	\item[графика] состоящий из независящего от платформы модуля
+\code{Graphics}, который был описан в главе \ref{chpt:the_graphics_interface}.
+
+	\item[точная арифметика] несколько модулей для выполнения точных расчётов с
+целыми и рациональными числами. Числа представлены в виде целых Objective CAML
+когда это возможно.
+
+	\item[фильтрация регулярных выражений] облегчает анализ строк и текста.
+Модуль \code{Str} будет описан в главе
+\ref{chpt:tools_for_lexical_analysis_and_parsing}.
+
+	\item[системные вызовы Unix] при помощи модуля Unix этой библиотеки можно
+вызывать из Objective CAML системные вызовы Unix. Большая часть этой библиотеки
+совместима с системой Windows. Мы воспользуемся этой библиотекой в главах
+\ref{??} и \ref{??}
+
+	\item[\enq{легковесный} процесс] несколько модулей, которые будут подробно
+описаны в главе \ref{??}.
+
+	\item[доступ к базам данных NDBD] работает только в Unix и не будет описан.
+
+	\item[динамическая загрузка кода] состоит из одного модуля \code{Dynlink}.
+\end{description}
+
+При помощи приведённых примеров мы опишем библиотеки для работы с большими 
+числами и динамической загрузки. 
+
+\subsection{Точная арифметика}
+\label{subsec:exact_math}
+
+Данная библиотека обеспечивает точную арифметику при работе с большими числами; 
+целыми или рациональными. У значений типа \code{int} и \code{float} существует 
+предел. Вычисления целых чисел реализуются по модулю самого большого 
+положительного числа, что может привести к незамеченному переполнению. 
+Результат вычисления чисел с плавающей запятой округляется, при распространении 
+этот феномен также может привести к ошибкам. Данная библиотека смягчает выше 
+указанные недостатки.
+
+Эта библиотека написана на языке C, поэтому нам необходимо создать новую 
+интерактивную среду, в которую включён следующий код:
+
+\begin{lstlisting}[language=Bash]
+ocamlmktop -custom -o top nums.cma -cclib -lnums
+\end{lstlisting}
+
+Библиотека состоит из нескольких модулей, два наиболее важных из них это 
+\code{Num} для всех операций и \code{Arith\_status} для контроля опций расчёта. 
+Общий тип \type{num} является тип сумма группирующая три следующих типа: 
+
+\begin{lstlisting}[language=OCaml]
+type num = Int of int
+         | Big_int of big_int 
+         | Ratio of ratio
+\end{lstlisting}
+
+Типы \code{big\_int} и \code{ratio} являются абстрактными.
+
+После операций со значениями типа \type{num} ставится символ '/'. Например 
+сложение двух значений \code{num} запишется как \code{+/}, тип этой операции 
+\type{num -> num -> num}. Для операций сравнения применяется аналогичное 
+правило. В следующем примере, мы вычисляем факториал:
+
+\begin{lstlisting}[language=OCaml]
+# let rec fact_num n = 
+   if  Num.(<=/) n  (Num.Int 0) then (Num.Int 1) 
+   else  Num.( */ ) n  (fact_num ( Num.(-/) n (Num.Int 1)));;
+val fact_num : Num.num -> Num.num = <fun>
+# let r = fact_num (Num.Int 100);;
+val r : Num.num = Num.Big_int <abstr>
+# let n = Num.string_of_num r in (String.sub n 0 50) ^ "..." ;;
+- : string = "93326215443944152681699238856266700490715968264381..."
+\end{lstlisting}
+
+Предварительная загрузка модуля \code{Num} облегчает читаемость кода:
+
+\begin{lstlisting}[language=OCaml]
+# open Num ;;
+# let rec fact_num n = 
+   if  n <=/  (Int 0) then (Int 1) 
+   else  n */   (fact_num ( n -/ (Int 1))) ;;
+val fact_num : Num.num -> Num.num = <fun>
+\end{lstlisting}
+
+Вычисление рациональных чисел так же является точным. Для того чтобы вычислить 
+число $e$ по следующей формуле:
+
+$$
+e = \lim_{m \to \infty} \left(1 + \frac1m \right)^m
+$$
+
+напишем такую функцию:
+
+\begin{lstlisting}[language=OCaml]
+# let  calc_e m =  
+   let a = Num.(+/) (Num.Int 1) ( Num.(//) (Num.Int 1) m) in 
+     Num.( **/ ) a  m;;
+val calc_e : Num.num -> Num.num = <fun>
+# let r = calc_e (Num.Int 100);;
+val r : Num.num = Ratio <abstr>
+# let n = Num.string_of_num r in (String.sub n 0 50) ^ "..." ;;
+- : string = "27048138294215260932671947108075308336779383827810..."
+\end{lstlisting}
+
+При помощи модуля \code{Arith\_status} мы можем контролировать вычисление: 
+округление результата для вывода, нормализация рациональных чисел и обработка 
+нулевого знаменателя дроби. При помощи функции \code{arith\_status} мы можем 
+знать состояние указанных опций.
+
+\begin{lstlisting}[language=OCaml]
+# Arith_status.arith_status();;
+
+Normalization during computation --> OFF
+     (returned by get_normalize_ratio ())
+     (modifiable with set_normalize_ratio <your choice>)
+
+Normalization when printing --> ON
+     (returned by get_normalize_ratio_when_printing ())
+     (modifiable with set_normalize_ratio_when_printing <your choice>)
+
+Floating point approximation when printing rational numbers --> OFF
+     (returned by get_approx_printing ())
+     (modifiable with set_approx_printing <your choice>)
+
+Error when a rational denominator is null --> ON
+     (returned by get_error_when_null_denominator ())
+     (modifiable with set_error_when_null_denominator <your choice>)
+- : unit = ()
+\end{lstlisting}
+
+В зависимости от необходимости, эти опции могут быть изменены. К примеру если мы 
+желаем выводить на экран приближенное значение предыдущего расчёта:
+
+\begin{lstlisting}[language=OCaml]
+# Arith_status.set_approx_printing true;;
+- : unit = ()
+# Num.string_of_num (calc_e (Num.Int 100));;
+- : string = "0.270481382942e1"
+\end{lstlisting}
+
+Вычисление больших чисел занимает больше времени чем для обычных целых, а так же 
+значения занимают больше места в памяти. Однако, данная библиотека старается 
+делать представление данных наиболее экономичным. В любом случае, наша цель, 
+избежать распространение ошибок из-за округления и возможность проводить 
+вычисления над большими числами, оправдывает потерю эффективности.
+
+\subsection{Динамическая загрузка кода}
+\label{subsec:dynamic_loading_of_code}
+
+Для динамической загрузки программ, в виде байт–кода, существует библиотека 
+\code{Dynlink}. Преимущества у динамической загрузки кода следующие:
+
+\begin{itemize}
+	\item уменьшение размера кода программы. Если определённые модули не 
+используются, то они не будут загружены.
+
+	\item возможность выбора модуля для загрузки во время выполнения программы. 
+В зависимости от условий выполнения программы, можно выбрать тот или иной модуль 
+для загрузки. 
+
+	\item     возможность изменить поведение модуля во время выполнения. Опять 
+же, при определённых условиях программа может загрузить новый модуль и скрыть 
+код предыдущего.
+\end{itemize}
+
+Интерактивная среда Objective CAML использует подобный механизм, почему бы и 
+разработчик на Objective CAML не имел подобных удобств.
+
+Во время загрузки объектного файла (с расширением \code{.cmo}), вычисляются 
+различные выражения. Программа, которая загружает модуль, не имеет доступа к 
+именам модуля, поэтому обновление таблицы имён основной программы лежит на 
+ответственности загружаемого модуля.
+
+{\it \bf Warning}
+Динамическая загрузка кода может быть действует лишь для байт--код объектов.
+
+\subsection{Описание модуля}
+\label{subsubsec:description_of_the_module}
+
+Для того чтобы загрузить файл \code{f.cmo}, содержащий байт--код, необходимо с 
+одной стороны знать путь по которому находится данный файл, и имена модулей 
+которые он использует с другой стороны. Динамические загружаемые байт--код 
+файлы не знают путь по которому находятся модули стандартной библиотеки и имена 
+модулей. Поэтому необходимо предоставить им эту информацию. 
+
+\begin{table}[hl]
+	\begin{center}
+	\caption{\label{tbl:functions_of_the_marshal_dynlink} Функции модуля 
+\code{Dynlink}}
+	\begin{tabular}{|l|c|l|}
+		\hline
+		\code{init} & : & \type{unit -> unit} \\
+		& & инициализация динамической загрузки \\
+		\hline
+		\code{add\_interfaces} & : & \type{string list -> string list -> unit} 
+\\
+		& & добавление имен модулей и путь по которому находится стандартная 
+библиотека \\
+		\hline
+		\code{loadfile} & : & \type{string -> unit} \\
+		& & загрузка байт–код файла \\
+		\hline
+		\code{clear\_avalaible\_units} & : & \type{unit -> unit} \\
+		& & удаляет имена модулей и путь по которому находится стандартная 
+библиотека \\
+		\hline
+		\code{add\_avalaibl\_units} & : & \type{(string * Digest.t) list -> 
+unit} \\
+		& & добавить имя модуля и отпечаток для загрузки, без интерфейсного 
+файла \\
+		\hline
+		\code{allow\_unsafe\_modules} & : & \type{bool -> unit} \\
+		& & загружать файлы содержащие внешние объявления \\
+		\hline
+		\code{loadfile\_private} & : & \type{string -> unit} \\
+		& & загруженный модуль не будет доступен для следующих загруженных 
+модулей \\
+		\hline
+	\end{tabular}
+	\end{center}
+\end{table}
+
+В момент динамической загрузки, может возникнуть множество ошибок. Кроме того, 
+что загружаемый файл и интерфейсный файлы должны существовать по искомым 
+каталогам, байт--код должен быть корректным и загружаемым. Подобные ошибки 
+сгруппированы в типе \type{error}, который используется как аргумент исключения 
+\code{Error} и функции \code{error} с типом \code{error -> string}. При помощи 
+данной функции мы получаем понятные сообщения об ошибках. 
+
+\subsubsection{Пример}
+
+Для того, чтобы проиллюстрировать динамическою загрузку, создадим три модуля:
+
+\begin{itemize}
+	\item \code{F} в котором определена ссылка на функцию \code{g}
+
+	\item \code{Mod1} и \code{Mod2} в которых изменяется поведение функции на 
+которую указывает \code{F.f}
+\end{itemize}
+
+Модуль \code{F} определён в файле \code{f.ml}:
+
+\begin{lstlisting}[language=OCaml]
+let g () = 
+  print_string "I am the 'f' function by default\n" ; flush stdout  ;;
+let f = ref g ;;
+\end{lstlisting}
+
+Модуль \code{Mod1} определён в файле \code{mod1.ml}:
+
+\begin{lstlisting}[language=OCaml]
+print_string "The 'Mod1' module modifies the value of 'F.f'\n" ; flush stdout ;;
+let g () = 
+  print_string "I am the 'f' function of module 'Mod1'\n" ;
+  flush stdout ;;
+F.f := g ;;
+\end{lstlisting}
+
+Модуль \code{Mod2} определён в файле \code{mod1.m2}:
+
+\begin{lstlisting}[language=OCaml]
+print_string "The 'Mod2' module modifies the value of 'F.f'\n" ; flush stdout ;;
+let g () = 
+  print_string "I am the 'f' function of module 'Mod2'\n" ;
+  flush stdout ;;
+F.f := g ;;
+\end{lstlisting}
+
+И наконец определим основную программу в файле \code{main.ml}, в которой 
+вызовем функцию на которую указывает \code{F.f}, затем загрузим модуль 
+\code{Mod1}, снова вызовем функцию \code{F.f}, загрузим модуль \code{Mod2} и 
+вызовем в последний раз \code{F.f}.
+
+\begin{lstlisting}[language=OCaml]
+let main () = 
+  try 
+    Dynlink.init () ;
+    Dynlink.add_interfaces [ "Pervasives"; "F" ; "Mod1" ; "Mod2" ] 
+                           [ Sys.getcwd() ; "/usr/local/lib/ocaml/" ] ;
+    !(F.f) () ;
+    Dynlink.loadfile "mod1.cmo" ;  !(F.f) () ;
+    Dynlink.loadfile "mod2.cmo" ;  !(F.f) () 
+  with 
+    Dynlink.Error e -> print_endline (Dynlink.error_message e) ; exit 1 ;;
+
+main () ;;
+\end{lstlisting}
+
+Кроме указанных действий, инициализации динамической загрузки, программа должна 
+объявить используемые интерфейсы вызовом \code{Dynlink.add\_interfaces}.
+
+Скомпилируем созданные файлы.
+
+\begin{lstlisting}[language=Bash]
+$ ocamlc -c f.ml
+$ ocamlc -o main dynlink.cma f.cmo main.ml
+$ ocamlc -c f.cmo mod1.ml
+$ ocamlc -c f.cmo mod2.ml
+\end{lstlisting}
+
+Вызов программы \code{main} даст следующий результат: 
+
+\begin{lstlisting}[language=Bash]
+$ main
+I am the 'f' function by default
+The 'Mod1' module modifies the value of 'F.f'
+I am the 'f' function of module 'Mod1'
+The 'Mod2' module modifies the value of 'F.f'
+I am the 'f' function of module 'Mod2'
+\end{lstlisting}
+
+Во время динамической загрузки, происходит выполнения кода. Это 
+проиллюстрировано выводом на экран строк начинающихся на \code{The 'Mod\ldots}. 
+Возможные побочные эффекты данного модуля наследуются основной программой. По 
+этой причине различные вызовы функции \code{F.f} приводят к разным вызовам 
+функций.
+
+Библиотека \code{Dynlink} предоставляет базовый механизм \code{динамической} 
+загрузки байт--кода. Программист должен самостоятельно позаботится об 
+управлении таблица, для того чтобы загрузка имела место.
