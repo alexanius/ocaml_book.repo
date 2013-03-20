@@ -1,0 +1,259 @@
+\section {Профайлер}
+\label{sec:profiling}
+
+С помощью профайлера можно получить определённую информацию о выполнении 
+программы: сколько раз была выполнения функция или структура контроля 
+(условный, цикл или сопоставление с образцом). Эта информация сохраняется в 
+файле, анализируя который, можно обнаружить алгоритмические ошибки или 
+критические моменты, которые можно оптимизировать.
+
+Для того, чтобы профайлер смог реализовать анализ, необходимо скомпилировать код 
+со специальными опциями. Эти опции добавляют в код инструкции, необходимые для 
+сбора данных. Существует две методики профайлинга: одна --- для байт--код 
+компилятора и другая --- для нативного компилятора, плюс две комманды для 
+представления результата. При анализе машинного кода мы получим так же время 
+затрачено на выполнение каждой функции.
+
+Профайлинг программы состоит из трёх этапов: 
+
+\begin{itemize}
+	\item компиляция с опциями для профайлинга 
+
+	\item выполнение программы
+
+	\item представление результатов
+\end{itemize}
+
+\subsection {Команды компиляции}
+\label{subsec:compilation_commands}
+
+Ниже приводятся команды компиляции с опциями для профайлинга 
+
+\begin{itemize}
+	\item \code{ocamlcp -p} опции для байт--код компилятора
+
+	\item \code{ocamlopt -p} опции для нативного компилятора
+\end{itemize}
+
+Указанные компиляторы создают такие же типы файлов, что и обычные команды 
+компиляции (\ref{chpt:compilation_and_portability}). В таблице 
+\ref{tbl:options_of_the_profiling_commands} приведены различные опции 
+компиляции.
+
+\begin{table}[hc]
+	\centering
+	\caption{\label{tbl:options_of_the_profiling_commands}Опции команд 
+профайлинга}
+	\begin{tabular}{|l|l|}
+	\hline
+	\code{f} & вызов функции \\
+	\hline
+	\code{i} & ответвления {\bf if} \\
+	\hline
+	\code{l} & цикл {\bf while} и {\bf for} \\
+	\hline
+	\code{m} & ответвления {\bf match} \\
+	\hline
+	\code{t} & ответвления {\bf try} \\
+	\hline
+	\code{a} & все опции \\
+	\hline
+	\end{tabular}
+\end{table}
+
+Данные команды указывают, какие структуры контроля должны учитываться 
+профайлером. По умолчанию используются опции \code{fm}.
+
+\subsection {Выполнение программы}
+\label{subsec:program_execution}
+
+\subsection {Байт--код компилятор}
+\label{subsubsec:bytecode_compiler}
+
+Пру успешном выполнение программы, которая была скомпилирована со 
+специальными для профайлера опциями, мы получим файл \code{ocamlprof.dump},
+который содержит желаемую информацию.
+
+Вернёмся к нашему примеру произведения элементов целочисленного списка. Пусть 
+файл \code{f1.ml} содержит следующий код:
+
+\begin{lstlisting}[language=OCaml]
+let rec interval a b = 
+  if b < a then []
+  else a::(interval (a+1) b);;
+
+exception Found_zero ;; 
+
+let mult_list l = 
+ let rec mult_rec l = match l with 
+    [] -> 1
+  | 0::_ -> raise Found_zero
+  | n::x -> n * (mult_rec x)
+ in
+  try mult_rec l with Found_zero -> 0
+;; 
+\end{lstlisting}
+
+А так же файл \code{f2.ml}, в котором вызываются функции из \code{f1.ml}:
+
+\begin{lstlisting}[language=OCaml]
+let l1 = F1.interval 1 30;;
+let l2 = F1.interval 31 60;;
+let l3 = l1 @ (0::l2);;
+
+print_int (F1.mult_list l1);;
+print_newline();;
+
+print_int (F1.mult_list l3);;
+print_newline();;
+\end{lstlisting}
+
+Компиляция файлов для профайлера осуществляется так:
+
+\begin{lstlisting}[language=Bash]
+ocamlcp -i -p a -c f1.ml
+val profile_f1_ : int array
+val interval : int -> int -> int list
+exception Found_zero
+\end{lstlisting}
+
+С опцией \code{-p}, компилятор добавляет новую функцию (\code{profile\_f1\_}) 
+для инициализации счётчиков модуля \code{F1}. Это касается и файла \code{f2.ml}:
+
+\begin{lstlisting}[language=Bash]
+ocamlcp -i -p a -o f2.exe f1.cmo f2.ml
+val profile_f2_ : int array
+val l1 : int list
+val l2 : int list
+val l3 : int list
+\end{lstlisting}
+
+\subsection {Нативный компилятор}
+\label{subsubsec:native_compiler}
+
+Компиляция в машинный код выглядит следующим образом:
+
+\begin{lstlisting}[language=Bash]
+$ ocamlopt -i -p  -c f1.ml
+val interval : int -> int -> int list
+exception Found_zero
+val mult_list : int list -> int
+$ ocamlopt -i -p -o f2nat.exe f1.cmx f2.ml
+\end{lstlisting}
+
+Здесь используется лишь опция \code{-p} без аргументов. После выполения 
+\code{f2.exe} мы получим файл \code{gmon.out}. Формат данного файла распознается 
+обычными средствами Unix (см. \code{??}).
+
+\subsection {Представление результата}
+\label{subsec:presentation_of_the_results}
+
+Так как способы анализа программ отличаются в зависимости от вида компиляции, 
+представление результата соответственно тоже отличается. В случае компиляции в 
+байт--код в исходный код программы добавляется число выполнений для структур 
+контроля. При компиляции в машинный код для каждой функции добавляется время 
+затраченное на её выполнение и число выполнений.
+
+\subsection {Байт--код компилятор}
+\label{subsubsec:bytecode_compiler}
+
+Команда \code{ocamlprof} представляет анализ результата измерений профайлера. 
+Для этого используется информация содержащаяся в файле \code{camlprof.dump}. 
+Данная команда читает приведённый файл и затем, при помощи исходного кода, 
+создаёт новый исходный код программы, содержащий желаемые данные в виде 
+комментариев.
+
+Для нашего примера получим следующее:
+
+\begin{lstlisting}[language=OCaml]
+ocamlprof f1.ml
+
+let rec interval a b = 
+  (* 62 *) if b < a then (* 2 *) []
+  else (* 60 *) a::(interval (a+1) b);;
+
+exception Found_zero ;; 
+
+let mult_list l = 
+ (* 2 *) let rec mult_rec l = (* 62 *) match l with 
+    [] -> (* 1 *) 1
+  | 0::_ -> (* 1 *) raise Found_zero
+  | n::x -> (* 60 *) n * (mult_rec x)
+ in
+  try mult_rec l with Found_zero -> (* 1 *) 0
+;; 
+\end{lstlisting}
+
+Полученные счётчики отражают запрошенные в модуле \code{F2} вычисления. Мы 
+получили 2 вызова для \code{list\_mult} и 62 для вспомогательной функции 
+\code{mult\_rec}. Анализ ответвлений \code{match} показывает что образец по 
+умолчанию выполнялся 60 раз, образец [] выполнялся один раз в самом начале и 
+образец с нулём в начале списка так же выполнялся один раз, возбуждая 
+исключение. В строке с \code{try} указывается значение образца вызвавшее 
+исключение.
+
+У команды \code{camlprof} имеется две опции. При помощи опции \code{-f} файл 
+можно указать файл, в котором содержатся измерения. Опцией \code{-F} строка 
+можно добавить строку в комментарии структурам контроля.
+
+\subsection {Нативный компилятор}
+\label{subsubsec:native_compilation}
+
+Чтобы получить время, затраченное на вызов функции умножения элементов списка, 
+напишем следующий файл \code{f3.ml}:
+
+\begin{lstlisting}[language=OCaml]
+let l1 = F1.interval 1 30;;
+let l2 = F1.interval 31 60;;
+let l3 = l1 @ (0::l2);;
+
+for i=0 to 100000 do 
+  F1.mult_list l1;
+  F1.mult_list l3
+done;;
+
+print_int (F1.mult_list l1);;
+print_newline();;
+
+print_int (F1.mult_list l3);;
+print_newline();;
+\end{lstlisting}
+
+Это такой же файл как и \code{f3.ml} с 100000 итерациями. 
+
+После выполнения программы получим файл \code{gmon.out}. Формат данного файла 
+распознаётся командой \code{gprof}, присутствующей в системе Unix. Вызов этой 
+команды выведет на экран затраченное время и граф вызовов. В связи с тем, что 
+вывод получается достаточно большой, мы покажем лишь начало, где содержится 
+имена функций, которые были вызваны минимум один раз и время затраченное на их 
+исполнение.
+
+\begin{lstlisting}[language=Bash]
+$ gprof  f3nat.exe 
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total
+ time   seconds   seconds    calls  us/call  us/call  name
+ 92.31      0.36     0.36   200004     1.80     1.80  F1_mult_rec_45
+  7.69      0.39     0.03   200004     0.15     1.95  F1_mult_list_43
+  0.00      0.39     0.00     2690     0.00     0.00  oldify
+  0.00      0.39     0.00      302     0.00     0.00  darken
+  0.00      0.39     0.00      188     0.00     0.00  gc_message
+  0.00      0.39     0.00      174     0.00     0.00  aligned_malloc
+  0.00      0.39     0.00      173     0.00     0.00  alloc_shr
+  0.00      0.39     0.00      173     0.00     0.00  fl_allocate
+  0.00      0.39     0.00       34     0.00     0.00  caml_alloc3
+  0.00      0.39     0.00       30     0.00     0.00  caml_call_gc
+  0.00      0.39     0.00       30     0.00     0.00  garbage_collection
+...
+\end{lstlisting}
+
+Здесь наглядно видно, что почти все время выполнения затрачено на исполнение 
+функции \code{F1\_mult\_rec\_45}, которая соответствует функции 
+\code{F1.mult\_rec} из файла \code{f1.ml}. Мы так же видим, что вызывается 
+много других функций. Первые из них, являются функциями стандартной библиотеки 
+по управлению памятью(8).
+
+
+

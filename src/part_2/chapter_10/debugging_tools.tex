@@ -1,0 +1,437 @@
+\section {Средства отладки}
+\label{sec:debugging_tools}
+
+Существует два типа средств для отладки программ. Первый тип это трассировка 
+глобальных функций, интерактивного интерпретатора. Второе средство это отладчик, 
+который не используется в нормальном интерактивном интерпретаторе. После 
+первичного выполнения программы, отладчик позволяет вернуться к контрольным 
+точкам, просмотреть определённые значения или перезапустить функции с новыми 
+параметрами. Данный отладчик доступен лишь в среде Unix, потому что он 
+использует вызов \code{fork} для создания процесса программы (см. \ref{??}).
+
+\subsection {Трассировка}
+\label{subsec:trace}
+
+Трассировкой называется вывод входных аргументов функции и её результата в 
+момент выполнения программы. Команды трассировки это директивы интерактивного 
+интерпретатора. При помощи директив можно начать трассировку функции, остановить 
+трассировку функции и остановить все установленные трассировки. Эти три 
+директивы представлены в следующей таблице:
+
+\begin{tabular}{|l|l|}
+	\hline
+	\code{#trace имя\_функции} & трассировать указанную функцию \\
+	\hline
+	\code{#untrace имя\_функции} & прекратить трассировку указанной функции \\
+	\hline
+	\code{#untrace\_all} & прекратить все трассировки \\
+	\hline
+\end{tabular}
+
+В следующем примере, определим функцию:
+
+\begin{lstlisting}[language=OCaml]
+# let f x = x + 1;;
+val f : int -> int = <fun>
+# f 4;;
+- : int = 5
+\end{lstlisting}
+
+Теперь зададим директиву трассировки данной функции, после чего переданные 
+аргументы и результат буду выведены на экран.
+
+\begin{lstlisting}[language=OCaml]
+#  #trace f;;
+f is now traced.
+# f 4;;
+f <-- 4
+f --> 5
+- : int = 5
+\end{lstlisting}
+
+Передача аргумента 4 функции \code{f} выводится на экран, функция реализует 
+вычисление и затем результат так же выводится на экран. Значения параметров 
+вызова функции указываются стрелкой влево, а возвращаемое значение стрелкой 
+вправо.
+
+\subsection {Функции с несколькими параметрами}
+\label{subsubsec:functions_of_several_arguments}
+
+Таким же образом можно трассировать функции с несколькими аргументами (или 
+возвращающими замыкание). Каждая передача аргумента выводится на экран. Для того 
+чтобы различить замыкания, символом '*' помечается число уже переданных 
+замыканию аргументов. Пусть имеется функция \code{verif\_div} с четырьмя 
+аргументами a b c d, соответствующие целочисленному делению: $a = bq + r$.
+
+\begin{lstlisting}[language=OCaml]
+# let verif_div a b q r = 
+   a = b*q + r;;
+val verif_div : int -> int -> int -> int -> bool = <fun>
+# verif_div 11 5 2 1;;
+- : bool = true
+\end{lstlisting}
+
+Трассировка данной функции выводит на экран передачу 4 аргумента:
+
+\begin{lstlisting}[language=OCaml]
+#trace verif_div;;
+verif_div is now traced.
+# verif_div 11 5 2 1;;
+verif_div <-- 11
+verif_div --> <fun>
+verif_div* <-- 5
+verif_div* --> <fun>
+verif_div** <-- 2
+verif_div** --> <fun>
+verif_div*** <-- 1
+verif_div*** --> true
+- : bool = true
+\end{lstlisting}
+
+\subsection {Рекурсивные функции}
+\label{subsubsec:recursive_functions}
+
+Трассировка даёт ценную информацию о рекурсивных функциях. Можно с лёгкостью 
+определить неверный критерий остановки рекурсии.
+
+Определим функцию \code{belongs\_to}, которая проверяет принадлежит ли число 
+списку целых чисел:
+
+\begin{lstlisting}[language=OCaml]
+# let rec belongs_to (e : int) l = match l with 
+   [] -> false
+ | t::q -> (e = t) || belongs_to e q ;;
+val belongs_to : int -> int list -> bool = <fun>
+# belongs_to 4 [3;5;7] ;;
+- : bool = false
+# belongs_to 4 [1; 2; 3; 4; 5; 6; 7; 8] ;;
+- : bool = true
+\end{lstlisting}
+
+Трассировка вызова функции \code{belongs_to 4 [3;5;7]} выведет на экран 
+передачу четырёх аргументов и возвращённые результаты.
+
+\begin{lstlisting}[language=OCaml]
+#  #trace belongs_to ;;
+belongs_to is now traced.
+# belongs_to 4 [3;5;7] ;;
+belongs_to <-- 4
+belongs_to --> <fun>
+belongs_to* <-- [3; 5; 7]
+belongs_to <-- 4
+belongs_to --> <fun>
+belongs_to* <-- [5; 7]
+belongs_to <-- 4
+belongs_to --> <fun>
+belongs_to* <-- [7]
+belongs_to <-- 4
+belongs_to --> <fun>
+belongs_to* <-- []
+belongs_to* --> false
+belongs_to* --> false
+belongs_to* --> false
+belongs_to* --> false
+- : bool = false
+\end{lstlisting}
+
+При каждом вызове функции \code{belongs\_to} ей передаётся аргумент 4 и 
+тестируемый список. Когда передаётся пустой список, то функция возвращает 
+\code{false}. Это значение передаётся каждому ожидающему рекурсивному вызову.
+
+В следующем примере список пройден лишь частично, до того места где находится 
+нужный элемент:
+
+\begin{lstlisting}[language=OCaml]
+# belongs_to 4 [1; 2; 3; 4; 5; 6; 7; 8] ;;
+belongs_to <-- 4
+belongs_to --> <fun>
+belongs_to* <-- [1; 2; 3; 4; 5; 6; 7; 8]
+belongs_to <-- 4
+belongs_to --> <fun>
+belongs_to* <-- [2; 3; 4; 5; 6; 7; 8]
+belongs_to <-- 4
+belongs_to --> <fun>
+belongs_to* <-- [3; 4; 5; 6; 7; 8]
+belongs_to <-- 4
+belongs_to --> <fun>
+belongs_to* <-- [4; 5; 6; 7; 8]
+belongs_to* --> true
+belongs_to* --> true
+belongs_to* --> true
+belongs_to* --> true
+- : bool = true
+\end{lstlisting}
+
+Как только 4 оказывается в заголовке списка, функция возвращает значение 
+\code{true} и оно возвращается всем ожидающим рекурсивным вызовам.
+
+Если в функции \code{belongs\_to} поменять порядок '||', то функция все так же 
+будет возвращать правильный результат, но при этом она будет проверять список 
+до конца.
+
+\begin{lstlisting}[language=OCaml]
+# let rec belongs_to (e : int) = function 
+     [] -> false
+   | t::q ->   belongs_to e q || (e = t) ;;
+val belongs_to : int -> int list -> bool = <fun>
+# #trace belongs_to ;;
+belongs_to is now traced.
+# belongs_to 3 [3;5;7] ;;
+belongs_to <-- 3
+belongs_to --> <fun>
+belongs_to* <-- [3; 5; 7]
+belongs_to <-- 3
+belongs_to --> <fun>
+belongs_to* <-- [5; 7]
+belongs_to <-- 3
+belongs_to --> <fun>
+belongs_to* <-- [7]
+belongs_to <-- 3
+belongs_to --> <fun>
+belongs_to* <-- []
+belongs_to* --> false
+belongs_to* --> false
+belongs_to* --> false
+belongs_to* --> true
+- : bool = true
+\end{lstlisting}
+
+Несмотря на то, что число 3 находится в начале списка, он, список, проверяется 
+до конца. Таким образом трассировка помогает анализировать эффективность 
+рекурсивных функций.
+
+\subsection {Полиморфные функции}
+\label{subsubsec:polymorphic_functions}
+
+Трассировка аргументов полиморфной функции не выводит на экран значение 
+параметризованного типа. Пусть функция \code{belongs\_to} написана без явного 
+указания типа.
+
+\begin{lstlisting}[language=OCaml]
+# let rec belongs_to e l = match l with 
+   [] -> false
+ | t::q -> (e = t) || belongs_to e q ;;
+val belongs_to : 'a -> 'a list -> bool = <fun>
+\end{lstlisting}
+
+Теперь, функция \code{belongs\_to} стала полиморфная и в её трассировке вывод 
+значений аргументов заменён на \code{<poly>}.
+
+\begin{lstlisting}[language=Bash]
+#trace belongs_to ;;
+belongs_to is now traced.
+# belongs_to 3 [2;3;4] ;;
+belongs_to <-- <poly>
+belongs_to --> <fun>
+belongs_to* <-- [<poly>; <poly>; <poly>]
+belongs_to <-- <poly>
+belongs_to --> <fun>
+belongs_to* <-- [<poly>; <poly>]
+belongs_to* --> true
+belongs_to* --> true
+- : bool = true
+\end{lstlisting}
+
+Интерактивный интерпретатор умеет выводить на экран только значения мономорфных 
+типов. К тому же он сохраняет лишь выведенный тип глобальных деклараций. То есть 
+после компиляции выражения \code{belongs\_to 3 [2;3;4]}, интерактивный 
+интерпретатор не располагает другой информацией о типе, кроме того, что тип 
+функции \code{belongs\_to} есть \type{a -> 'a list -> bool}. Типы (мономорфные) 
+\type{3} и \type{[2;3;4]} утеряны, так как при статической типизации значения 
+не хранят информацию о типе. Поэтому, трассировка программы ассоциирует 
+значениям функции \code{belongs\_to} полиморфные типы \type{'a} и \type{'a 
+list}.
+
+Из--за того что значения не сохраняют информацию о типе, мы не можем создать
+общую функцию \code{print} с типом \type{a -> unit}.
+
+\subsection {Локальные функции}
+\label{subsubsec:local_functions}
+
+Локальные функции не трассируются по аналогичным причинам, которые связанны со 
+статической типизацией. В окружении интерактивного интерпретатор сохраняются 
+только типы глобальных деклараций. Однако, не смотря на это, следующий стиль 
+программирования достаточно распространён:
+
+\begin{lstlisting}[language=Ocaml]
+# let belongs_to e l = 
+   let rec bel_aux l = match l with 
+     [] -> false
+   | t::q -> (e = t) || (bel_aux q)
+   in 
+     bel_aux l;;
+val belongs_to : 'a -> 'a list -> bool = <fun>
+\end{lstlisting}
+
+Глобальная функция лишь вызывает локальную, чтобы она выполнила необходимую 
+задачу.
+
+\subsection {Замечания о трассировке}
+\label{subsubsec:notes_on_tracing}
+
+На данный момент, трассировка является единственным мультиплатформенным 
+средством отладки. Его недостатками являются отсутствие вывода для локальных 
+объявлений и полиморфных параметров функций. По этой причине трассировка мало 
+используется, особенно на первых этапах знакомства с языком.
+
+\subsection {Отладка программ}
+\label{subsec:debug}
+
+Средством отладки программ или отладчик в Objective CAML является 
+\code{ocamldeb}. Он позволяет пошаговое выполнение программы, вставлять 
+контрольные точки, просмотреть или изменить значения окружения.
+
+Сказать пошаговое выполнения, значить осознавать что такое в программе шаг. В 
+императивном программировании это понятие соответствует инструкции языка. Однако 
+подобное определение не имеет смысла в функциональном программировании. Здесь 
+скорее говорят о событии (event) программы. Событием может быть применения, вход 
+функции, сопоставление с образцом, условие, цикл, элемент последовательности.
+
+{\it \bf Warning}
+
+Отладчик доступен только для систем Unix.
+
+\subsection {Компиляция для отладчика}
+\label{subsubsec:compiling_with_debugging_mode}
+
+При компиляции с опцией \code{-g} создаётся файл с расширением \code{.cmo}, что 
+позволяет создать инструкции необходимые для отладки. Данная опция существует 
+только для байт--код компилятора. При компиляции различных файлов программы, 
+необходимо указать данную опцию. После того как получен исполняемый файл, 
+необходимо запустить \code{ocamldebug} следующим образом:
+
+\code{ocamldebug [options] executable [arguments]}
+
+Пусть есть файл \code{fact.ml} со следующим кодом для вычисления факториала:
+
+\begin{lstlisting}[language=Ocaml]
+let fact n = 
+  let rec fact_aux p q n = 
+    if n = 0 then p
+    else fact_aux (p+q) p (n-1)
+  in
+fact_aux 1 1 n;;
+\end{lstlisting}
+
+Основная программа находится в файле \code{main.ml}, она запускает долгую 
+рекурсию вызовом \code{Fact.fact} на -1.
+
+\begin{lstlisting}[language=Ocaml]
+let x = ref 4;;
+let go () = 
+  x :=  -1;
+  Fact.fact !x;;
+go();;
+\end{lstlisting}
+
+Оба файла компилируются с опцией \code{-g}:
+
+\begin{lstlisting}[language=Bash]
+$ ocamlc -g -i -o fact.exe fact.ml main.ml
+val fact : int -> int
+val x : int ref
+val go : unit -> int
+\end{lstlisting}
+
+\subsection {Запуск отладчика}
+\label{subsubsec:starting_the_debugger}
+
+После того как программа скомпилирована подобным образом, ее запуск в режиме 
+отладчика происходит следующим образом:
+
+\begin{lstlisting}[language=Bash]
+$ ocamldebug fact.exe
+        Objective Caml Debugger version 3.00
+
+(ocd) 
+\end{lstlisting}
+
+\subsection {Контроль над выполнение программы}
+\label{subsec:execution_control}
+
+Контроль над выполнением реализуется при помощи событий программы. Можно либо 
+продвинутся вперёд или назад на n элементов программы, либо продвинутся вперёд 
+или назад до первой точки контроля (или на n точек). Точку контроля можно 
+установить на функцию или элемент программы. Элемент языка можно выбрать по 
+номеру линии, столбца или номера символа. Эти координаты могут быть определены 
+по отношению к модулю.
+
+В приведённом ниже примере, мы устанавливаем точку на четвёртой строке модуля 
+\code{Main}:
+
+\begin{lstlisting}[language=Bash]
+(ocd) step 0
+Loading program... done.
+Time : 0
+Beginning of program.
+(ocd)  break @ Main 4
+Breakpoint 1 at 5028 : file Main, line 4 column 3
+\end{lstlisting}
+
+Инициализация модуля происходит до самой программы. И по этой причине 
+контрольная точка 4 находится после 4964 инструкций.
+
+Перемещаться по программе можно либо по отношению к элементам программы либо по 
+отношению к контрольным точкам. \code{run} и \code{reverse} выполняют программу 
+до первой встретившейся точки. В первом случае выполнение происходит в 
+нормальном направлении, а во втором в обратном порядке. По команде \code{step} 
+выполняется один или n элементов программы входя в функции, а \code{next} не 
+входя в функции. Соответственно команды \code{backstep} и \code{previous} 
+выполняют программу в обратном порядке. И наконец команда \code{finish} 
+завершает вызов текущей функции, а \code{start} возвращается к элементу 
+стоящему перед вызовом функции.
+
+В продолжении примера, продвинемся до контрольной точки, а затем выполним три 
+элемента программы. 
+
+\begin{lstlisting}[language=Bash]
+(ocd) run
+Time : 6 - pc : 4964 - module Main
+Breakpoint : 1
+4   <|b|>Fact.fact !x;;
+(ocd) step
+Time : 7 - pc : 4860 - module Fact
+2   <|b|>let rec fact_aux p q n = 
+(ocd) step
+Time : 8 - pc : 4876 - module Fact
+6 <|b|>fact_aux 1 1 n;;
+(ocd) step
+Time : 9 - pc : 4788 - module Fact
+3     <|b|>if n = 0 then p
+\end{lstlisting}
+
+\subsection {Просмотр значений}
+\label{subsubsec:inspection_of_values}
+
+В контрольной точке можно просмотреть значения связанные с активным блоком. 
+Команды \code{print} и \code{display} выводят в зависимости от глубины значения.
+
+Выведем значение \code{n}, затем вернёмся на три элемента назад и выведем 
+значение \code{x}.
+
+\begin{lstlisting}[language=Bash]
+(ocd) print n
+n : int = -1
+(ocd) backstep 3    
+Time : 6 - pc : 4964 - module Main
+Breakpoint : 1
+4   <|b|>Fact.fact !x;;
+(ocd) print x
+x : int ref = {contents=-1}
+\end{lstlisting}
+
+Эти же команды позволяют вывести содержимое вектора или поле записи.
+
+\begin{lstlisting}[language=Bash]
+(ocd) print x.contents
+1 : int = -1
+\end{lstlisting}
+
+\subsection {Стек выполнения}
+\label{subsubsec:execution_stack}
+
+Вложенные вызовы функций можно просмотреть в стеке выполнения. Для этого 
+существует команда \code{backtrace} или \code{bt}, которая выводит порядок в 
+котором вызывались функции. При помощи команд \code{up down} выбирается 
+следующий или предыдущих активный блок. Для описания текущего блока используется 
+команда \code{frame}.

@@ -1,0 +1,70 @@
+\section {Анализ зависимостей}
+\label{sec:dependency_analysis}
+
+Вычисление зависимостей между файлами интерфейса и реализации имеет двойную 
+цель. Первая --- получить глобальное видение зависимостей между модулями? 
+Вторая --- использовать данную информацию для того чтобы компилировать лишь 
+необходимый минимум при изменении некоторых файлов. 
+
+Команда \code{ocamldep} анализирует файлы \code{.ml} и \code{.mli} и выводит 
+зависимости файлов в формате Makefile \footnote{Файлы \code{Makefile} 
+используются командой \code{make} чтобы обновлять при необходимости файлы или 
+программы}.
+
+Зависимости появляются при глобальной декларации других модулей, либо используя 
+синтаксис с точкой (пример: \code{M1.f}), либо открывая модуль (пример: 
+\code{open M1}).
+
+Предположим, что имеются файлы \code{dp.ml}:
+
+\begin{lstlisting}[language=OCaml]
+let print_vect v = 
+    for i = 0 to Array.length v do 
+      Printf.printf "%f " v.(i)
+    done;
+    print_newline();;
+\end{lstlisting}
+
+и \code{d1.ml}:
+
+\begin{lstlisting}[language=OCaml]
+let init n e = 
+  let v = Array.create 4 3.14 in 
+    Dp.print_vect v;
+    v;;
+\end{lstlisting}
+
+При вызове команды \code{ocamldep} с указанием файлов, получим следующий 
+результат:
+
+\begin{lstlisting}[language=Bash]
+$ ocamldep dp.ml d1.ml array.ml array.mli printf.ml printf.mli
+dp.cmo: array.cmi printf.cmi 
+dp.cmx: array.cmx printf.cmx 
+d1.cmo: array.cmi dp.cmo 
+d1.cmx: array.cmx dp.cmx 
+array.cmo: array.cmi 
+array.cmx: array.cmi 
+printf.cmo: printf.cmi 
+printf.cmx: printf.cmi 
+\end{lstlisting}
+
+Зависимости вычисляются для байт--код и нативных компиляторов. Поясним 
+полученный результат: компиляция файла \code{dp.cmo} зависит от файлов 
+\code{array.cmi} и \code{printf.cmi}. Файлы с расширением \code{.cmi} зависят 
+от файлов с таким же именем, но с расширением .mli. Аналогичное правило 
+распространяется на файлы \code{.ml} с \code{.cmo} и \code{.cmx}.
+
+Объектные файлы дистирбитува отсутствуют в списке зависимостей. В 
+действительности, если команда \code{ocamldep} не найдёт их в текущем каталоге, 
+то они будут найдены в каталоге библиотек дистрибутива и выдаст следующий 
+результат:
+
+\begin{lstlisting}[language=Bash]
+$ ocamldep dp.ml d1.ml
+d1.cmo: dp.cmo 
+d1.cmx: dp.cmx 
+\end{lstlisting}
+
+Для того, чтобы указать командe \code{ocamldep} дополнительные каталоги для 
+поиска файлов, используйте опцию \code{-I каталог}.
